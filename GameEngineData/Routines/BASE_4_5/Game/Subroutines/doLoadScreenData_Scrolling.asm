@@ -399,6 +399,7 @@ GetScreenTriggerInfo:
         TXA
         PHA
         CreateObject tempB, tempC, mon4_type, #$00 
+        
         LDA #$03
         STA Object_id,x
         PLA

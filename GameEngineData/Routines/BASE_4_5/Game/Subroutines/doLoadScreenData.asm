@@ -438,7 +438,7 @@ GetScreenTriggerInfo:
         LDA (collisionPointer),y
         STA mon4_type ;; type of monster loaded into tempA
 
-        ;LDY Mon4SpawnLocation,x
+        LDY Mon4SpawnLocation,x
         LDA (collisionPointer),y
         ASL
         ASL
@@ -446,7 +446,7 @@ GetScreenTriggerInfo:
         ASL
         STA tempB ;; x value in tempB
 
-        LDY Mon4SpawnLocation,x
+        ;LDY Mon4SpawnLocation,x
         LDA (collisionPointer),y
         AND #%11110000
         STA tempC ;; y value in tempC
