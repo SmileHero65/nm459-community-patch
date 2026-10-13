@@ -1,24 +1,24 @@
 ;; do handle physics.
-    
+
     LDA Object_x_lo,x
     STA xHold_lo
     LDA Object_x_hi,x
     STA xHold_hi
     STA xPrev
 
-    
+
     LDA Object_screen,x
     STA xHold_screen
     sta screenPrev
-    
-    
+
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
     STA yHold_hi
     STA yPrev
 ;;;;;;;;;;;;;;;;;;;;;;;;;;; FOR BRAWLER PHYSICS
-;;;;;;;;;;;;;;;;;;;;;;;;;;; DON'T UPDATE POSITIONING IF ATTACKING    
+;;;;;;;;;;;;;;;;;;;;;;;;;;; DON'T UPDATE POSITIONING IF ATTACKING
     CPX player1_object
     BNE +notPlayer
         ;; it was the player.
@@ -29,16 +29,16 @@
         CMP #$02
         BNE +notPlayer ;; skip, because was not 2.
             JMP skipPhysics
-    
+
     +notPlayer
-    
-    
+
+
     ;;;;;;;;;;;; CUSTOMIZATION: IGNORE PHYSICS IF NOT ON MAIN GAME MODE
         LDA gameState
         BEQ +doHandlePhysics
             JMP skipPhysics
         +doHandlePhysics
-    
+
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; Reset the vars we will use for movement.
     LDA #$00
@@ -46,8 +46,8 @@
     STA tempB
     STA tempC
     STA tempD
-    
-    
+
+
     LDA Object_status,x
     AND #%00000100
     BNE doHandlePhysics
@@ -55,7 +55,7 @@
 doHandlePhysics:
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;;; check to see if we are using aiming physics.
     ;;; if we are using aim physics, Object_direction will have it's 3rd bit flipped. xxxxXxxx
     LDA Object_direction,x
@@ -78,12 +78,12 @@ doHandlePhysics:
         STA xHold_lo
         LDA Object_x_hi,x
         STA xHold_hi
-        
+
         LDA Object_y_lo,x
         STA yHold_lo
         LDA Object_y_hi,x
         STA yHold_hi
-        
+
     LDA Object_flags,x
     AND #%00001000
     BEQ +skipProxCheck ;; only monsters will do prox check.
@@ -92,7 +92,7 @@ doHandlePhysics:
     BEQ +skipProxCheck
     ;;; ok, now it is a monster, and that second vulnerability bit is flipped.
     ;;; which means it's checking for x proximity.
-        
+
     TXA
     PHA
         LDX player1_object
@@ -101,7 +101,7 @@ doHandlePhysics:
 
     PLA
     TAX
-    
+
     LDA tempz
     SEC
     SBC Object_x_hi,x
@@ -124,8 +124,8 @@ doHandlePhysics:
         ChangeActionStep temp, temp1
         JMP skipPhysics
     +skip
-        
-    +skipProxCheck:    
+
+    +skipProxCheck:
         LDA Object_h_speed_lo,x
         BPL AddHspeedToAimedX
             ;; subtract h speed to aimed x
@@ -143,9 +143,9 @@ doHandlePhysics:
                 STA xHold_hi
                 DEY
                 BPL doAimLoop1
-                
-                
-            
+
+
+
             JMP figureAimedVspeed
         AddHspeedToAimedX:
             LDY tempA
@@ -159,7 +159,7 @@ doHandlePhysics:
             STA xHold_hi
             DEY
             BPL doAimLoop2
-        
+
         figureAimedVspeed:
 
         LDA Object_v_speed_lo,x
@@ -179,7 +179,7 @@ doHandlePhysics:
             STA yHold_hi
             DEY
             BPL doAimLoop3
-            
+
             JMP doneWithAimedV
         AddVSpeedToAimedY:
             LDY tempA
@@ -194,7 +194,7 @@ doHandlePhysics:
             DEY
             BPL doAimLoop4
         doneWithAimedV:
-        
+
         ;;;;;;;;;;;;; check xHold_hi and yHold_hi against bounds.
             LDA yHold_hi
             CMP #BOUNDS_TOP
@@ -204,12 +204,12 @@ doHandlePhysics:
             +doTopBounds
                     LDA #$02
                     STA screenUpdateByte
-            
+
                     JSR doHandleBounds
                     JMP skipPhysics
-                    
+
             +doneWithTop
-        
+
             STA yHold_hi
             CLC
             ADC self_bottom
@@ -221,23 +221,23 @@ doHandlePhysics:
                     STA screenUpdateByte
                     JSR doHandleBounds
                     JMP skipPhysics
-                    
+
             +doneWithBottom
-        
-        
-        
+
+
+
                 LDA xHold_hi
                 clc
-                ADC self_right 
+                ADC self_right
                 BCS +doRightBounds
                     JMP +doneWithRight
                 +doRightBounds:
-                
+
                     LDA #$01
                     STA screenUpdateByte
                     JSR doHandleBounds
                     JMP skipPhysics
-                    
+
                 +doneWithRight
                 LDA xHold_hi
                 CMP #BOUNDS_LEFT
@@ -252,10 +252,10 @@ doHandlePhysics:
                 +doneWithLeft
         JMP skipPhysics ;; skips all the acc/dec stuff and goes right to movement based on speed
                             ;; which was figured out in the directional macro.
-                            
+
     useNormalDirectionalPhysics:
         LDY Object_type,x
-        
+
         LDA ObjectBboxLeft,y
         STA self_left
         CLC
@@ -265,7 +265,7 @@ doHandlePhysics:
         SBC self_left
         LSR
         STA self_center_x
-        
+
         LDA ObjectBboxTop,y
         STA self_top
         CLC
@@ -280,8 +280,8 @@ doHandlePhysics:
     ;;;; THESE CONSTANTS WILL DETERMINE THE SPEED OF RECOIL
     ;RECOIL_SPEED
     RECOIL_SPEED_LO = #$00
-    
-    
+
+
         STX temp
         GetActionStep temp
         CMP #$07
@@ -294,38 +294,38 @@ doHandlePhysics:
             AND #%10000000
             BNE +isMovingH
                 ;; is not moving h
-            LDA Object_direction,x    
+            LDA Object_direction,x
             AND #%00100000
             BNE +isMovingV
                 ;; is not moving V
                 JMP +skipPhysics
             +isMovingV
-                LDA #RECOIL_SPEED_LO 
+                LDA #RECOIL_SPEED_LO
                     STA Object_v_speed_lo,x
                     LDA #RECOIL_SPEED
                     STA Object_v_speed_hi,x
-                    
+
                     LDA #$00
                     STA Object_h_speed_hi,x
                     STA Object_h_speed_lo,x
                     JMP gotHandVspeeds
-            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             +isMovingH
 
-                    LDA #RECOIL_SPEED_LO 
+                    LDA #RECOIL_SPEED_LO
                     STA Object_h_speed_lo,x
                     LDA #RECOIL_SPEED
                     STA Object_h_speed_hi,x
-                    
+
                     LDA #$00
                     STA Object_v_speed_hi,x
                     STA Object_v_speed_lo,x
                     JMP gotHandVspeeds
 
-            
-            
+
+
         +notHurt
-   
+
         LDY Object_type,x
         LDA ObjectMaxSpeed,y
         ASL
@@ -346,24 +346,24 @@ doHandlePhysics:
         STA myAcc+1
         LDA ObjectAccAmount,y
         STA myAcc
-    
-    
-     
 
 
-        
 
-    
+
+
+
+
+
 ;   ReturnBank
     ;;;; deal with acceleration / deceleration
 
-    
+
     LDA Object_direction,x
     AND #%10000000
     BNE doHvel
     JMP doHdec
     doHvel:
-    
+
         ;; we have activated horizontal inertia for this object
         LDA Object_h_speed_lo,x
         CLC
@@ -374,7 +374,7 @@ doHandlePhysics:
         ADC myAcc+1
         STA Object_h_speed_hi,x
         STA temp1
-        
+
         ;;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -383,14 +383,14 @@ doHandlePhysics:
         STA Object_h_speed_lo,x
         LDA myMaxSpeed+1
         STA Object_h_speed_hi,x
-        
+
         JMP doneWithAccFetch
         ++
         LDA temp
         STA Object_h_speed_lo,x
         LDA temp1
         STA Object_h_speed_hi,x
-        
+
         doneWithAccFetch:
         JMP skipDoHdec
 doHdec:
@@ -398,30 +398,30 @@ doHdec:
     CLC
     ADC Object_h_speed_lo,x
     BEQ skipDoHdec
-    
+
     LDA Object_h_speed_lo,x
     SEC
     SBC myAcc
     STA temp
-    
+
     LDA Object_h_speed_hi,x
     SBC myAcc+1
     STA temp1
-    BCC zeroHdec ;; if the result of the 16 bit compare is 
+    BCC zeroHdec ;; if the result of the 16 bit compare is
                     ;; less than zero, clamp the acc to zero.
                     ;; Otherwise, make it the stored values.
-    
+
     LDA temp1
     STA Object_h_speed_hi,x
     LDA temp
     STA Object_h_speed_lo,x
     JMP skipDoHdec
-    
+
 zeroHdec:
     LDA #$00
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-    
+
 
 skipDoHdec:
 
@@ -433,7 +433,7 @@ skipDoHdec:
     BNE doVvel
     JMP doVdec
     doVvel:
-    
+
         ;; we have activated horizontal inertia for this object
         LDA Object_v_speed_lo,x
         CLC
@@ -444,7 +444,7 @@ skipDoHdec:
         ADC myAcc+1
         STA Object_v_speed_hi,x
         STA temp1
-        
+
         ;;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -453,14 +453,14 @@ skipDoHdec:
         STA Object_v_speed_lo,x
         LDA myMaxSpeed+1
         STA Object_v_speed_hi,x
-        
+
         JMP doneWithAccFetchV
         ++
         LDA temp
         STA Object_v_speed_lo,x
         LDA temp1
         STA Object_v_speed_hi,x
-        
+
         doneWithAccFetchV:
         JMP skipDoVdec
 doVdec:
@@ -468,25 +468,25 @@ doVdec:
     CLC
     ADC Object_v_speed_lo,x
     BEQ skipDoVdec
-    
+
     LDA Object_v_speed_lo,x
     SEC
     SBC myAcc
     STA temp
-    
+
     LDA Object_v_speed_hi,x
     SBC myAcc+1
     STA temp1
-    BCC zeroVdec ;; if the result of the 16 bit compare is 
+    BCC zeroVdec ;; if the result of the 16 bit compare is
                     ;; less than zero, clamp the acc to zero.
                     ;; Otherwise, make it the stored values.
-    
+
     LDA temp1
     STA Object_v_speed_hi,x
     LDA temp
     STA Object_v_speed_lo,x
     JMP skipDoVdec
-    
+
 zeroVdec:
     LDA #$00
     STA Object_v_speed_lo,x
@@ -504,19 +504,19 @@ gotHandVspeeds:
     STA tempA
     LDA Object_h_speed_hi,x
     STA tempB
-    
+
 
     LDA Object_direction,x
     AND #%01000000
     BNE isMovingRight
     ;isMovingLeft
-    
-    
+
+
     ;;; set to check points 0 and 3 (top left and bottom left.)
     LDA collisionsToCheck
     ORA #%00001001
-    STA collisionsToCheck 
-    
+    STA collisionsToCheck
+
         LDA tempA
         CLC
         ADC tempB
@@ -534,11 +534,11 @@ gotHandVspeeds:
             STA directionByte
     JMP gotHmoveDirection
 isMovingRight:
-    
+
         ;;; set to check points 1 and 2 (top right and bottom right.)
     LDA collisionsToCheck
     ORA #%00000110
-    STA collisionsToCheck 
+    STA collisionsToCheck
         LDA tempA
         clc
         ADC tempB
@@ -560,7 +560,7 @@ gotHmoveDirection:
     STA tempC
     LDA Object_v_speed_hi,x
     STA tempD
-    
+
 
     LDA Object_direction,x
     AND #%00010000
@@ -570,8 +570,8 @@ gotHmoveDirection:
     ;;; set to check points 0 and 1 (top left and top right.)
     LDA collisionsToCheck
     ORA #%00000011
-    STA collisionsToCheck 
-    
+    STA collisionsToCheck
+
         LDA tempC
         CLC
         ADC tempD
@@ -586,14 +586,14 @@ gotHmoveDirection:
             ORA #%00100000
             AND #%11101111 ;; "up"
             STA directionByte
-    
+
     JMP gotVmoveDirection
 isMovingDown:
 
     ;;; set to check points 2 and 3 (bottom left and bottom right.)
     LDA collisionsToCheck
     ORA #%00001100
-    STA collisionsToCheck 
+    STA collisionsToCheck
         LDA tempC
         CLC
         ADC tempD
@@ -607,10 +607,10 @@ isMovingDown:
             LDA directionByte
             ORA #%00110000 ;; "right"
             STA directionByte
-    
-    
+
+
 gotVmoveDirection:
-    
+
    LDA directionByte
     AND #%01000000
     BNE doMoveRight
@@ -629,7 +629,7 @@ gotVmoveDirection:
     LDA xHold_screen
             AND #%00001111
             STA temp
-            
+
             Compare16 camX_hi, camX, temp, xHold_hi
 
                 +
@@ -646,13 +646,13 @@ gotVmoveDirection:
                     STA xHold_screen
                     JMP doneWithH
                 ++
-    
-    
+
+
 
     JMP doneWithH
 doMoveRight:
     ;; update x position.
-    
+
     LDA Object_x_lo,x
     clc
     adc tempA
@@ -663,18 +663,18 @@ doMoveRight:
     LDA Object_screen,x
     ADC #$00
     STA xHold_screen
-    
-    
+
+
     LDA xHold_hi
             clc
             adc #$10
             STA temp2
-            
+
             LDA Object_screen,x
             ADC #$00
             AND #%00001111
             STA temp
-            
+
             LDA camX
             CLC
             ADC #$FE
@@ -682,9 +682,9 @@ doMoveRight:
             LDA camX_hi
             ADC #$00
             STA temp1
-            
-            
-            
+
+
+
             Compare16 temp1, tempA, temp, temp2
                 +
                 JMP doneWithH
@@ -704,7 +704,7 @@ doMoveRight:
                     STA xHold_screen
                     JMP skipPhysics
             JMP doneWithH
-    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ; LDA camX
         ; STA temp16 ;; low left cam clip
@@ -714,7 +714,7 @@ doMoveRight:
         ; AND #%00001111
         ; STA temp16+1 ;; high left cam clip
     ; ;;; Player's position is in xHold_lo and xHold_hi
-    
+
         ; LDA xHold_hi
         ; CLC
         ; ADC self_right
@@ -725,21 +725,21 @@ doMoveRight:
         ; STA temp1
         ; Compare16 temp16+1, temp16, temp1, temp
             ; JMP +
-            ; ++    
-                
+            ; ++
+
                 ; LDA xPrev
                 ; STA xHold_hi
                 ; STA Object_x_hi,x
                 ; LDA screenPrev
                 ; STA xHold_screen
-                
+
                     ; LDA #$01
                     ; STA screenUpdateByte
                     ; JSR doHandleBounds
-                    
+
                 ; JMP doneWithH
             ; +
-    
+
 JMP doneWithH
 
 ;;; SKIP EDGE CHECK IF SCROLLING IS ENABLED
@@ -763,7 +763,7 @@ doneWithH:
             CLC
             ADC Object_y_hi,x
             STA tempy
-            
+
             LDA Object_x_hi,x
             STA tempx
         PLA
@@ -781,7 +781,7 @@ doneWithH:
             ORA #FACE_RIGHT
         +gotDir
             STA Object_direction,x
-        
+
         LDY Object_type,x
         LDA ObjectBboxTop,y
         CLC
@@ -820,7 +820,7 @@ doneWithH:
                 STA directionByte
                 JMP +normalVmove
         +closeEnough
-        
+
         ;; update to next action step.
         STX temp
         GetActionStep temp
@@ -829,10 +829,10 @@ doneWithH:
         AND #%00000111
         STA temp1
         ChangeActionStep temp, temp1
-        
+
     JMP doneWithV
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- +normalVmove  
+ +normalVmove
     LDA directionByte
     AND #%00010000
     BNE doMoveDown
@@ -878,12 +878,12 @@ doneWithH:
             +notHurt
             LDA #$02
             STA screenUpdateByte
-    
+
             JSR doHandleBounds
             JMP skipPhysics
 doMoveDown:
     ;; update x position.
-    
+
     LDA Object_y_lo,x
     clc
     adc tempC
@@ -915,7 +915,7 @@ doMoveDown:
             JMP skipPhysics
 doneWithV
     JMP skipPhysics
-    
+
 stopMovingDueToHurtState:
     LDA #$00
     STA Object_x_lo,x
@@ -932,7 +932,7 @@ stopMovingDueToHurtState:
     LDA yPrev
     STA Object_y_hi,x
     STA yHold_hi
-    
+
 
 
 skipPhysics:

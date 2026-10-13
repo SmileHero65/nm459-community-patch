@@ -23,6 +23,6 @@ oStopMoving:
         AND temp ;; and only the one defined by flipped bits in "direction"
         ORA temp2 ;; then put back the bit status of the rest of the byte.
         STA Object_direction,x
-        
-        
+
+
     RTS

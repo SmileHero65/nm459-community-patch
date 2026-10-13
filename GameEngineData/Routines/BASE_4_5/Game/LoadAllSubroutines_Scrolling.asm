@@ -41,14 +41,14 @@
     .include SCR_DRAW_BOX
     .include SCR_HANDLE_OBJECTS
     .include SCR_MENU_MANAGER
-    
-    
+
+
 ;; Object subroutines
     .include SCR_UPDATE_POSITION
     .include SCR_START_MOVING
     .include SCR_STOP_MOVING
     .include SCR_CHANGE_FACING_DIRECTION
-    
+
 
 ;; Inline subroutines
 doCamera:
@@ -136,7 +136,7 @@ AI_F:
 AI_table_lo:
     .db #<AI_0, #<AI_1, #<AI_2, #<AI_3, #<AI_4, #<AI_5, #<AI_6, #<AI_7
     .db #<AI_8, #<AI_9, #<AI_A, #<AI_B, #<AI_C, #<AI_D, #<AI_E, #<AI_F
-    
+
 AI_table_hi:
     .db #>AI_0, #>AI_1, #>AI_2, #>AI_3, #>AI_4, #>AI_5, #>AI_6, #>AI_7
     .db #>AI_8, #>AI_9, #>AI_A, #>AI_B, #>AI_C, #>AI_D, #>AI_E, #>AI_F

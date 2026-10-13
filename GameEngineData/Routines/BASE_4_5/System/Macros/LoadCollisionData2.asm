@@ -10,7 +10,7 @@ MACRO LoadCollisionData2  arg0, arg1, arg2, arg3, arg4, arg5, arg6
     ;; arg4 = rows to load
     ;; arg5 = start row (unused)
     ;; arg6 = start column
-    
+
     LDA arg0
     STA arg0_hold
     ;LDA arg1
@@ -27,7 +27,7 @@ MACRO LoadCollisionData2  arg0, arg1, arg2, arg3, arg4, arg5, arg6
     STA arg6_hold
 
     SwitchBank #$16
-        LDY arg1 
+        LDY arg1
         LDA arg2
         AND #%00000001
         BEQ loadFromMap1table_2
@@ -43,7 +43,7 @@ MACRO LoadCollisionData2  arg0, arg1, arg2, arg3, arg4, arg5, arg6
             STA temp16
             LDA CollisionTables_Map1_Hi,y
             STA temp16+1
-        
+
         GotColTablePointer_2:
         ;; now (temp16) holds the address of the nametable to be loaded.
     ReturnBank

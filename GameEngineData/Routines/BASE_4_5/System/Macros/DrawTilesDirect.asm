@@ -3,7 +3,7 @@
 MACRO DrawTilesDirect arg0, arg1, arg2, arg3, arg4
     ;; arg0 = bank.
     ;; arg1 = label
-    ;; arg2 = x 
+    ;; arg2 = x
     ;; arg3 = y
     ;; arg4 = tileset offset- usually used for hud, otherwise zero.
 
@@ -19,14 +19,14 @@ MACRO DrawTilesDirect arg0, arg1, arg2, arg3, arg4
     STA arg3_hold
     LDA arg4
     STA arg4_hold
-    
+
     SwitchBank arg0
         LDA #<arg1
         STA textPointer
         LDA #>arg1
         STA textPointer+1
     ReturnBank
-    
+
     JSR doDrawTilesDirect
 ENDM
 

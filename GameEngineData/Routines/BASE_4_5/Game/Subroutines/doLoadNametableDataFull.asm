@@ -21,9 +21,9 @@ doLoadNametableDataFull:
 
             INC temp16+1
             DEX
-        BNE loadNametableLoop    
+        BNE loadNametableLoop
     ReturnBank
-    
+
     PLA
     TAY
     PLA

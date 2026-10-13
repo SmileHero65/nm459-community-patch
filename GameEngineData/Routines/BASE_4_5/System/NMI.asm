@@ -19,12 +19,12 @@ NMI:
     TYA
     PHA
     PHP
-    
+
     ;; Push RAM values to stack
     LDA currentBank
-    PHA 
+    PHA
     LDA prevBank
-    PHA 
+    PHA
 
     ;; Check if PPU updates must be skipped or not
     LDA skipNMI
@@ -36,7 +36,7 @@ NMI:
     STA $2000
     LDA soft2001
     STA $2001
-    
+
     ;; Set OAM DMA (update sprites on screen)
     LDA #$00
     STA $2003
@@ -100,7 +100,7 @@ NMI:
     AND #%00000001
     ORA #%10010000
     STA $2000
-    
+
     ;; Update camera offset
     ;; (only if screen is turned on)
     LDA soft2001
@@ -118,18 +118,18 @@ NMI:
 
     ;; music player things
     SwitchBank #$1B
-        JSR doSoundEngineUpdate 
+        JSR doSoundEngineUpdate
     ReturnBank
 
     ;; Pull RAM values from stack
-    PLA 
+    PLA
     STA prevBank
-    PLA 
+    PLA
     STA currentBank
-    
+
     ;; Tell game that NMI is done
     DEC doNMI
-    
+
     ;; Pull registers from stack
     PLP
     PLA

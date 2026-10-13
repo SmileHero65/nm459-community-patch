@@ -18,7 +18,7 @@
 ;        LDA #$00
         STA collisionTable,y
     +doneWithTileUpdate:
-    
+
     LDA npcTrigger
     ORA #%00000001
     STA npcTrigger

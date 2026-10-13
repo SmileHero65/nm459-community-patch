@@ -29,7 +29,7 @@ doHandleUpdateScreen:
         LDA #$23
         STA camFocus_att
     gotScreenFocus:
-    
+
     ;; Byte byte has been flipped.
     ;; go through collision by collision to get rid of potential boss tiles.
     ;; held in bossTile_hold over frames.
@@ -63,7 +63,7 @@ doHandleUpdateScreen:
 
     LDA #$00
     STA collisionTable2,y
-                
+
     +updateTile:
 
     LDA camFocus_tiles
@@ -97,7 +97,7 @@ doHandleUpdateScreen:
     ;; Set the tile number to change to
     LDA #$00 ;; the tile to change.
              ;; this is in tiles, so if you wanted the second "metatile",
-             ;; use 2, not 1.  If you wanted the tile in the next row, 
+             ;; use 2, not 1.  If you wanted the tile in the next row,
              ;; use #$20, not #$10.  Etc.
     STA tempA
 
@@ -126,7 +126,7 @@ doHandleUpdateScreen:
     LDA tempA
     STA scrollUpdateRam,y
     INY
-                    
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -149,7 +149,7 @@ doHandleUpdateScreen:
     LDA temp2
     ADC #$00
     STA temp2
-                    
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -161,7 +161,7 @@ doHandleUpdateScreen:
     LDA tempC
     STA scrollUpdateRam,y
     INY
-                    
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -186,12 +186,12 @@ doHandleUpdateScreen:
     +skipThisTile:
 
     LDY bossTile_hold
-    INY 
+    INY
     CPY #240
     BEQ +doneWithScreenCheck
         ;; not done yet.
         ;; prepare to loop on next frame
-        TYA 
+        TYA
         STA bossTile_hold
         JMP +skipBossByte
     +doneWithScreenCheck:
@@ -201,7 +201,7 @@ doHandleUpdateScreen:
     STA bossByte
 
     LDA ScreenFlags00
-    AND #%11100111 
+    AND #%11100111
     STA ScreenFlags00
 
     LDA camX
@@ -212,7 +212,7 @@ doHandleUpdateScreen:
     LDA camX_hi
     ADC #$00
     STA camX_hi
-                
+
     LDA scrollByte
     ORA #%00000010
     STA scrollByte
@@ -226,13 +226,13 @@ doHandleUpdateScreen:
     +updateToNewScreen:
 
     LDA #$00
-    STA soft2001    
+    STA soft2001
     JSR doWaitFrame
 
     LDA currentNametable
     LDX player1_object
     STA Object_screen,x
-    
+
     LSR
     LSR
     LSR
@@ -242,7 +242,7 @@ doHandleUpdateScreen:
     LDA currentNametable
     AND #%00001111
     STA camX_hi
-    
+
     JSR doLoadScreen2
     JSR doLoadScreen
 

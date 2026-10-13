@@ -55,7 +55,7 @@
     ADC self_center_y
     STA tempB
 
-    TXA 
+    TXA
     PHA
 
     LDX otherObject
@@ -70,7 +70,7 @@
 
     PLA
     TAX
-    
+
     ;; RECOIL L/R
     LDA tempA
     CMP tempC
@@ -87,28 +87,28 @@
     ORA #%11000000
     STA Object_direction,x
     JMP +skipHurt
-    
+
 
 +playerHealthIsZero:
     LDA continueMap
     STA warpMap
-    
+
     LDA continueX
     STA newX
     LDA continueY
     STA newY
-    
+
     LDA continueScreen
     STA warpToScreen
     STA camScreen
-    
+
     ;; Reset health values
     LDA myMaxHealth
     STA myHealth
-    
+
     ;; Put player into action step 0
     ChangeActionStep player1_object, #$00
-    
+
     ;; Stop player
     LDA #$00
     STA Object_h_speed_hi,x
@@ -122,7 +122,7 @@
     AND #%00111110
     ORA #%00000010
     STA scrollByte
-    
+
     ;; Reset Screen
     WarpToScreen warpToMap, warpToScreen, #$02
 

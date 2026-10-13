@@ -59,7 +59,7 @@
     STA tempB
 
     ;; Get damaging object position on screen
-    TXA 
+    TXA
     PHA
     LDX otherObject
 
@@ -75,7 +75,7 @@
 
     PLA
     TAX
-    
+
     ;; Check distance between player and object (horizontally)
     LDA tempA
     SEC
@@ -86,7 +86,7 @@
         ADC #$01
     +gotAbs:
     STA temp
-            
+
     ;; Check distance between player and object (vertically)
     LDA tempB
     SEC
@@ -161,7 +161,7 @@
     LDA #$02
     STA screenTransitionType
 
-    ;; Tell game to update the screen next loop    
+    ;; Tell game to update the screen next loop
     LDA gameHandler
     ORA #%10000000
     STA gameHandler

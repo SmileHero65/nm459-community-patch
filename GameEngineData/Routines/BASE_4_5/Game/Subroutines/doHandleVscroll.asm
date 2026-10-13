@@ -5,18 +5,18 @@
                 BEQ notHscrolling
                     JMP doneVscrollHandle
                 notHscrolling
-                
+
                 lda camX
                     AND #%00001111
                     BEQ camXisLinedUpWithBoundary
                         ;; don't allow vertical movement if we're not x aligned.
-                        JMP doneVscrollHandle 
+                        JMP doneVscrollHandle
                     camXisLinedUpWithBoundary
-                
+
                  LDA camY
                  AND #%00001111
                  BEQ linedUpWithVscrollBoundary
-    
+
                      LDA scrollByte
                      AND #%00000010
                      BNE canDoDownScroll
@@ -43,7 +43,7 @@
                     LDA camY
                     BNE notAtZeroForDownScroll
                         LDA #$FF
-                        STA temp ;; will insure that temp compare activates a scroll 
+                        STA temp ;; will insure that temp compare activates a scroll
                                     ;; for row 0 as soon as we move down.
                         JMP gotTempForDownScroll
                     notAtZeroForDownScroll:
@@ -64,7 +64,7 @@
                         AND #%00001111
                         STA camY
                         LDA camY_hi
-                        CLC 
+                        CLC
                         ADC #$01
                         STA camY_hi
                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -100,7 +100,7 @@
                         BEQ canScrollDown
                             JMP doneScrollDown
                         canScrollDown:
-                    
+
                             JSR doLoadScrollRow
                         doneScrollDown:
                     dontUpdateRowColumnDown:
@@ -130,15 +130,15 @@
                         STA camY
                         JMP checkForRowUpdateUp
                     underflowYscroll
-                        
+
                         AND #%00001111
-                        SBC #32 
+                        SBC #32
                         STA camY
                         LDA camY_hi
                         SEC
                         SBC #$01
                         STA camY_hi
-                        
+
                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                             ;; manage objects' offset, tool
                             TXA
@@ -159,7 +159,7 @@
                             PLA
                             TAX
                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                        
+
                     checkForRowUpdateUp:
                         LDA camY
                     SEC
@@ -172,10 +172,10 @@
                             BEQ canScrollUp
                                 JMP doneScrollUp
                             canScrollUp:
-                    
+
                                 JSR doLoadScrollRow
                             doneScrollUp:
-                            
+
                         dontUpdateRomColumnUp:
                         JMP doneVscrollHandle
                 notPressingUp:

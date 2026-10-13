@@ -9,7 +9,7 @@ MACRO CountObjects arg0
     PHA
     TYA
     PHA
-        
+
     LDA #$00
     STA temp
 

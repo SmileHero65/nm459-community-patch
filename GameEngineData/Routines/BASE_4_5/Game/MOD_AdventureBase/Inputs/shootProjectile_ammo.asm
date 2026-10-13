@@ -48,7 +48,7 @@
 
     STX temp
     StartMoving temp, temp1
-    
+
     PLA
     TAY
     PLA

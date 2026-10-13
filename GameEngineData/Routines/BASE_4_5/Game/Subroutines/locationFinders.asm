@@ -8,7 +8,7 @@ coordinatesToMetaNametableValue:
     ASL
     ASL
     ASL
-    ASL 
+    ASL
     STA temp
 
     LDA tileX
@@ -36,8 +36,8 @@ coordinatesToNametableValue:
     LSR
     LSR
     STA temp1
-    
-    LDA tileY 
+
+    LDA tileY
     ASL
     ASL
     ASL
@@ -59,11 +59,11 @@ coordinatesToNametableValue:
 
 
 GetTileAtPosition:
-    LDA tileY                
-    AND #%11110000                
-    STA tempz                
+    LDA tileY
+    AND #%11110000
+    STA tempz
 
-    LDA tileX            
+    LDA tileX
     LSR A
     LSR A
     LSR A
@@ -136,7 +136,7 @@ getPointColTable:
     RTS
 
 
-LoadMonster_1:    
+LoadMonster_1:
     LDY Mon1SpawnLocation,x
     LDA (collisionPointer),y
     STA temp
@@ -180,12 +180,12 @@ LoadMonster_1:
 
     RTS
 
-    
+
 ;; @TODO  Move these from subroutine to tables
 
 StringDataChoice:
     .db #154, #155, #156, #157  ;; day, night, day trig, night trig
-    
+
 Mon1SpawnLocation:
     .db #131, #134, #137, #140
 Mon2SpawnLocation:
@@ -199,14 +199,14 @@ MonGroupChoice:
     .db #143, #144, #145, #121 ;; day, night, dayT, nightT
 MonPal1Choice:
     .db #146, #147, #148, #123 ;; day, night, dayT, nightT
-MonPal2Choice:    
+MonPal2Choice:
     .db #149, #150, #151, #129
-    
+
 GoPal1Choice:
     .db #203, #204, #205, #206
 GoPal2Choice:
     .db #183, #184, #185, #186
-    
+
 Monster1ID:
     .db #162, #170, #166, #174
 Monster2ID:
@@ -215,7 +215,7 @@ Monster3ID:
     .db #164, #172, #168, #176
 Monster4ID:
     .db #165, #173, #169, #177
-    
+
 MonsterPlacementType:
     .db #183,#184, #185, 186
 

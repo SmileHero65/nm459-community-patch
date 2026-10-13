@@ -9,20 +9,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SOLID FOR ALL OBJECTS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    
+
     LDA ObjectUpdateByte
     ORA #%00000001
     STA ObjectUpdateByte
-    
+
 ;;; CHECK SOLID ABOVE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    
+
     LDY Object_type,x
     LDA Object_x_hi,x
     CLC
     ADC self_left
     STA temp
     JSR getPointColTable
-    
+
     LDA Object_y_hi,x
     CLC
     ADC self_top

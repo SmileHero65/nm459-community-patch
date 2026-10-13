@@ -10,28 +10,28 @@
     LDA Object_screen,x
     STA xHold_screen
     sta screenPrev
-    
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
     STA yHold_hi
     STA yPrev
-    
+
     ; LDA currentNametable
     ; AND #%00001111
     ; STA xHold_screen
-    
+
     ; LDA currentNametable
     ; LSR
     ; LSR
     ; LSR
     ; LSR
     ; STA yHold_screen
-    
-    
-    
-    
-    
+
+
+
+
+
     LDA Object_status,x
     AND #%00000100
     BNE doHandlePhysics
@@ -40,7 +40,7 @@ doHandlePhysics:
 
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;;; check to see if we are using aiming physics.
     ;;; if we are using aim physics, Object_direction will have it's 3rd bit flipped. xxxxXxxx
     LDA Object_direction,x
@@ -48,14 +48,14 @@ doHandlePhysics:
     BEQ useNormalDirectionalPhysics
         ;; use aimed physics.
         ;; Aimed physics doesn't need to update speed.
-        
+
         LDA Object_h_speed_lo,x
         BPL AddHspeedToAimedX
             ;; subtract h speed to aimed x
             LDA Object_h_speed_lo,x
             EOR #$FF
             STA temp
-            
+
             LDA Object_x_lo,x
             sec
             sbc temp
@@ -72,7 +72,7 @@ doHandlePhysics:
             LDA Object_x_hi,x
             ADC Object_h_speed_hi,x
             STA xHold_hi
-        
+
         figureAimedVspeed:
 
         LDA Object_v_speed_lo,x
@@ -98,15 +98,15 @@ doHandlePhysics:
             sbc Object_v_speed_hi,x
             STA yHold_hi
         doneWithAimedV:
-        
-        
+
+
         JMP skipPhysics ;; skips all the acc/dec stuff and goes right to movement based on speed
                             ;; which was figured out in the directional macro.
-                            
+
     useNormalDirectionalPhysics:
     ;;; jump out to bank 1C to load in physics values.
     ;SwitchBank #$1C
-        
+
         LDY Object_type,x
         LDA ObjectMaxSpeed,y
         ASL
@@ -132,7 +132,7 @@ doHandlePhysics:
         LSR
         LSR
         STA myAcc+1
-    
+
         LDA ObjectBboxLeft,y
         STA self_left
         CLC
@@ -142,7 +142,7 @@ doHandlePhysics:
         SBC self_left
         LSR
         STA self_center_x
-        
+
         LDA ObjectBboxTop,y
         STA self_top
         CLC
@@ -154,19 +154,19 @@ doHandlePhysics:
         STA self_center_y ;; self center in the vertical direction.
 
 
-        
 
-    
+
+
 ;    ReturnBank
     ;;;; deal with acceleration / deceleration
 
-    
+
     LDA Object_direction,x
     AND #%10000000
     BNE doHvel
     JMP doHdec
     doHvel:
-    
+
         ;; we have activated horizontal inertia for this object
         LDA Object_h_speed_lo,x
         CLC
@@ -177,7 +177,7 @@ doHandlePhysics:
         ADC myAcc+1
         STA Object_h_speed_hi,x
         STA temp1
-        
+
         ;;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -186,14 +186,14 @@ doHandlePhysics:
         STA Object_h_speed_lo,x
         LDA myMaxSpeed+1
         STA Object_h_speed_hi,x
-        
+
         JMP doneWithAccFetch
         ++
         LDA temp
         STA Object_h_speed_lo,x
         LDA temp1
         STA Object_h_speed_hi,x
-        
+
         doneWithAccFetch:
         JMP skipDoHdec
 doHdec:
@@ -201,30 +201,30 @@ doHdec:
     CLC
     ADC Object_h_speed_lo,x
     BEQ skipDoHdec
-    
+
     LDA Object_h_speed_lo,x
     SEC
     SBC myAcc
     STA temp
-    
+
     LDA Object_h_speed_hi,x
     SBC myAcc+1
     STA temp1
-    BCC zeroHdec ;; if the result of the 16 bit compare is 
+    BCC zeroHdec ;; if the result of the 16 bit compare is
                     ;; less than zero, clamp the acc to zero.
                     ;; Otherwise, make it the stored values.
-    
+
     LDA temp1
     STA Object_h_speed_hi,x
     LDA temp
     STA Object_h_speed_lo,x
     JMP skipDoHdec
-    
+
 zeroHdec:
     LDA #$00
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-    
+
 
 skipDoHdec:
 
@@ -237,19 +237,19 @@ skipDoHdec:
     STA tempA
     LDA Object_h_speed_hi,x
     STA tempB
-    
+
 
     LDA Object_direction,x
     AND #%01000000
     BNE isMovingRight
     ;isMovingLeft
-    
-    
+
+
     ;;; set to check points 0 and 3 (top left and bottom left.)
     LDA collisionsToCheck
     ORA #%00001111
-    STA collisionsToCheck 
-    
+    STA collisionsToCheck
+
         LDA tempA
         CLC
         ADC tempB
@@ -267,11 +267,11 @@ skipDoHdec:
             STA directionByte
     JMP gotHmoveDirection
 isMovingRight:
-    
+
         ;;; set to check points 1 and 2 (top right and bottom right.)
     LDA collisionsToCheck
     ORA #%00001111
-    STA collisionsToCheck 
+    STA collisionsToCheck
         LDA tempA
         clc
         ADC tempB
@@ -286,7 +286,7 @@ isMovingRight:
             ORA #%11000000 ;; "right"
             STA directionByte
 gotHmoveDirection:
-    
+
     LDA directionByte
     AND #%01000000
     BNE doMoveRight
@@ -301,8 +301,8 @@ gotHmoveDirection:
     LDA Object_screen,x
     ;SBC #$00
     STA xHold_screen
-    
-    
+
+
      LDA #BOUNDS_LEFT
     BNE doNonZeroBoundsLeftCheck
         LDA Object_x_lo,x
@@ -313,7 +313,7 @@ gotHmoveDirection:
         BEQ doLeftBounds
         BCC doLeftBounds
             JMP doneWithH
-    
+
     doNonZeroBoundsLeftCheck:
         LDA Object_x_lo,x
         SEC
@@ -332,13 +332,13 @@ gotHmoveDirection:
             LDA #$03
             STA screenUpdateByte
             JSR doHandleBounds
-    
-    
+
+
 
     JMP doneWithH
 doMoveRight:
     ;; update x position.
-    
+
     LDA Object_x_lo,x
     clc
     adc tempA
@@ -351,11 +351,11 @@ doMoveRight:
     STA xHold_screen
     LDA xHold_hi
     clc
-    ADC self_right 
+    ADC self_right
     BCS +doRightBounds
         JMP doneWithH
     +doRightBounds:
-    
+
         LDA #$01
         STA screenUpdateByte
         LDA xPrev
@@ -364,7 +364,7 @@ doMoveRight:
         JSR doHandleBounds
         ; jmp doneWithH
 doneWithH:
-    
+
     LDA Object_vulnerability,x
     AND #%00000001
     BEQ +skip
@@ -374,17 +374,17 @@ doneWithH:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;; GRAVITY VALUES ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Here, you can manipulate the constants for MAX_FALL_SPEED, GRAVITY_LO and GRAVITY_HI
-;;;; to work with your game.  
+;;;; to work with your game.
 ;;;;; MAX_FALL_SPEED = the maximum speed a player can fall.  It is good to give this a max speed
 ;;;;; so the player doesn't begin falling so fast that he falls through blocks.
-;;;;; GRAVITY_LO / HI = the low and high bytes for gravity.  The two bytes work sort of like 
+;;;;; GRAVITY_LO / HI = the low and high bytes for gravity.  The two bytes work sort of like
 ;;;;; a minute and hour hand on a watch.  So if you thought about it like minutes and hours, if you put "1" in hi and "30" in low
 ;;;;; you would add an hour and a half every time that gravity was engaged.  If you put 1 in hi and 45 in low,
 ;;;;; it would add an hour and 45 minutes every time gravity was engaged (a little faster.
 ;;;;; ** NOTE, that is not literal, just a way to easily understand it.
 ;;;;; HI will likely be a low number...0-4, I would imagine.  Not much more.  Written #$xx.
 ;;;;; LO could be anything, #$00 - #$FF if you want to write in hex, or if you just want to write in regular
-;;;;; decimal values, #x will work, any value between #0 and #255.  
+;;;;; decimal values, #x will work, any value between #0 and #255.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -405,7 +405,7 @@ GRAVITY_HI = #$00
     ADC self_right
     STA temp3 ;; the right bottom collision point.
     LDA Object_y_lo,x
-    CLC 
+    CLC
     ADC Object_v_speed_lo,x
     LDA Object_y_hi,x
     ADC Object_v_speed_hi,x
@@ -462,9 +462,9 @@ GRAVITY_HI = #$00
         JMP +isJumpThruPlat_left
     isNotSolid_checkPoint2
         ;; check second point.
-        
 
-        
+
+
         CheckCollisionPoint temp3, temp1, #$01, tempA
         BNE +isNotSolidSoDontLandYet
             JMP isSolidSoLand
@@ -489,7 +489,7 @@ GRAVITY_HI = #$00
                 JMP isSolidSoLand
             +otherSideWasNotSolid
             JMP notJumpThruPlat
-        
+
             ;; is jumpthru plat
         +isJumpThruPlat_right:
             LDA Object_v_speed_hi,x
@@ -507,7 +507,7 @@ GRAVITY_HI = #$00
                     BEQ notJumpThruPlat
                     CheckCollisionPoint temp3, temp1, #$0A, tempA  ;; or ladder
                     BEQ notJumpThruPlat
-                    
+
                         JMP isSolidSoLand
             +isJumpThruPlat_left
                 LDA Object_v_speed_hi,x
@@ -518,17 +518,17 @@ GRAVITY_HI = #$00
                     ADC self_bottom
                     SEC
                     SBC #$01
-                    STA temp1            
+                    STA temp1
                     CheckCollisionPoint temp, temp1, #$07, tempA ;; jumpthrough
                     BEQ notJumpThruPlat
                     CheckCollisionPoint temp, temp1, #$0A, tempA  ;; or ladder
                     BEQ notJumpThruPlat
-                    
+
                         JMP isSolidSoLand
             +isNotSolid
         notJumpThruPlat:
-        
-    
+
+
             ;; is not solid, don't land.
             LDA Object_y_lo,x
             CLC
@@ -538,7 +538,7 @@ GRAVITY_HI = #$00
             ADC Object_v_speed_hi,x
             STA Object_y_hi,x
             STA yHold_hi
-            
+
             LDA Object_v_speed_lo,x
             CLC
             ADC #GRAVITY_LO
@@ -546,7 +546,7 @@ GRAVITY_HI = #$00
             LDA Object_v_speed_hi,x
             ADC #GRAVITY_HI
             STA Object_v_speed_hi,x
-            
+
                 LDA Object_v_speed_hi,x
                 CMP #MAX_FALL_SPEED
                 BNE notOverFallSpeed
@@ -554,11 +554,11 @@ GRAVITY_HI = #$00
                     LDA #$00
                     STA Object_v_speed_lo,x
                 notOverFallSpeed:
-                
-                
-            
+
+
+
             JMP doneWithGravity
-            
+
 +checkLadderPhysics:
 
     ; GetActionStep player1_object, #$03
@@ -571,9 +571,9 @@ GRAVITY_HI = #$00
 isSolidSoLand:
     ;; move to position
     ;;; load the top of the tile that is being run into.
-    
-    
-        ;; force y to tile boundary.    
+
+
+        ;; force y to tile boundary.
         ; LDA tileY
         ; AND #%11110000
         ; SEC
@@ -582,7 +582,7 @@ isSolidSoLand:
         ; SBC #$01
         ; STA Object_y_hi,x
         ; STA yHold_hi
-    
+
         LDA #$00
         STA Object_v_speed_lo,x
         STA Object_v_speed_hi,x

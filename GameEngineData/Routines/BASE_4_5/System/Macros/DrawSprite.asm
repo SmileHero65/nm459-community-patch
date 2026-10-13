@@ -7,9 +7,9 @@ MACRO DrawSprite arg0, arg1, arg2, arg3
     ;; arg3 = attribute data
     TYA
     PHA
-    
+
     LDY spriteRamPointer
-    
+
     LDA arg1
     STA SpriteRam,y
     INY

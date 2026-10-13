@@ -10,6 +10,6 @@
     StartMoving temp, #UP
     ;STX temp
     ChangeFacingDirection temp, #FACE_UP
- 
+
     RTS
 

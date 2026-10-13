@@ -55,13 +55,13 @@ doAnimAction13:
     .include ROOT\Game\Subroutines\blank.asm
     RTS
 
-    
+
 EndAnimAndActions_Lo:
     .db #<doAnimAction00, #<doAnimAction01, #<doAnimAction02, #<doAnimAction03
     .db #<doAnimAction04, #<doAnimAction05, #<doAnimAction06, #<doAnimAction07
     .db #<doAnimAction08, #<doAnimAction09, #<doAnimAction10, #<doAnimAction11
     .db #<doAnimAction12, #<doAnimAction13
-    
+
 EndAnimAndActions_Hi:
     .db #>doAnimAction00, #>doAnimAction01, #>doAnimAction02, #>doAnimAction03
     .db #>doAnimAction04, #>doAnimAction05, #>doAnimAction06, #>doAnimAction07

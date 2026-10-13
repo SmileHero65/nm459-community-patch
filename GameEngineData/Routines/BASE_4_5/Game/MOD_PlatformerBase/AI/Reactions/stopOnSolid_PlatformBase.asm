@@ -1,6 +1,6 @@
 ;;;; ...this will only work if the current labels are observed.
 ;;;; This assumes that the label "donePositionUpdate" precedes stop-code at the end of this subroutine.
-;;;; Assumes that 
+;;;; Assumes that
 ;;;; In a a platform game, there are different things that happen if an object runs into a block from below, above, or the side.
 
     TXA
@@ -11,12 +11,12 @@
      STA Object_x_lo,x
      STA Object_h_speed_hi,x
      STA Object_h_speed_lo,x
-     
+
      LDA Object_v_speed_hi,x
      BMI +isJumpingUpWhenHittingSolid
         JMP +isFallingDownWhenHittingSolid
     +isJumpingUpWhenHittingSolid
-        
+
         ;; is jumping up when hitting a solid.
         ;; ONLY do this is there is a solid directly over head.
         LDY Object_type,x
@@ -25,8 +25,8 @@
         ADC self_left
         STA temp
         JSR getPointColTable
-        
-        
+
+
         LDA Object_y_hi,x
         CLC
         ADC self_top
@@ -59,7 +59,7 @@
                 ;; there is nothing above head.
                 LDX tempx
                 JMP +isFallingDownWhenHittingSolid
-                
+
             +isPrizeBlock
                 JSR GetTileAtPosition
                 LDA Object_screen,x
@@ -73,7 +73,7 @@
             +checkCollisionScreenRight
                 LDA #$01
                 STA collisionTable2,y
-    
+
             +checkedCollisionScreen:
                 LDA tileX
                 AND #%11110000
@@ -91,7 +91,7 @@
                 CreateObjectOnScreen tempA, tempB, #$02, #$00, tempC
                 PLA
                 TAX
-                
+
             +stopVerticalMovementOnSolidHit
                 ; LDX tempx
                 ; LDY Object_type,x
@@ -106,10 +106,10 @@
                 ; SBC ObjectBboxTop,y
                 ; STA Object_y_hi,x
                 ; STA yHold_hi
-                
+
 
     +isFallingDownWhenHittingSolid:
-     
+
 
     PLA
     TAX

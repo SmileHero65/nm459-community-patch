@@ -18,7 +18,7 @@
         ;; Do we need to update the HUD to reflect this?
         ;; If so, which element is the above variable represented in?
         ;UpdateHudElement #$03
-        
+
         JMP +endPickups
     +notThisPickup:
 

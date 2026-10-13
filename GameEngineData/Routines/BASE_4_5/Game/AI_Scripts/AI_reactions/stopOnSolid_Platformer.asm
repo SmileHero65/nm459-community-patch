@@ -1,4 +1,4 @@
-    
+
     ;; In a a platform game, there are different things that happen if an
     ;; object runs into a block from below, above, or the side.
 
@@ -10,7 +10,7 @@
     STA Object_x_lo,x
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-     
+
     LDA Object_v_speed_hi,x
     BMI +isJumpingUpWhenHittingSolid
         JMP +isFallingDownWhenHittingSolid
@@ -25,7 +25,7 @@
         STA temp
 
         JSR getPointColTable
-        
+
         LDA Object_y_hi,x
         CLC
         ADC self_top

@@ -22,7 +22,7 @@ LDX player1_object
     CLC
     ADC #$01 ;; ladder speed
     STA Object_y_hi,x
-    
+
     GetActionStep player1_object
     CMP #$03 ;; in this module, the player's action step 3 is for climbing
     BEQ +alreadyOnLadder

@@ -5,6 +5,6 @@ doWaitFrame:
     waitLoop:
         LDA waiting
     BNE waitLoop
-    
+
     RTS
 

@@ -14,7 +14,7 @@
       LDY #$00
       LDA (textPointer),y
       STA pointer
-          
+
       LDA textPointer
       CLC
       ADC #$01
@@ -27,7 +27,7 @@
       LDY #$00
       LDA (textPointer),y
       STA pointer+1
-          
+
       LDA (pointer),y
       TAY
 

@@ -3,12 +3,12 @@
       CLC
       ADC #$01
       STA textPointer
-      
+
       LDA textPointer+1
       ADC #$00
       STA textPointer+1
-      
-      ;; NOW, get the modifier 
+
+      ;; NOW, get the modifier
       TYA
       PHA
 

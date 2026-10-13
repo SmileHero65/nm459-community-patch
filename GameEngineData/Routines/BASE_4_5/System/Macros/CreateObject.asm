@@ -10,7 +10,7 @@ MACRO CreateObject arg0, arg1, arg2, arg3
     BNE +CreateThisObject
         JMP +NoFreeSpaces
     +CreateThisObject:
-    
+
     LDA arg0
     STA arg0_hold
     LDA arg1
@@ -26,7 +26,7 @@ MACRO CreateObject arg0, arg1, arg2, arg3
     LDA currentNametable
     STA Object_screen,x
     JSR doCreateObject
-    
+
     PLA
     TAY
 +NoFreeSpaces:

@@ -6,7 +6,7 @@
     AND #%00000111
     STA tempB
 
-    TXA 
+    TXA
     STA tempA
 
     LDA Object_frame,x

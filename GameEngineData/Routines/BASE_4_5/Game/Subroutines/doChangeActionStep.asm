@@ -15,9 +15,9 @@ doChangeActionStep:
     AND #%11000111
     ORA temp
     STA Object_frame,x
-    
+
     DoObjectAction arg0_hold, arg1_hold
-    
+
     PLA
     TAX
 

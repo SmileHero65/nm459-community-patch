@@ -12,7 +12,7 @@
 ;;   ||||+----- Standard nametable layout
 ;;   ++++------ Mapper-30 (lower nybble)
 
-.db %00010000   
+.db %00010000
 ;;   ||||||++-- Standard cartridge (no VS/PC10)
 ;;   ||||++---- iNES 1.0 format
 ;;   ++++------ Mapper-30 (upper nybble)

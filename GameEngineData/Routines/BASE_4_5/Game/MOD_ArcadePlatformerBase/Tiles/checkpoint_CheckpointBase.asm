@@ -9,9 +9,9 @@
     STA continueX
     LDA Object_y_hi,x
     STA continueY
-    
+
     ChangeTileAtCollision #$00, #$00 ;; change to tile zero (make disappear), collision type 0
-    
+
 +skip
-    
+
     

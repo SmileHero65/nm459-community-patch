@@ -4,7 +4,7 @@
     BNE +
         JMP maybeUpdatePosition
     +
-    
+
     ;; Do solid edge behavior for this object
     LDA EdgeSolidReaction
     LSR
@@ -67,12 +67,12 @@
         STA Object_x_lo,x
         LDA xHold_hi
         STA Object_x_hi,x
-        
+
         LDA yHold_lo
         STA Object_y_lo,x
         LDA yHold_hi
         STA Object_y_hi,x
-        
+
         LDA xHold_screen
         STA Object_screen,x
 

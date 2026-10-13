@@ -30,11 +30,11 @@ BNE +notSubState0
         STA tempC
         LDA SubstateTable_height,y
         STA tempD
-        
+
         ;;; if we are IN command box state when the same button is pressed, it
         ;;; should erase the box
         DrawBox tempA, tempB, tempC, tempD, #TEXT_FREE, #$00
-        
+
         ;;; Now, when this closes, what state should it be in?
         ;;; To return to our main game, it will be zero, but maybe you have a menu opening in a
         ;;; battle substate which is non-zero.  You can tell it what substate it should open in on
@@ -48,10 +48,10 @@ BNE +notSubState0
     ;;; change the state to 1, which will be that command box is open.
     LDA #COMMAND_BOX_SUBSTATE
     STA gameSubState
- 
+
     LDA #$00
     STA currentCommandChoice
-    
+
     DrawBox #COMMAND_BOX_ORIGIN_X, #COMMAND_BOX_ORIGIN_Y, #COMMAND_BOX_WIDTH , #COMMAND_BOX_HEIGHT, #TEXT_FREE, commandMenuText
     ;;; x
     ;;; y

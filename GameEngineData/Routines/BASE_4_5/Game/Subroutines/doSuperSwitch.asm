@@ -6,38 +6,38 @@
 
 superSwitch:
 	LDA prevBank
-	PHA 
+	PHA
 	LDA currentBank
 	PHA
 	
-	JSR doSuperSwitch 
+	JSR doSuperSwitch
 	
-	PLA 
-	STA temp 
-	SwitchBank temp 
-	PLA 
-	STA prevBank 
+	PLA
+	STA temp
+	SwitchBank temp
+	PLA
+	STA prevBank
 
-	RTS 
+	RTS
 
 
 doSuperSwitch:
 	SwitchBank arg5_hold
 		;;decrease low byte of address
-		LDA arg6_hold 
-		SEC 
+		LDA arg6_hold
+		SEC
 		SBC #$01
-		STA arg6_hold 
+		STA arg6_hold
 		BCS +dontChangeHighByte
 			;;if it's right on a page boundary
 			;;we need to decrease the high byte as well
-			DEC arg7_hold 
-		+dontChangeHighByte 
+			DEC arg7_hold
+		+dontChangeHighByte
 
-		LDA arg7_hold 
-		PHA 
-		LDA arg6_hold 
-		PHA 
+		LDA arg7_hold
+		PHA
+		LDA arg6_hold
+		PHA
 		
 		RTS
 

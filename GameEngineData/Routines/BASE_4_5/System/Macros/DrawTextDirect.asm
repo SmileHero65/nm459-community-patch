@@ -3,7 +3,7 @@
 MACRO DrawTextDirect arg0, arg1, arg2, arg3
     ;; arg0 = bank.
     ;; arg1 = label
-    ;; arg2 = x 
+    ;; arg2 = x
     ;; arg3 = y
 
     LDA arg0
@@ -23,7 +23,7 @@ MACRO DrawTextDirect arg0, arg1, arg2, arg3
         LDA #>arg1
         STA textPointer+1
     ReturnBank
-    
+
     JSR doDrawTextDirect
 ENDM
 

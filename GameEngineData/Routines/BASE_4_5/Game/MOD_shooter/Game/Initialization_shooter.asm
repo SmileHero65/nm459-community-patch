@@ -11,7 +11,7 @@
     STA soft2001
     JSR doWaitFrame
     ;; turn off rendering to load graphics.
-        
+
     LDA #$FF
     STA songToPlay ;; this will force "none" to play, which means that the first
                    ;; screen with a song that is not none will not be seen as
@@ -22,7 +22,7 @@
     STA continueScreen
     STA currentNametable
     STA camScreen
-    
+
     AND #%00001111
     STA camX_hi
 
@@ -32,11 +32,11 @@
     LSR
     LSR
     STA camY_hi
-    
+
     LDA #$00
     STA camX
     STA camX_lo
-    
+
     ;; Eight now, this is set up backwards, where 0 is underground:
     LDA #START_LEVEL
     EOR #%00000001
@@ -48,23 +48,23 @@
 
     LDX #$00
     CreateObject #START_POSITION_PIX_X, #START_POSITION_PIX_Y, #$00, #$00
-    STX player1_object    
+    STX player1_object
     STX camObject
 
     LDA currentNametable
     STA Object_screen,x
 
-    TXA 
+    TXA
     STA temp
     ChangeFacingDirection temp, #FACE_RIGHT
-        
+
     LDA #START_POSITION_PIX_X
     STA newX
     STA continueX
     LDA #START_POSITION_PIX_Y
     STA newY
     STA continueY
-        
+
     LDA #$00
     STA scrollTrigger
     ;; this sets up to ignore "screen edge" behavior
@@ -73,16 +73,16 @@
     ;; Bit 6 = Down
     ;; Bit 5 = left
     ;; Bit 4 = right
-    
+
     LDA #%11000010
     STA scrollByte
-    
+
     SwitchBank #$1B ;; switch to the music bank
                     ;; which contains the initializtion scripts.
 
         ;; THIS SETS UP THE MUSIC ENGINE.
         ;; IF YOU USE A DIFFERENT MUSIC ENGINE
-        ;; CHANGE THIS TO FIT YOUR NEEDS OF INITIALIZING YOUR MUSIC ENGINE.    
+        ;; CHANGE THIS TO FIT YOUR NEEDS OF INITIALIZING YOUR MUSIC ENGINE.
 
         LDA #SOUND_REGION_NTSC ; #SOUND_REGION_PAL, #SOUND_REGION_DENDY
         STA sound_param_byte_0
@@ -107,7 +107,7 @@
     ReturnBank
 
     ;; Triggers
-    .ifdef ENABLE_TRIGGER_TESTING    
+    .ifdef ENABLE_TRIGGER_TESTING
         LDA #INIT_TRIG_00
         STA screenTriggers+0
         LDA #INIT_TRIG_01
@@ -173,9 +173,9 @@
         LDA #INIT_TRIG_1f
         STA screenTriggers+31
     .endif
-    
+
     .include "GameData\InitializationScripts\hudVarInits.asm"
-    
+
     LDA #%00011110
     STA soft2001
 

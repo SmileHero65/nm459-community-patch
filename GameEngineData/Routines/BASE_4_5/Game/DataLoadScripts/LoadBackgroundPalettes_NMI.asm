@@ -15,8 +15,8 @@
         INX
         CPX #$10
     BNE loadBackgroundPal_NMI
-    
+
     LDA updateScreenData
     AND #%11111110
     STA updateScreenData
-    
+

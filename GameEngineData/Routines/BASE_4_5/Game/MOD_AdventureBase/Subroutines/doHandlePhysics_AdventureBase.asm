@@ -8,7 +8,7 @@ RECOIL_SPEED_LO = #$00
 
 
     ;; Do handle physics.
-    
+
     LDA Object_x_lo,x
     STA xHold_lo
     LDA Object_x_hi,x
@@ -20,7 +20,7 @@ RECOIL_SPEED_LO = #$00
     LDA Object_y_hi,x
     STA yHold_hi
     STA yPrev
-    
+
     ;; For adventure physics, don't update position if attacking.
     CPX player1_object
     BNE +notPlayer
@@ -40,7 +40,7 @@ RECOIL_SPEED_LO = #$00
     BEQ +doHandlePhysics
         JMP skipPhysics
     +doHandlePhysics
-    
+
     ;; Reset the vars we will use for movement.
     LDA #$00
     STA tempA
@@ -56,7 +56,7 @@ RECOIL_SPEED_LO = #$00
 
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;; Check to see if we are using aiming physics. If we are using aim physics,
     ;; Object_direction will have it's 3rd bit flipped. xxxxXxxx
 
@@ -83,12 +83,12 @@ RECOIL_SPEED_LO = #$00
     STA xHold_lo
     LDA Object_x_hi,x
     STA xHold_hi
-        
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
     STA yHold_hi
-        
+
     LDA Object_h_speed_lo,x
     BPL AddHspeedToAimedX
 
@@ -119,11 +119,11 @@ RECOIL_SPEED_LO = #$00
             CLC
             ADC Object_h_speed_lo,x
             STA xHold_lo
-            
+
             LDA xHold_hi
             ADC Object_h_speed_hi,x
             STA xHold_hi
-            
+
             DEY
         BPL aimLoop2
     figureAimedVspeed:
@@ -134,7 +134,7 @@ RECOIL_SPEED_LO = #$00
         LDA Object_v_speed_lo,x
         EOR #$FF
         STA temp
-        
+
         LDY tempA
         doAimLoop3:
             LDA yHold_lo
@@ -148,7 +148,7 @@ RECOIL_SPEED_LO = #$00
 
             DEY
         BPL doAimLoop3
-        
+
         JMP doneWithAimedV
 
     AddVSpeedToAimedY:
@@ -166,7 +166,7 @@ RECOIL_SPEED_LO = #$00
             DEY
         BPL aimLoop4
     doneWithAimedV:
-        
+
     ;; check xHold_hi and yHold_hi against bounds.
     LDA yHold_hi
     CMP #BOUNDS_TOP
@@ -179,26 +179,26 @@ RECOIL_SPEED_LO = #$00
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-        
+
     +doneWithTop:
-        
+
     STA yHold_hi
     CLC
     ADC self_bottom
     CMP #BOUNDS_BOTTOM ;#240
     BCS +doBottomBounds
         JMP +doneWithBottom
-    
+
     +doBottomBounds:
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-        
+
     +doneWithBottom:
 
     LDA xHold_hi
     CLC
-    ADC self_right 
+    ADC self_right
     BCS +doRightBounds
         JMP +doneWithRight
 
@@ -207,7 +207,7 @@ RECOIL_SPEED_LO = #$00
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-                    
+
     +doneWithRight:
 
     LDA xHold_hi
@@ -224,34 +224,34 @@ RECOIL_SPEED_LO = #$00
 
     +doneWithLeft:
 
-    JMP +skipPhysics ;; skips all the acc/dec stuff and goes right to movement 
+    JMP +skipPhysics ;; skips all the acc/dec stuff and goes right to movement
                      ;; based on speed, which was figured out in the directional
                      ;; macro.
-                            
+
 
     useNormalDirectionalPhysics:
 
     LDY Object_type,x
-    
+
     LDA ObjectBboxLeft,y
     STA self_left
-    
+
     CLC
     ADC ObjectWidth,y
     STA self_right
-    
+
     SEC
     SBC self_left
     LSR
     STA self_center_x
-    
+
     LDA ObjectBboxTop,y
     STA self_top
-    
+
     CLC
     ADC ObjectHeight,y
     STA self_bottom
-    
+
     SEC
     SBC self_top
     LSR
@@ -268,18 +268,18 @@ RECOIL_SPEED_LO = #$00
         AND #%10000000
         BNE +isMovingH
             ;; is not moving h
-            LDA Object_direction,x    
+            LDA Object_direction,x
             AND #%00100000
             BNE +isMovingV
                 ;; is not moving V
                 JMP +skipPhysics
             +isMovingV:
 
-            LDA #RECOIL_SPEED_LO 
+            LDA #RECOIL_SPEED_LO
             STA Object_v_speed_lo,x
             LDA #RECOIL_SPEED
             STA Object_v_speed_hi,x
-                    
+
             LDA #$00
             STA Object_h_speed_hi,x
             STA Object_h_speed_lo,x
@@ -287,17 +287,17 @@ RECOIL_SPEED_LO = #$00
             JMP gotHandVspeeds
         +isMovingH:
 
-        LDA #RECOIL_SPEED_LO 
+        LDA #RECOIL_SPEED_LO
         STA Object_h_speed_lo,x
         LDA #RECOIL_SPEED
         STA Object_h_speed_hi,x
-                    
+
         LDA #$00
         STA Object_v_speed_hi,x
         STA Object_v_speed_lo,x
         JMP gotHandVspeeds
     +notHurt:
-   
+
     LDY Object_type,x
 
     LDA ObjectMaxSpeed,y
@@ -328,7 +328,7 @@ RECOIL_SPEED_LO = #$00
     BNE doHvel
         JMP doHdec
     doHvel:
-    
+
     ;; we have activated horizontal inertia for this object
     LDA Object_h_speed_lo,x
     CLC
@@ -340,7 +340,7 @@ RECOIL_SPEED_LO = #$00
     ADC myAcc+1
     STA Object_h_speed_hi,x
     STA temp1
-        
+
     ;; now, evaluate against max speed.
     Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
     +
@@ -365,16 +365,16 @@ RECOIL_SPEED_LO = #$00
     CLC
     ADC Object_h_speed_lo,x
     BEQ skipDoHdec
-        
+
         LDA Object_h_speed_lo,x
         SEC
         SBC myAcc
         STA temp
-        
+
         LDA Object_h_speed_hi,x
         SBC myAcc+1
         STA temp1
-        BCC zeroHdec ;; If the result of the 16 bit compare is 
+        BCC zeroHdec ;; If the result of the 16 bit compare is
                      ;; less than zero, clamp the acc to zero.
                      ;; Otherwise, make it the stored values.
             LDA temp1
@@ -397,7 +397,7 @@ RECOIL_SPEED_LO = #$00
     BNE doVvel
         JMP doVdec
     doVvel:
-    
+
     ;; We have activated horizontal inertia for this object
     LDA Object_v_speed_lo,x
     CLC
@@ -418,7 +418,7 @@ RECOIL_SPEED_LO = #$00
         STA Object_v_speed_lo,x
         LDA myMaxSpeed+1
         STA Object_v_speed_hi,x
-        
+
         JMP doneWithAccFetchV
     ++
         LDA temp
@@ -426,11 +426,11 @@ RECOIL_SPEED_LO = #$00
         LDA temp1
         STA Object_v_speed_hi,x
     doneWithAccFetchV:
-    
+
     JMP skipDoVdec
 
     doVdec:
-    
+
     LDA Object_v_speed_hi,x
     CLC
     ADC Object_v_speed_lo,x
@@ -439,11 +439,11 @@ RECOIL_SPEED_LO = #$00
         SEC
         SBC myAcc
         STA temp
-    
+
         LDA Object_v_speed_hi,x
         SBC myAcc+1
         STA temp1
-        BCC zeroVdec ;; if the result of the 16 bit compare is 
+        BCC zeroVdec ;; if the result of the 16 bit compare is
                      ;; less than zero, clamp the acc to zero.
                      ;; Otherwise, make it the stored values.
             LDA temp1
@@ -477,8 +477,8 @@ RECOIL_SPEED_LO = #$00
         ;; Set to check points 0 and 3 (top left and bottom left.)
         LDA collisionsToCheck
         ORA #%00001001
-        STA collisionsToCheck 
-    
+        STA collisionsToCheck
+
         LDA tempA
         CLC
         ADC tempB
@@ -496,11 +496,11 @@ RECOIL_SPEED_LO = #$00
         STA directionByte
         JMP gotHmoveDirection
     isMovingRight:
-    
+
     ;; Set to check points 1 and 2 (top right and bottom right.)
     LDA collisionsToCheck
     ORA #%00000110
-    STA collisionsToCheck 
+    STA collisionsToCheck
 
     LDA tempA
     CLC
@@ -531,8 +531,8 @@ RECOIL_SPEED_LO = #$00
         ;; Set to check points 0 and 1 (top left and top right.)
         LDA collisionsToCheck
         ORA #%00000011
-        STA collisionsToCheck 
-    
+        STA collisionsToCheck
+
         LDA tempC
         CLC
         ADC tempD
@@ -548,14 +548,14 @@ RECOIL_SPEED_LO = #$00
         ORA #%00100000
         AND #%11101111 ;; "up"
         STA directionByte
-    
+
         JMP gotVmoveDirection
     isMovingDown:
 
     ;; set to check points 2 and 3 (bottom left and bottom right.)
     LDA collisionsToCheck
     ORA #%00001100
-    STA collisionsToCheck 
+    STA collisionsToCheck
 
     LDA tempC
     CLC
@@ -571,9 +571,9 @@ RECOIL_SPEED_LO = #$00
     LDA directionByte
     ORA #%00110000 ;; "right"
     STA directionByte
-    
+
     gotVmoveDirection:
-    
+
     LDA directionByte
     AND #%01000000
     BNE doMoveRight
@@ -590,7 +590,7 @@ RECOIL_SPEED_LO = #$00
         LDA Object_screen,x
         SBC #$00
         STA xHold_screen
-    
+
         LDA #BOUNDS_LEFT
         BNE doNonZeroBoundsLeftCheck
             LDA Object_x_lo,x
@@ -658,7 +658,7 @@ RECOIL_SPEED_LO = #$00
     BCS doRightBounds
         JMP doneWithH
     doRightBounds:
-    
+
     LDA scrollTrigger
     AND #%00010000
     BEQ checkRightBounds_NoScroll
@@ -698,7 +698,7 @@ RECOIL_SPEED_LO = #$00
             STA yHold_hi
             BEQ doTopBounds
             BCC doTopBounds
-            
+
             JMP doneWithV
         doNonZeroBoundsTopCheck:
 
@@ -710,14 +710,14 @@ RECOIL_SPEED_LO = #$00
         LDA Object_y_hi,x
         SBC tempD
         STA yHold_hi
-        
+
         ;; check yHold_hi against left bounds.
         CMP #BOUNDS_TOP
         BEQ doTopBounds
         BCC doTopBounds
             JMP doneWithV
         doTopBounds:
-        
+
         LDA scrollTrigger
         AND #%10000000
         BEQ checkTopBounds_NoScroll
@@ -733,13 +733,13 @@ RECOIL_SPEED_LO = #$00
 
         LDA #$02
         STA screenUpdateByte
-    
+
         JSR doHandleBounds
         JMP skipPhysics
     doMoveDown:
-    
+
     ;; update y position.
-    
+
     LDA Object_y_lo,x
     CLC
     ADC tempC
@@ -775,7 +775,7 @@ RECOIL_SPEED_LO = #$00
 
     doneWithV:
     JMP skipPhysics
-    
+
     stopMovingDueToHurtState:
 
     LDA #$00

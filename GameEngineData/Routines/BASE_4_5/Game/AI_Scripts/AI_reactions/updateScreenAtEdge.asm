@@ -5,7 +5,7 @@
     STA gameHandler
 
     LDA #$00
-    STA soft2001    
+    STA soft2001
     JSR doWaitFrame
 
     ;; Screen is now off.
@@ -14,13 +14,13 @@
 
     LDA Object_screen,x
     STA currentNametable
-    
-    LDA #$00 
+
+    LDA #$00
     STA camX
     STA camY
     STA camX_lo
     STA camY_lo
-    
+
     LDA screenUpdateByte
     BNE notHandlingBottomBounds
         ;; Handling bottom bounds
@@ -94,9 +94,9 @@
     notHandlingLeftBounds:
 
     ;; Non normal screen updates
-    
+
     DoScreenUpdate:
 
     STA currentNametable
     STA Object_screen,x
-    
+

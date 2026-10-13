@@ -1,4 +1,4 @@
-    
+
 oSetGlobalVariable:
 
     RTS

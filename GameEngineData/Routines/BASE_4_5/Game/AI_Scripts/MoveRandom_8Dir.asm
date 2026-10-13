@@ -1,6 +1,6 @@
 
     ;; Choose out of 8 directions
-    TXA    
+    TXA
     STA tempA
 
     JSR doGetRandomNumber

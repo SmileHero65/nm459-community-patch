@@ -10,28 +10,28 @@
     LDA Object_screen,x
     STA xHold_screen
     sta screenPrev
-    
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
     STA yHold_hi
     STA yPrev
-    
+
     ; LDA currentNametable
     ; AND #%00001111
     ; STA xHold_screen
-    
+
     ; LDA currentNametable
     ; LSR
     ; LSR
     ; LSR
     ; LSR
     ; STA yHold_screen
-    
-    
-    
-    
-    
+
+
+
+
+
     LDA Object_status,x
     AND #%00000100
     BNE doHandlePhysics
@@ -40,7 +40,7 @@ doHandlePhysics:
 
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;;; check to see if we are using aiming physics.
     ;;; if we are using aim physics, Object_direction will have it's 3rd bit flipped. xxxxXxxx
     LDA Object_direction,x
@@ -48,14 +48,14 @@ doHandlePhysics:
     BEQ useNormalDirectionalPhysics
         ;; use aimed physics.
         ;; Aimed physics doesn't need to update speed.
-        
+
         LDA Object_h_speed_lo,x
         BPL AddHspeedToAimedX
             ;; subtract h speed to aimed x
             LDA Object_h_speed_lo,x
             EOR #$FF
             STA temp
-            
+
             LDA Object_x_lo,x
             sec
             sbc temp
@@ -72,7 +72,7 @@ doHandlePhysics:
             LDA Object_x_hi,x
             ADC Object_h_speed_hi,x
             STA xHold_hi
-        
+
         figureAimedVspeed:
 
         LDA Object_v_speed_lo,x
@@ -98,15 +98,15 @@ doHandlePhysics:
             sbc Object_v_speed_hi,x
             STA yHold_hi
         doneWithAimedV:
-        
-        
+
+
         JMP skipPhysics ;; skips all the acc/dec stuff and goes right to movement based on speed
                             ;; which was figured out in the directional macro.
-                            
+
     useNormalDirectionalPhysics:
     ;;; jump out to bank 1C to load in physics values.
     ;SwitchBank #$1C
-        
+
         LDY Object_type,x
         LDA ObjectMaxSpeed,y
         ASL
@@ -136,9 +136,9 @@ doHandlePhysics:
         +notMaxedAccAmount
         STA myAcc
     +doneWithAccFetch
-    
-    
-    
+
+
+
         LDA ObjectBboxLeft,y
         STA self_left
         CLC
@@ -148,7 +148,7 @@ doHandlePhysics:
         SBC self_left
         LSR
         STA self_center_x
-        
+
         LDA ObjectBboxTop,y
         STA self_top
         CLC
@@ -160,12 +160,12 @@ doHandlePhysics:
         STA self_center_y ;; self center in the vertical direction.
 
 
-        
+
     ;;;; THESE CONSTANTS WILL DETERMINE THE SPEED OF RECOIL
     ;RECOIL_SPEED - which can be changed in the UI
     RECOIL_SPEED_LO = #$00 ;;always stays as 0, because changing it never really produces any effects
-    
-    
+
+
         STX temp
         GetActionStep temp
         CMP #$07
@@ -174,25 +174,25 @@ doHandlePhysics:
             ;;; so it's speed will be determined by the recoil speed above.
             ;;; any caveats to that, put here.  For instance, if there is a monster bit
             ;;; that prevents recoil.
-            
-                    LDA #RECOIL_SPEED_LO 
+
+                    LDA #RECOIL_SPEED_LO
                     STA Object_h_speed_lo,x
                     LDA #RECOIL_SPEED
                     STA Object_h_speed_hi,x
-                    
+
                     JMP gotHandVspeeds
         +notHurt
-    
+
 ;    ReturnBank
     ;;;; deal with acceleration / deceleration
 
-    
+
     LDA Object_direction,x
     AND #%10000000
     BNE doHvel
     JMP doHdec
     doHvel:
-    
+
         ;; we have activated horizontal inertia for this object
         LDA Object_h_speed_lo,x
         CLC
@@ -203,7 +203,7 @@ doHandlePhysics:
         ADC myAcc+1
         STA Object_h_speed_hi,x
         STA temp1
-        
+
         ;;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -212,14 +212,14 @@ doHandlePhysics:
         STA Object_h_speed_lo,x
         LDA myMaxSpeed+1
         STA Object_h_speed_hi,x
-        
+
         JMP doneWithAccFetch
         ++
         LDA temp
         STA Object_h_speed_lo,x
         LDA temp1
         STA Object_h_speed_hi,x
-        
+
         doneWithAccFetch:
         JMP skipDoHdec
 doHdec:
@@ -227,30 +227,30 @@ doHdec:
     CLC
     ADC Object_h_speed_lo,x
     BEQ skipDoHdec
-    
+
     LDA Object_h_speed_lo,x
     SEC
     SBC myAcc
     STA temp
-    
+
     LDA Object_h_speed_hi,x
     SBC myAcc+1
     STA temp1
-    BCC zeroHdec ;; if the result of the 16 bit compare is 
+    BCC zeroHdec ;; if the result of the 16 bit compare is
                     ;; less than zero, clamp the acc to zero.
                     ;; Otherwise, make it the stored values.
-    
+
     LDA temp1
     STA Object_h_speed_hi,x
     LDA temp
     STA Object_h_speed_lo,x
     JMP skipDoHdec
-    
+
 zeroHdec:
     LDA #$00
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-    
+
 
 skipDoHdec:
 
@@ -263,19 +263,19 @@ gotHandVspeeds:
     STA tempA
     LDA Object_h_speed_hi,x
     STA tempB
-    
+
 
     LDA Object_direction,x
     AND #%01000000
     BNE isMovingRight
     ;isMovingLeft
-    
-    
+
+
     ;;; set to check points 0 and 3 (top left and bottom left.)
     LDA collisionsToCheck
     ORA #%00001111
-    STA collisionsToCheck 
-    
+    STA collisionsToCheck
+
         LDA tempA
         CLC
         ADC tempB
@@ -293,11 +293,11 @@ gotHandVspeeds:
             STA directionByte
     JMP gotHmoveDirection
 isMovingRight:
-    
+
         ;;; set to check points 1 and 2 (top right and bottom right.)
     LDA collisionsToCheck
     ORA #%00001111
-    STA collisionsToCheck 
+    STA collisionsToCheck
         LDA tempA
         clc
         ADC tempB
@@ -312,7 +312,7 @@ isMovingRight:
             ORA #%11000000 ;; "right"
             STA directionByte
 gotHmoveDirection:
-    
+
     LDA directionByte
     AND #%01000000
     BEQ doMoveLeft            ;; dale_coop
@@ -352,7 +352,7 @@ doMoveLeft:                    ;; dale_coop
         ADC #$01            ;; dale_coop
         STA temp1
         Compare16 temp16+1, temp16, temp1, temp
-            +    
+            +
                 CPX player1_object
                 BNE +notPlayerAtEdge
                     LDA xPrev
@@ -368,13 +368,13 @@ doMoveLeft:                    ;; dale_coop
 
                 JMP doneWithH
             ++
-    
-    
+
+
 
     JMP doneWithH
 doMoveRight:
     ;; update x position.
-    
+
     LDA Object_x_lo,x
     clc
     adc tempA
@@ -385,9 +385,9 @@ doMoveRight:
     LDA Object_screen,x
     ADC #$00
     STA xHold_screen
-    
-    
-    
+
+
+
         LDA camX
         STA temp16 ;; low left cam clip
         LDA camX_hi
@@ -396,7 +396,7 @@ doMoveRight:
         AND #%00001111
         STA temp16+1 ;; high left cam clip
     ;;; Player's position is in xHold_lo and xHold_hi
-    
+
         ; LDA xHold_hi        ;; dale_coop: I commented out those lines
         ; CLC                ;; dale_coop: I commented out those lines
         ; ADC self_right    ;; dale_coop: I commented out those lines
@@ -421,7 +421,7 @@ doMoveRight:
         STA temp1            ;; dale_coop
         Compare16 temp16+1, temp16, temp1, temp
             JMP +
-            ++    
+            ++
                 CPX player1_object
                 BNE +skipStopAtEdge
                     LDA xPrev
@@ -433,21 +433,21 @@ doMoveRight:
                     LDA #$01
                     STA screenUpdateByte
                     JSR doHandleBounds
-                    
+
                 JMP doneWithH
             +
-    
+
 JMP doneWithH
         ; LDA Object_x_hi,x
         ; clc
         ; ADC Object_h_speed_hi,x
         ; ADC self_right
 
-    ; ;    
+    ; ;
         ; BCS doRightBounds
             ; JMP doneWithH
         ; doRightBounds:
-    
+
         ; LDA scrollTrigger
         ; AND #%00010000
         ; BEQ checkRightBounds_NoScroll
@@ -464,7 +464,7 @@ doneWithH:
         ;;; What should we do if vulnerability bit 0 is flipped?
         JMP doneWithGravity
     +skip
-    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; HANDLE GRAVITY
@@ -475,7 +475,7 @@ doneWithH:
 ;;;;GRAVITY_LO        = the low byte for gravity
 ;;;;GRAVITY_HI        = the high byte for gravity
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;NOTE: the las two bytes work sort of like 
+;;;;NOTE: the las two bytes work sort of like
 ;;;;a minute and hour hand on a watch.  So if you thought about it like minutes and hours, if you put "1" in hi and "30" in low
 ;;;;you would add an hour and a half every time that gravity was engaged.  If you put 1 in hi and 45 in low,
 ;;;;it would add an hour and 45 minutes every time gravity was engaged (a little faster)
@@ -502,7 +502,7 @@ GRAVITY_HI = #$00;
 
     LDA Object_x_hi,x
     CLC
-    ADC self_left                
+    ADC self_left
     STA temp
         JSR getPointColTable
     STA tempB
@@ -512,7 +512,7 @@ GRAVITY_HI = #$00;
     STA temp3 ;; the right bottom collision point.
         JSR getPointColTable
     LDA Object_y_lo,x
-    CLC 
+    CLC
     ADC Object_v_speed_lo,x
     LDA Object_y_hi,x
     ADC Object_v_speed_hi,x
@@ -527,11 +527,11 @@ GRAVITY_HI = #$00;
         ;; 9 = prize block, which behaves as a solid
         ;; 10 (0A) = ladder, whose top behaves like a solid.
         ;; Here is where we handle the "landing" scenario for all of those possibilities.
-        
-        
+
+
     GetCollisionPoint temp, temp1, tempB ;; is it a solid?
         BNE +check
-        
+
     GetCollisionPoint temp3, temp1, tempA ;; is it a solid?
         +check
         CMP #$01
@@ -549,7 +549,7 @@ GRAVITY_HI = #$00;
         CMP #$0A
         BEQ +isLadderSolid
             JMP +notSolid
-            
+
     +isLadderSolid
         LDA Object_v_speed_hi,x
         BEQ +checkSolid
@@ -566,7 +566,7 @@ GRAVITY_HI = #$00;
             BEQ +checkForSecondPoint
             CMP #$0A
             BEQ +notSolid
-        GetCollisionPoint temp3, tempy, tempA ;; is it a solid?    
+        GetCollisionPoint temp3, tempy, tempA ;; is it a solid?
             BEQ +checkForFirstPoint
             CMP #$0A
             BEQ +notSolid
@@ -579,8 +579,8 @@ GRAVITY_HI = #$00;
                     GetCollisionPoint temp, tempy, tempB ;; is it a solid?
                     BEQ +isSolid
                     JMP +notSolid
-                    
-                    
+
+
     +isOneWaySolid
         ;; a special kind of solid
         LDA Object_v_speed_hi,x
@@ -588,26 +588,26 @@ GRAVITY_HI = #$00;
             ;;; however, it is not solid if we haven't cleared it yet.
             TYA
             AND #%11110000
-            CLC 
+            CLC
             ADC Object_v_speed_hi,x
             CMP temp1
             BEQ +isSolid
             BCS +isSolid
             JMP +notSolid
-            
+
     +isSolid
 
         JMP isSolidSoLand
-    
-    
-    
+
+
+
         +notSolid:
-        
-    
+
+
             ;; is not solid, don't land.
             ;; Fixed MetroidVania Jumping Up Screen Issue by goatgary
             ;;https://www.nesmakers.com/index.php?threads/4-5-6-metroidvania-jumping-up-screen-issue-solved.6246/
-            
+
             LDA Object_y_lo,x
             CLC
             ADC Object_v_speed_lo,x
@@ -621,7 +621,7 @@ GRAVITY_HI = #$00;
             +setY
             STA Object_y_hi,x
             STA yHold_hi
-            
+
             CMP #BOUNDS_BOTTOM
             BCC +notAtBounds
                 CPX player1_object
@@ -633,11 +633,11 @@ GRAVITY_HI = #$00;
                 +destroyNonPlayerObject
                     DestroyObject
             +notAtBounds:
-            
+
             CMP #BOUNDS_TOP
             BEQ +atBoundsTop
             BCS +notAtBoundsTop
-                
+
             +atBoundsTop
                 CPX player1_object
                 BNE +destroyNonPlayerObject
@@ -648,8 +648,8 @@ GRAVITY_HI = #$00;
                 +destroyNonPlayerObject
                     DestroyObject
             +notAtBoundsTop
-            
-            
+
+
             LDA Object_v_speed_lo,x
             CLC
             ADC #GRAVITY
@@ -657,7 +657,7 @@ GRAVITY_HI = #$00;
             LDA Object_v_speed_hi,x
             ADC #GRAVITY_HI
             STA Object_v_speed_hi,x
-    
+
             ;;; Player fall animation
             CPX player1_object
             BNE +notPlayerFalling
@@ -670,7 +670,7 @@ GRAVITY_HI = #$00;
                     BMI +notPlayerFalling
                         ChangeActionStep temp, #2 ;Jumping
             +notPlayerFalling:
-            
+
                 LDA Object_v_speed_hi,x
                 CMP #MAX_FALL_SPEED
                 BNE notOverFallSpeed
@@ -678,11 +678,11 @@ GRAVITY_HI = #$00;
                     LDA #$00
                     STA Object_v_speed_lo,x
                 notOverFallSpeed:
-                
-                
-            
+
+
+
             JMP doneWithGravity
-            
+
 
 isSolidSoLand:
 
@@ -710,15 +710,15 @@ isSolidSoLand:
         +gotLandingState
             ChangeActionStep temp, temp1 ;; changes to either idle or running depending on if a direction key is pressed.
     +dontChangeToIdle
-    
-    
-    
-    
+
+
+
+
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;;This following commented code will smooth out your landing
         ;;;;However, you will not be able to stand on top of a ladder
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        
+
         ;; force y to tile boundary
          ;LDA tileY
          ;AND #%11110000
@@ -728,14 +728,14 @@ isSolidSoLand:
          ;SBC #$01
          ;STA Object_y_hi,x
          ;STA yHold_hi
-         
+
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-         
+
 
         LDA #$00
         STA Object_v_speed_lo,x
         STA Object_v_speed_hi,x
-        
+
 doneWithGravity:
 
 ;;;Vertical Movement added back in
@@ -761,7 +761,7 @@ VerticalMovement:
                 CLC
                 ADC self_bottom
                 CMP #BOUNDS_BOTTOM ;#240
-          
+
                 BCS doBottomBounds
                     JMP +noVertMovement
                 doBottomBounds:

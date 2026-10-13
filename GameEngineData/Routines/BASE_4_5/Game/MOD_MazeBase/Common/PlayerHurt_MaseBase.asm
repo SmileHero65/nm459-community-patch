@@ -12,9 +12,9 @@
     BNE +canHurtPlayer
         JMP +skipHurt
     +canHurtPlayer
-    
+
     DEC myLives
-    
+
     UpdateHudElement #$01
     LDA myLives
     BNE +notZeroLives
@@ -32,8 +32,8 @@
             ; STA Object_x_hi,x
             ; LDA yPrev
             ; STA Object_y_hi,x
-    
-    
+
+
 +skipHurt
     PLA
     TAX

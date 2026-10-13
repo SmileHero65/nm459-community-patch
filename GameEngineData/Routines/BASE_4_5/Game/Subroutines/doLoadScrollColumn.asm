@@ -10,7 +10,7 @@ doLoadScrollColumn:
     +
 
     LDA updateScreenData
-    AND #%00000100 
+    AND #%00000100
     BEQ +
         ;; this column is in the middle of being updated
         ;; so skip the update.
@@ -33,14 +33,14 @@ doLoadScrollColumn:
     TXA
     PHA
 
-    ;; right now, we need the column +18 
+    ;; right now, we need the column +18
     ;; for the seam in the opposite nametable.
     ;; And we need to fetch the values into ram and trigger
     ;; an NMI update.
 
     ;; if we are moving right
     SwitchBank #$16
-            
+
         ;; make a determination if cam x is in the first 8 rows.
         ;; if so, the screen to load should be one less than camX_hi
         LDA camY_hi
@@ -53,12 +53,12 @@ doLoadScrollColumn:
         STA camScreen
 
 ;        JMP gotCamScreen
-;        
+;
 ;        LDA camX
 ;        CMP #$80
 ;        BCC doLeftAlignedScroll
-;        
-;    
+;
+;
 ;            LDA camY_hi
 ;            ASL
 ;            ASL
@@ -104,10 +104,10 @@ doLoadScrollColumn:
             LDA camX
             SEC
             SBC #$78
-            
+
             LDA camScreen
             SBC #$00
-            STA tempA        
+            STA tempA
             ;; figure which table to use...skip for now.
             TAY
 
@@ -121,7 +121,7 @@ doLoadScrollColumn:
 
             LDA camScreen
             ADC #$01
-            STA tempA        
+            STA tempA
             TAY
 
 ;            ;; figure which table to use...skip for now.
@@ -132,15 +132,15 @@ doLoadScrollColumn:
 ;            STA temp16
 ;            LDA NameTablePointers_Map2_hi,y
 ;            STA temp16+1
-;            
+;
 ;            LDY tempA
 ;            LDA AttributeTables_Map2_Lo,y
 ;            STA pointer
 ;            LDA AttributeTables_Map2_Hi,y
 ;            STA pointer+1
-;            
-;            
-;            
+;
+;
+;
 ;            JMP GotNametableLoadPointer_forColumn
 
         loadFromMap1table:
@@ -149,12 +149,12 @@ doLoadScrollColumn:
         STA temp16
         LDA NameTablePointers_Map1_hi,y
         STA temp16+1
-    
+
         LDA AttributeTables_Map1_Lo,y
         STA pointer
         LDA AttributeTables_Map1_Hi,y
         STA pointer+1
-            
+
         LDA CollisionTables_Map1_Lo,y
         STA pointer6
         LDA CollisionTables_Map1_Hi,y
@@ -165,7 +165,7 @@ doLoadScrollColumn:
         LDA tempA
         CLC
         ADC #$10
-        
+
         ;; find load bank
         LSR
         LSR
@@ -173,7 +173,7 @@ doLoadScrollColumn:
         LSR
         LSR;; this is the bank
         STA bankHold
-            
+
         LDA tempA
         CLC
         ADC #$10
@@ -183,7 +183,7 @@ doLoadScrollColumn:
         STA pointer2
         LDA NameTablePointers_Map1_hi,y
         STA pointer2+1
-            
+
         LDA CollisionTables_Map1_Lo,y
         STA pointer7
         LDA CollisionTables_Map1_Hi,y
@@ -193,7 +193,7 @@ doLoadScrollColumn:
         STA pointer3
         LDA AttributeTables_Map1_Hi,y
         STA pointer3+1
-            
+
 ;        GotNametableLoadPointer_forColumn:
 
         ;;now (temp16) holds the address of the nametable to be loaded.
@@ -206,12 +206,12 @@ doLoadScrollColumn:
     LSR
     LSR
     STA temp ; bank
-        
+
     SwitchBank temp
         LDA scrollByte
         AND #%00000001
         BNE getRightScrollColumnValues
-            
+
             LDA camX
             SEC
             SBC #$78
@@ -223,7 +223,7 @@ doLoadScrollColumn:
             TAY
             ASL
             STA tempD
-            
+
             LDA camY
             ASL
             ASL
@@ -239,13 +239,13 @@ doLoadScrollColumn:
             LSR
             LSR
             STA temp
-            
+
             LDA camY
             AND #%11110000
             CLC
             ADC temp
             TAY
-            
+
             LDA camX
             SEC
             SBC #$78
@@ -253,9 +253,9 @@ doLoadScrollColumn:
             SBC #$01
             AND #%00000001
             BNE loadScrollColumnInLeftNT
-            
+
             JMP loadScrollColumnInRightNT
-            
+
         getRightScrollColumnValues:
 
             LDA camX
@@ -270,14 +270,14 @@ doLoadScrollColumn:
             TAY
             ASL
             STA tempD
-        
+
             LDA camY
             ASL
             ASL
             CLC
             ADC tempD
             STA tempD
-    
+
             LDA camX
             CLC
             ADC #$70 ;#$80
@@ -286,7 +286,7 @@ doLoadScrollColumn:
             LSR
             LSR
             STA temp
-        
+
             LDA camY
             AND #%11110000
             CLC
@@ -301,7 +301,7 @@ doLoadScrollColumn:
             ADC #$00
             AND #%00000001
             BNE loadScrollColumnInLeftNT
-    
+
         loadScrollColumnInRightNT:
             LDA #$27
             STA tempx ;; used for attributes
@@ -316,7 +316,7 @@ doLoadScrollColumn:
 
         STA updateNametable
         STA tempC
-        
+
         LDA camY
         LSR
         LSR
@@ -339,7 +339,7 @@ doLoadScrollColumn:
         LSR
         LSR
         STA tempz
-    
+
         loop_LoadNametableMeta_column:
             TYA
             PHA
@@ -383,7 +383,7 @@ doLoadScrollColumn:
             LDA updateTile_01
             STA scrollUpdateRam,x
             INX
-            
+
             LDA tempC
             STA scrollUpdateRam,x
             INX
@@ -402,7 +402,7 @@ doLoadScrollColumn:
             LDA updateTile_02
             STA scrollUpdateRam,x
             INX
-            
+
             LDA tempC
             STA scrollUpdateRam,x
             INX
@@ -426,11 +426,11 @@ doLoadScrollColumn:
             CLC
             ADC #$1F
             STA tempD
-            
+
             LDA tempC
             ADC #$00
             STA tempC
-            
+
             TYA
             CLC
             ADC #$10
@@ -440,19 +440,19 @@ doLoadScrollColumn:
             LDA tempz
             CMP #$0F
             BNE didNotWrapVforColumnLoad
-            
+
                 TYA
                 PHA
                 LDY bankHold
                 JSR doBankswitchY
                 PLA
                 TAY
-            
+
                 LDA pointer2
                 STA temp16
                 LDA pointer2+1
                 STA temp16+1
-            
+
                 LDA updateNametable
                 STA tempC
 
@@ -473,15 +473,15 @@ doLoadScrollColumn:
                 LSR
                 LSR
                 STA tempD
-                
+
                 TYA
                 AND #%00001111
                 TAY
-                    
+
                 LDA #$00
                 STA tempz
             didNotWrapVforColumnLoad:
-    
+
             DEC tempA
             LDA tempA
             BEQ gotValuesLoaded
@@ -497,7 +497,7 @@ doLoadScrollColumn:
     LSR
     LSR
     STA temp ; bank
-    
+
     SwitchBank temp
         ;; tempx should be the value of the attribute table.
 
@@ -506,7 +506,7 @@ doLoadScrollColumn:
         LSR
         LSR
         STA temp
-    
+
         LDA camX
         CLC
         ADC #$78
@@ -520,7 +520,7 @@ doLoadScrollColumn:
         STA tempy
 
         TAY
-        
+
         LDA camY
         LSR
         LSR
@@ -539,7 +539,7 @@ doLoadScrollColumn:
             STA scrollUpdateRam,x
             INX
 
-            LDA #$C0 
+            LDA #$C0
             CLC
             ADC tempy
             STA scrollUpdateRam,x
@@ -558,7 +558,7 @@ doLoadScrollColumn:
             CLC
             ADC #$08
             TAY
-            
+
             INC tempz
             LDA tempz
             CMP #$08
@@ -590,13 +590,13 @@ doLoadScrollColumn:
             LDA tempA
         BNE doLoadScrollColumnAttributesLoop
 
-        ;; done with loading attributes    
+        ;; done with loading attributes
         DoneLoadingAttributesForColumn:
         LDA #$00
         STA scrollOffsetCounter
-        
+
         STX maxScrollOffsetCounter
-    
+
         LDA updateScreenData
         ORA #%0000100
         STA updateScreenData
@@ -610,12 +610,12 @@ doLoadScrollColumn:
     LSR
     LSR
     STA temp ; bank
-    
+
     SwitchBank temp
-    
+
         LDA #$0F
         STA tempB ;; how tall is the column in tiles.
-    
+
         LDA scrollByte
         AND #%00000001
         BNE doRightUpdateColCol
@@ -691,7 +691,7 @@ doLoadScrollColumn:
 
             LSR
             TAY
-    
+
             doLoadColColLoop:
                 LDA (pointer6),y
                 STA tempA
@@ -712,7 +712,7 @@ doLoadScrollColumn:
                     AND #%00001111
                     STA tempA
                 gotcha:
-        
+
                 LDA updateNametable
                 CMP #$20
                 BEQ do20
@@ -723,7 +723,7 @@ doLoadScrollColumn:
                     LDA tempA
                     STA collisionTable,x
                 donething:
-        
+
                 TYA
                 CLC
                 ADC #$08
@@ -753,7 +753,7 @@ doLoadScrollColumn:
     AND #%00001111
     SBC #$00
     STA temp16+1 ;; high left cam clip
-    
+
     LDA camX
     CLC
     ADC #$80
@@ -780,7 +780,7 @@ doLoadScrollColumn:
             AND #%00001111
             STA temp1
             Compare16 temp16+1, temp16, temp1, temp
-            +    
+            +
                 DestroyObject
                 JMP doEraseNonPlayerObjectsInThisColumnLoop
             ++

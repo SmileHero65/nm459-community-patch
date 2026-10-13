@@ -18,7 +18,7 @@ pickupLabel:
         ;arg1 = home variable
         ;arg2 = amount to add
         ;arg3 = what place value is receiving the addition?
-        
+
         AddValue #$06, myScore, #$1, #$02
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;; Do we need to update the HUD to reflect this?
@@ -26,8 +26,8 @@ pickupLabel:
         UpdateHudElement #$03
         JMP +endPickups
 +notThisPickup:
-    
-     
+
+
 +notThisPickup
 
 +endPickups

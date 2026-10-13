@@ -4,7 +4,7 @@ AND #%01000000                ; Check if the HideHud box is checked on Screen De
 BEQ +doNotTurnOffSpriteHud    ; If not, jump to +doNotTurnOffSpriteHud to continue showing HUD
 JMP skipDrawingSpriteHud      ; If so, skip drawing the sprite HUD
 
-+doNotTurnOffSpriteHud:  
++doNotTurnOffSpriteHud:
 
 ; Example of drawing a sprite HUD:
 ; Arg5 must be a user-defined variable in your game (myVar in this example)
@@ -17,7 +17,7 @@ JMP skipDrawingSpriteHud      ; If so, skip drawing the sprite HUD
 ;; The game object tileset has numbers 0-9 located at 40-49, and 4A represents "X"
 
     ; Draw the "carrot" sprite
-    DrawSprite #HUD_PRIZE_ROW_X, #HUD_PRIZE_ROW_Y, #$22, #%00000001 
+    DrawSprite #HUD_PRIZE_ROW_X, #HUD_PRIZE_ROW_Y, #$22, #%00000001
 
 ; Draw the "x" sprite 8 pixels to the right of the "carrot"
 LDA #HUD_PRIZE_ROW_X

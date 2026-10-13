@@ -14,7 +14,7 @@
     LDA #$00
     STA soft2001
     JSR doWaitFrame
-        
+
     ;; Set song to "none".
     LDA #$FF
     STA songToPlay ;; This will force "none" to play, which means that the
@@ -32,7 +32,7 @@
     STA camX_hi
     LDA #START_SCREEN_Y
     STA camY_hi
-    
+
     LDA #START_LEVEL ;; This is set up backwards, where 0 is underground.
     EOR #%00000001
     STA warpMap
@@ -69,7 +69,7 @@
     ;; Bit 5 = left
     ;; Bit 4 = right
 
-    ;; Initialize sound driver    
+    ;; Initialize sound driver
     SwitchBank #$1B ;; Switch to the music bank, which contains
                     ;; the initializtion scripts.
 

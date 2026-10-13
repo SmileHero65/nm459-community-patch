@@ -12,4 +12,4 @@
     LDA gameTimerHi
     ADC #$00
     STA gameTimerHi
-    
+

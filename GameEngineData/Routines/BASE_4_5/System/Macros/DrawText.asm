@@ -2,15 +2,15 @@
 MACRO DrawText arg0, arg1, arg2, arg3, arg4, arg5
     ;; arg0 = bank.
     ;; arg1 = label
-    ;; arg2 = x 
+    ;; arg2 = x
     ;; arg3 = y
     ;; arg4 = width (columns) in tiles
     ;; arg5 = height (rows) intiles
-    
+
     LDA arg0
     STA arg0_hold
     STA textBank ;; allows for it to flow over frames.
-    
+
     LDA arg1
     STA arg1_hold
     LDA arg2
@@ -21,7 +21,7 @@ MACRO DrawText arg0, arg1, arg2, arg3, arg4, arg5
     STA arg4_hold
     LDA arg5
     STA arg5_hold
-    
+
     SwitchBank arg0
         LDA textQueued
         AND #%00000001
@@ -32,7 +32,7 @@ MACRO DrawText arg0, arg1, arg2, arg3, arg4, arg5
             STA textPointer+1
         +skipSettingNewPointer:
     ReturnBank
-    
+
     JSR doDrawText
 ENDM
 

@@ -21,7 +21,7 @@
             LDA #$00
             STA myPrizes
             ;; increase lives
-        
+
             INC myLives
             LDA myLives
             CMP #$09

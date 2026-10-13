@@ -7,7 +7,7 @@
     STA continueX
     LDA Object_y_hi,x
     STA continueY
-    
+
 +skip
-    
+
     

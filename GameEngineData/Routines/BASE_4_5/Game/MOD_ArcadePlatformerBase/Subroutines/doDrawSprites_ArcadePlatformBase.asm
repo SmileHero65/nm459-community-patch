@@ -1,6 +1,6 @@
 
 ;; sprite drawing routine.
-;; For horizontal scrolling games, extra attention has to be taken to draw 
+;; For horizontal scrolling games, extra attention has to be taken to draw
 ;; sprites off screen if they are no longer in the camera render area.
 
     LDA gameHandler
@@ -16,13 +16,13 @@
     ;; We will use tempB to track the y value of a tile.
     ;; X is the index of the object.
     ;; Y is the index of the object type.
-    
+
     ;; ObjectSize,y is the size in tiles for this version of drawing.
     ;; 00xxxyyy
     ;; where x = the width in tiles (1-7)
     ;; where y = the height in tiles (1-7)
     ;; for both, zero is an impossible value.
-    
+
     ;; Object_frame,x keeps track of actions and animations.
     ;; 00xxxyyy
     ;; where x = animation frame
@@ -31,7 +31,7 @@
     LDA Object_type,x
     STA tempD
     TAY
-    
+
     LDA #$00
     STA animationFrameHolder ;; reset the animation frame holder.
 
@@ -44,13 +44,13 @@
     LDA ObjectSize,y
     AND #%00000111
     STA tempy ;; used for keeping track of draw width in tiles
-    
+
     LDA ObjectSize,y
     LSR
     LSR
     AND #%00000110
     STA tempx ;;; used for row count.
-    
+
     LDA Object_frame,x
     AND #%00000111
     STA temp ;; used to hold animation frame.
@@ -61,17 +61,17 @@
     LSR
     AND #%00000111
     STA temp1 ;; used to hold action frame.
-    
+
     LDA Object_direction,x
-    AND #%00000111 
+    AND #%00000111
     STA temp2 ;; facing direction.
-    
+
     ;; So now, for each object, we get the type of object, the type of animation
     ;; currently displayed (indexed) and the direction that it is facing.
     ;; That address gives us our tile table.
-    
+
     ;; How to minimize the indirectly addressed reads here...
-            
+
     TXA
     PHA
 
@@ -79,7 +79,7 @@
     TAY
     LDA tblObjectSizeMatrix-9,y
     STA tempC
-    
+
     ;; done.  Number of tiles is in tempC
     ;; this is needed for the frame offset.
     ;; now tempc multiplied by the current animation frame number (plus 1, which
@@ -93,11 +93,11 @@
     ;; for that object are lain out, so you find a position *action number*
     ;; steps forward from that. The high nibble of that value gives you which
     ;; animation number you should look at.
-    
+
     ;; Take that animation number and multiply it by 8 (for all 8 potential
     ;; directions), and that is the index passed the ObjectPointer (in
     ;; ObjectPointers.pnt) we should use.
-    
+
     ;; temp holds the animation frame
     ;; temp1 holds the action frame.
 
@@ -108,7 +108,7 @@
     STA temp16
     LDA ObjectAnimationSpeedTableHi,y
     STA temp16+1
-        
+
     LDY temp1      ;; the current action number.
     LDA (temp16),y ;; this now points to the proper spot on the anim speed table
                    ;; we need to capture that number.
@@ -121,7 +121,7 @@
                    ;; hold the animation type number.
 
     LDA temp
-    PHA 
+    PHA
     TAX
 
     LDA tempC
@@ -148,10 +148,10 @@
 
     PLA
     STA temp
-        
+
     PLA
     TAX
-        
+
     ;; Next, we have to do a few indirect look ups to get the actual correct
     ;; table read.
     LDY Object_type,x
@@ -159,12 +159,12 @@
     STA tempPointer_lo
     LDA ObjectLoSpriteAddressHi,y
     STA tempPointer_lo+1
-    
+
     LDA ObjectHiSpriteAddressLo,y
     STA tempPointer_hi
     LDA ObjectHiSpriteAddressHi,y
     STA tempPointer_hi+1
-        
+
     ;; use the direction (temp2) to get the right starting point.
     ;; add it to 8*the animation number.
     LDA tempz
@@ -174,7 +174,7 @@
     CLC
     ADC temp2 ;; the direction.
     TAY
-        
+
     LDA (tempPointer_lo),y
     STA temp16
     LDA (tempPointer_hi),y
@@ -183,7 +183,7 @@
     LDY #$00
     LDA (temp16),y
     STA animationFrameHolder ;; holds the total number of animation frames for this type of animation.
-        
+
     LDA Object_type,x
     CMP #$10
     BCC dontAddTilesetOffset
@@ -191,18 +191,18 @@
         LDA #$80
         JMP gotTilesetOffset
     dontAddTilesetOffset:
-    LDA #$00    
+    LDA #$00
     gotTilesetOffset:
     STA temp3 ;; tile offset - add this to the tile value, for now.
-        
-        
+
+
     ;; ACTUALLY DRAW THE SPRITES.
 
     LDY tempC  ;; right now, this is the offset to find the right sprite index
                ;; to draw from the tile table.
     LDA tempx  ;; right now, this is the x value of the object.
     STA temp1  ;; Store it into temp1, so that we can restore the leftmost
-               ;; position when we're done drawing a row. 
+               ;; position when we're done drawing a row.
     LDA tempy  ;; Right now, this is the y value of the object.
     STA temp2  ;; Store it to temp2, so that we can use it to count the drawn
                ;; columns.
@@ -220,14 +220,14 @@
                    ;; tempC becomes the "tile to draw".
 
         INY
-        LDA (temp16),y 
+        LDA (temp16),y
         STA tempD  ;; the next value is the attribute to draw.
 
         INY        ;; increasing again sets us up for the next sprite.
 
         ;; Now we can use tempA-D to draw our sprite using the macro.
         DrawSprite tempA, tempB, tempC, tempD
-    
+
         ;; check to see if the row is finished.
         DEC temp1
         DEC temp1
@@ -245,7 +245,7 @@
         DEC temp2
         BEQ doneWithSpriteColumn
 
-            ;; reset the draw position to the left 
+            ;; reset the draw position to the left
             ;; and the row counter to width again.
             LDA tempx
             STA temp1

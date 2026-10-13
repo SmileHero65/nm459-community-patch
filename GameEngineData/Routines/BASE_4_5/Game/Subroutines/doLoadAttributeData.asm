@@ -10,16 +10,16 @@ doLoadAttributeData:
     ;; arg4_hold = rows to load
     ;; arg5_hold = start position hi
     ;; arg6_hold = start position lo
-    ;; arg7_hold = start column    
-    
+    ;; arg7_hold = start column
+
     ;; decreasing arg3_holder / arg4_holder will track if there are more
     ;; columns/rows to load. If zero, that part is done.
-    
+
     LDA arg6_hold
     STA pointer
     LDA arg5_hold
     STA pointer+1
-    
+
     LDA arg3_hold
     STA tempB ;; We will use tempB to hold the number of columns, so when we
               ;; start a new row, we can return to the proper number of columns.
@@ -38,7 +38,7 @@ doLoadAttributeData:
             STA $2006
             LDA (temp16),y
             STA $2007
-            
+
             INY
             DEC tempB ;; is a surrogate for columns
             BEQ doneWithAttributeColumn
@@ -51,7 +51,7 @@ doLoadAttributeData:
 
             DEC arg4_hold
             LDA arg4_hold
-            BEQ noMoreAttributeTilesToLoad    
+            BEQ noMoreAttributeTilesToLoad
                 LDA arg3_hold
                 STA tempB
 
@@ -61,7 +61,7 @@ doLoadAttributeData:
                 CLC
                 ADC #$09 ;; skip down to next attribute row.
                 STA pointer
-                
+
                 TYA
                 SEC
                 SBC tempB

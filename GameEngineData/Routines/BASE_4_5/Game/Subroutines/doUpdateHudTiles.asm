@@ -9,10 +9,10 @@ doUpdateHudTiles:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC tempx
     STA temp3 ;; low byte
-        
+
     LDA temp1
     LSR
     LSR
@@ -20,7 +20,7 @@ doUpdateHudTiles:
     CLC
     ADC camFocus_tiles
     STA temp2 ;; high byte
-    
+
     LDY #$00
     STY scrollOffsetCounter
 
@@ -35,14 +35,14 @@ doUpdateHudTiles:
     LDA #$E0
     STA scrollUpdateRam,y
     INY
-        
+
     STY maxScrollOffsetCounter
-        
+
     ;; Turn on update screen on next frame.
     LDA updateScreenData
     ORA #%0000100
     STA updateScreenData
 
-    
+
     RTS
 

@@ -1,4 +1,4 @@
-    
+
     LDA #$00
     STA Object_x_lo,x
     STA Object_y_lo,x

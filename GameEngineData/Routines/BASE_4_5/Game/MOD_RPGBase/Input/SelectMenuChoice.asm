@@ -1,13 +1,13 @@
 ;;; select menu choice.
     LDA gameSubState
-    BNE +dontSkipMenu 
+    BNE +dontSkipMenu
         RTS
     +dontSkipMenu
     CMP #$01
     BEQ +inCommandMenu
         JMP +notInCommandMenu
     +inCommandMenu:
-          
+
         ;;; in command menu
         LDA currentCommandChoice
         BEQ +isZero
@@ -50,12 +50,12 @@
         CMP #$03
         BNE +notThree
             ;;; is three in command menu
-            
+
         +notThree
             JMP +skipMenu
     +notInCommandMenu
 +skipMenu
     RTS
-    
-    
-    
+
+
+

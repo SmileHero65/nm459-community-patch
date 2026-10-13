@@ -6,14 +6,14 @@
         CLC
         ADC ObjectHeight,y
         STA temp2
-    
+
         LDA Object_x_hi,x
         CLC
         ADC ObjectBboxLeft,y
         STA temp
 
         JSR getPointColTable
-    
+
         LDA Object_y_hi,x
         CLC
         ADC #$02
@@ -54,7 +54,7 @@
         LDA ObjectJumpSpeedHi,y
         EOR #$FF
         STA Object_v_speed_hi,x
-        
+
         STX temp ;; assumes the object we want to move is in x.
 
         ;; @TODO  change the object's action so that he is in jump mode.

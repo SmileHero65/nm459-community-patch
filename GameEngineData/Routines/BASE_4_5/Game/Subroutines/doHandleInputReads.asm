@@ -55,7 +55,7 @@ doHandleInputReads:
     PLA
     TAY
     PLA
-    TAX    
+    TAX
 
     LDA gamepad
     STA buttonStates
@@ -79,7 +79,7 @@ findObjectOfType:
     LDX #$FF
 
     xIsNowCorrect:
-    RTS    
+    RTS
 
 
 doCheckControllerInputStates:
@@ -150,7 +150,7 @@ doCheckControllerInputStates:
     JMP -heldInputsLoop
 
 
-    ;; Pressed    
+    ;; Pressed
     +checkPressedInputs:
 
     LDA #PRESSED_INPUTS

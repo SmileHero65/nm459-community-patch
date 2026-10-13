@@ -19,7 +19,7 @@
 
         LDA scrollUpdateRam,y
         STA $2007
-        INY 
+        INY
 
         STY scrollOffsetCounter
         CPY maxScrollOffsetCounter ;; this should probably be variable.

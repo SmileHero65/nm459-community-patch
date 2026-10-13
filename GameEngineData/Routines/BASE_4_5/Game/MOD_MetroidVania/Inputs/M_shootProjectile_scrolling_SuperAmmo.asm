@@ -10,7 +10,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     TXA
-    STX temp                            ; assumes the object we want to move is in x. 
+    STX temp                            ; assumes the object we want to move is in x.
     GetActionStep temp                  ; Get the current action step of the player
     CMP #$07                            ; Check if action step is 7, which is commonly the "hurt" state)
         BNE +notHurt                    ; If the player is NOT in the hurt state, branch to continue checking movement

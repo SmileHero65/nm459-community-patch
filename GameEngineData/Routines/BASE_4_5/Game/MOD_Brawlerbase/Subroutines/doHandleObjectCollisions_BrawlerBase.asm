@@ -3,7 +3,7 @@
     ;;; Objects prior to its index have already checked against this particular object
     ;SwitchBank #$1C
 ;;STEP 1: Check for inactivity.
-    
+
     LDA Object_status,x
     AND #%10000000
     BNE +doCheckSelfForObjectCollision
@@ -28,29 +28,29 @@
     LDA ObjectFlags,y
     STA tempA ;; temp A now holds the current object flags.
             ;; collision box is still held over from the physics routine.
-            
-            
+
+
     LDA xHold_hi
     CLC
     ADC self_left
     LDA Object_screen,x
     ADC #$00
     STA self_screen_left
-    
+
     LDA xHold_hi
     CLC
     ADC self_right
     LDA Object_screen,x
     ADC #$00
     STA self_screen_right
-    
+
     ; LDA Object_x_hi,x
     ; CLC
     ; ADC #$10
     ; LDA self_screen_left
     ; ADC #$00
     ; STA self_screen_right
-    
+
     LDA xHold_hi;Object_x_hi,x
     CLC
     ADC self_left
@@ -60,7 +60,7 @@
     CLC
     ADC self_right
     STA bounds_right
-    
+
     LDA yHold_hi;Object_y_hi,x
     CLC
     ADC self_top
@@ -69,10 +69,10 @@
     CLC
     ADC self_bottom
     STA bounds_bottom
-    
+
     LDA Object_screen,x
     STA self_screen
-    
+
     TYA
     PHA
     ;;; we probably want this to live inside bank 1C
@@ -104,26 +104,26 @@
                 BNE isMonsterWeaponCol
                     JMP +notAmonsterWeaponCollision
                 isMonsterWeaponCol:
-                    
+
                     JSR getOtherColBox
                     JSR doCompareBoundingBoxes
                         ;;; if they have collided, it is a 1
                         ;;; if not, it is a zero.
                         BEQ +skipCollision
-                            
+
                             STX otherObject
                             ;; There was a collision between a monster and a weapon.
                             ;; weapon is self.
                             ;; monster is other.
                             ;DestroyObject
                             ;ChangeActionStep otherObject, #$07
-                            
-                                
+
+
                                 JSR doHandleHurtMonster
-                            
+
                             ;LDX selfObject
                             ;DestroyObject
-                            JMP +done                
+                            JMP +done
                     +skipCollision
                 +notAmonsterWeaponCollision
                 INX
@@ -132,10 +132,10 @@
                     JMP loop_objectCollision
             +lastCollisionForThisObject
             JMP +done
-            
-            
+
+
         +notPlayerWeapon
-            
+
             LDA Object_flags,x
             AND #%00000010
             BNE +isPlayerForCol
@@ -159,7 +159,7 @@
                         BNE +isPlayerMonsterCol
                             JMP +notPlayerMonsterCollision
                         +isPlayerMonsterCol
-                            
+
                             JSR getOtherColBox
                             JSR doCompareBoundingBoxes
                                 ;;; if they have collided, it is a 1
@@ -171,20 +171,20 @@
                                     ;; There was a collision between a monster and a weapon.
                                     ;; player is self.
                                     ;; monster is other.
-                                    
-                                
-                                    
+
+
+
                                         TXA
                                         PHA
                                         LDX selfObject
                                         JSR doHandleHurtPlayer
                                         PLA
                                         TAX
-                                    
+
                                     JMP +done
-                                    
+
                         +notPlayerMonsterCollision:
-                        
+
                             LDA Object_flags,x
                             AND #%00100000
                             BNE +isPlayerPowerupCol
@@ -202,8 +202,8 @@
                                     DestroyObject
                                     .include SCR_PICKUP_SCRIPTS
                                     JMP +done
-                                    
-                        +isNotPlayerPowerupCol    
+
+                        +isNotPlayerPowerupCol
                             LDA Object_flags,x
                             AND #%10000000
                             BNE +isPlayerNPCCol
@@ -216,17 +216,17 @@
                                     ;; There was a collision between a player and a powerup.
                                     ;; player is self.
                                     ;; powerup is other.
-                                    TXA 
+                                    TXA
                                     PHA
                                         LDX selfObject
                                         LDA xPrev
                                         STA Object_x_hi,x
                                         STA xHold_hi
-                                        
+
                                         LDA yPrev
                                         STA Object_y_hi,x
                                         STA yHold_hi
-                                        
+
                                         LDA #$00
                                         STA Object_h_speed_lo,x
                                         STA Object_h_speed_hi,x
@@ -237,11 +237,11 @@
                                     PLA
                                     TAX
                                     JMP +done
-                                    
+
                             +isNotPlayerNPCCol
-                            
+
                             +skipCollision
-                    
+
                             INX
                             CPX #TOTAL_MAX_OBJECTS
                             BEQ +lastCollisionForThisObject
@@ -250,15 +250,15 @@
                             ; PLA
                             ; TAX
                             JMP +done
-                        
-                            
+
+
                             ;; Add other object to object collision types here.
                         JMP +done
-                            
-            
+
+
         +notPlayerForCollisions
-    
-+done    
+
++done
     PLA
     TAY
     PLA

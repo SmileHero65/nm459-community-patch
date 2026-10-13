@@ -4,24 +4,24 @@
     ;;; this contains CONSTANTS information, like the starting screen and the game object palettes.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
-    
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
     LDA #$00
     STA soft2001
     JSR doWaitFrame
         ;;; turn off rendering to load graphics.
-        
+
     LDA #$FF
     STA songToPlay ;;; this will force "none" to play.
                     ;; which means that the first screen with a song that is not none
                     ;; will not be seen as the "Same songToPlay value", so it will play.
                     ;;; do this BEFORE screen loads.
-        
+
     LDA #START_ON_SCREEN
     STA continueScreen
     STA currentNametable
     STA camScreen
-    
+
     AND #%00001111
     STA camX_hi
     LDA #START_ON_SCREEN
@@ -30,7 +30,7 @@
     LSR
     LSR
     STA camY_hi
-    
+
     ; LDA #START_ON_SCREEN
     ; AND #%00000001
     ; BNE gameStartsInRightNametable
@@ -46,7 +46,7 @@
     ; LDA #$27
     ; STA updateAttributeTable
 ; gotNameAndAttributeTableStart:
-    
+
 
     LDA #START_LEVEL ;; right now, this is set up backwards, where 0 is underground.
     EOR #%00000001
@@ -63,26 +63,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         CreateObject #START_POSITION_PIX_X, #START_POSITION_PIX_Y, #$00, #$00
-        STX player1_object    
+        STX player1_object
         STX camObject
         LDA currentNametable
         STA Object_screen,x
-        
+
         LDA #START_POSITION_PIX_X
         STA newX
         STA continueX
         LDA #START_POSITION_PIX_Y
         STA newY
         STA continueY
-        
 
-        
+
+
     ;CreateObject #$A0, #$A0, #$10
-    ;TXA 
+    ;TXA
     ;STA player2_object
-    
+
     ;LDA #%11110000
-    
+
     ;LDA #%00110000
     LDA #$00
     STA scrollTrigger
@@ -92,16 +92,16 @@
     ;;Bit 6 = Down
     ;;Bit 5 = left
     ;;Bit 4 = right
-    
-    
-    
+
+
+
     SwitchBank #$1B ;; switch to the music bank
                     ;; which contains the initializtion scripts.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; THIS SETS UP THE MUSIC ENGINE.
 ;;;; IF YOU USE A DIFFERENT MUSIC ENGINE
-;;;; CHANGE THIS TO FIT YOUR NEEDS OF INITIALIZING YOUR MUSIC ENGINE.    
+;;;; CHANGE THIS TO FIT YOUR NEEDS OF INITIALIZING YOUR MUSIC ENGINE.
     lda #SOUND_REGION_NTSC ;or #SOUND_REGION_PAL, or #SOUND_REGION_DENDY
     sta sound_param_byte_0
     lda #<(song_list)
@@ -124,7 +124,7 @@
 
 
     ReturnBank
-    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Obtainable weapons
 ;; right now "bosses defeated" translates to weapons unlocked at start of the game.
@@ -133,8 +133,8 @@
     LDA #BOSSES_DEFEATED
     STA weaponsUnlocked
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    
-    
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Triggers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -203,10 +203,10 @@
     STA screenTriggers+30
     LDA #INIT_TRIG_1f
     STA screenTriggers+31
-.endif 
-    
-    
-    
+.endif
+
+
+
     ;;;;;;;;;;;;;;DELETE ME
     .include "GameData\InitializationScripts\hudVarInits.asm"
     LDA #INIT_ITEM_00
@@ -215,44 +215,44 @@
             ;; see MenuManager for an explanation of this.  This would vary completely from game to game,
             ;; or maybe even have different library tables for different types of text to be drawn.  This
             ;; is just one method.
-            
+
             ;; because of this, we'll have to also factor in that 4 when we get a new item or use an item.
     STA item1
-    
+
     LDA #INIT_ITEM_01
     CLC
     ADC #$04
     STA item2
-    
+
     LDA #INIT_ITEM_02
     CLC
     ADC #$04
     STA item3
-    
+
     LDA #INIT_ITEM_03
     CLC
     ADC #$04
     STA item4
-    
+
     LDA #INIT_ITEM_04
     CLC
     ADC #$04
     STA item5
-    
+
     LDA #INIT_ITEM_05
     CLC
     ADC #$04
     STA item6
-    
+
     LDA #INIT_ITEM_06
     CLC
     ADC #$04
     STA item7
-    
+
     LDA #INIT_ITEM_07
     CLC
     ADC #$04
     STA item8
-    
+
     LDA #%00011110 ;;
     STA soft2001

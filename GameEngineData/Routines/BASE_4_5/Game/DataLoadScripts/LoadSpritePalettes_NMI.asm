@@ -21,7 +21,7 @@
         INX
         CPX #$10
     BNE loadSpritePal_NMI
- 
+
     LDA updateScreenData
     AND #%11111101
     STA updateScreenData

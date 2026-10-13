@@ -1,28 +1,28 @@
 NPC_WIDTH  = #$10
-NPC_HEIGHT = #$10   
-  
+NPC_HEIGHT = #$10
+
 
 
     LDX player1_object
     LDA Object_direction,x
     AND #%00000111
     TAY
-    
+
     LDA NpcFocusTableX,y
     STA tempA
     LDA NpcFocusTableY,y
     STA tempB
-    
+
     LDA Object_x_hi,x
     CLC
     ADC tempA
     STA tempC
-    
+
     LDA Object_y_hi,x
     CLC
     ADC tempB
     STA tempD
-    
+
     LDX #$00
     -checkForNpcLoop:
         LDA Object_status,x
@@ -46,7 +46,7 @@ NPC_HEIGHT = #$10
 
         ;; Still possible.
         LDA Object_x_hi,x
-        CLC 
+        CLC
         ADC #NPC_WIDTH
         CMP tempC
         BCC +noNPCcollision
@@ -75,7 +75,7 @@ NPC_HEIGHT = #$10
             LDA npcTrigger
             ORA #%00000001
             STA npcTrigger
-            
+
             JMP +doNpc
         +noNPCcollision:
 
@@ -90,7 +90,7 @@ NPC_HEIGHT = #$10
     BNE +dontSkipNPCtext
         RTS
     +dontSkipNPCtext:
-   
+
     DrawBox #BOX_1_ORIGIN_X, #BOX_1_ORIGIN_Y, #BOX_1_WIDTH, #BOX_1_HEIGHT, #TEXT_NPC, npc_text
     ;; arg0: x
     ;; arg1: y
@@ -104,8 +104,8 @@ NPC_HEIGHT = #$10
     ;; arg5: string or index
 
     RTS
-   
-   
+
+
 NpcFocusTableX:
     ;;  D    DR   R    UR   U    UL   L    DL
     .db $08, $00, $18, $00, $08, $00, $F8, $00

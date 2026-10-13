@@ -29,6 +29,6 @@
     changeToStop_NoDpadPressed:
 
     ChangeActionStep temp, #$00 ;; assumes that "walk" is in action 1
-      
+
     RTS
 

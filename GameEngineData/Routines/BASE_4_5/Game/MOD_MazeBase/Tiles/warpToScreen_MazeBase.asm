@@ -1,6 +1,6 @@
     CPX player1_object
     BNE notPlayerForWarpTile
-    
+
     WarpToScreen warpToMap, warpToScreen, #$01
         ;; arg0 = warp to map.  0= map1.  1= map2.
         ;; arg1 = screen to warp to.

@@ -11,10 +11,10 @@ doDrawTilesDirect:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
-        
+
     LDA temp1
     LSR
     LSR
@@ -45,7 +45,7 @@ doDrawTilesDirect:
             CLC
             ADC arg4_hold
             STA $2007
-            
+
             LDA temp3
             CLC
             ADC #$01
@@ -92,11 +92,11 @@ doDrawTilesDirect:
         LDA textPointer+1
         ADC #$00
         STA textPointer+1
-        
+
         JMP loop_drawTextDirect
         doneWithThisString:
 
     ReturnBank
-    
+
     RTS
 

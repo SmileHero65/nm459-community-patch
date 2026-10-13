@@ -7,7 +7,7 @@ doLoadChrRam:
         STA $2006
         LDA arg2_hold
         STA $2006
-    
+
         ;; arg3_hold holds the number of tiles to be drawn.
 
         loadTilesOuterLoop:
@@ -41,6 +41,6 @@ doLoadChrRam:
 
         doneLoadingTiles:
     ReturnBank
-    
+
     RTS
-    
+

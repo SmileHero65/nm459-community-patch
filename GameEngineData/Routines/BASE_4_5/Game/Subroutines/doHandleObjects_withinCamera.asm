@@ -13,14 +13,14 @@ doHandleObjects:
         RTS
     +
 
-    ;; Reset any variables that need reset before evaluation    
+    ;; Reset any variables that need reset before evaluation
     LDA npcTrigger
     AND #%11111110
     STA npcTrigger
 
     ;; Create state
     LDX #$00
-        
+
     -handleObjectsLoop:
         LDA Object_status,x
         AND #%11000000
@@ -32,26 +32,26 @@ doHandleObjects:
         LDA Object_status,x
         AND #OBJECT_QUEUED_FOR_DESTRUCTION
         BEQ +
-            ;; Destroy 
+            ;; Destroy
             .include SCR_DESTROY_STATE
             LDA #$00
             STA Object_status,x
             JMP objectIsInactive
             ;; destroying will automatically set this object to inactive
         +
-        
+
         LDA Object_status,x
         AND #OBJECT_IS_ACTIVE
         BEQ +
             JMP activeObject
         +
-            
+
         LDA Object_status,x
         AND #OBJECT_QUEUED_FOR_ACTIVATION
         BNE +
             JMP objectIsInactive
         +
-        
+
         ;; Here, we create a new object. It will exist upon the next frame.
         .include SCR_CREATE_STATE
         JSR doHandleCreateState
@@ -66,18 +66,18 @@ doHandleObjects:
 
         ;; Below is everything that happens for an active object.
         activeObject:
-        
+
         ;; Evaluate the camera position
         LDA Object_x_hi,x
         STA pointer
         LDA Object_screen,x
         AND #%00001111
         STA pointer+1
-        
+
         Compare16 pointer+1, pointer, camX_hi, camX
         +
             JMP +checkRightForDrawingOffCamera
-        ++        
+        ++
             ;; object is outside camera
             ;; so skip updating this object.
             JMP objectIsInactive
@@ -108,8 +108,8 @@ doHandleObjects:
             JMP objectIsInactive
         ++
             ;; This object is in camera range.
-            ;; Continue evaluating this object. 
-                
+            ;; Continue evaluating this object.
+
             ;; ORDER OF OPERATIONS
             ;;  1) Check to see if this object reads input (status byte).
             ;;     If not (0), skip input read.
@@ -146,7 +146,7 @@ doHandleObjects:
             ;;       | | + -----------    Observes Input
             ;;       | + ------------- Queued for activation
             ;;       + --------------- Active
-            
+
             LDA Object_type,x
             STA tempObjType ;; not corrupted by any other routines
                             ;; used in timer handlings so no reference
@@ -157,7 +157,7 @@ doHandleObjects:
                 LDA ObjectReaction,y
                 STA EdgeSolidReaction ;; temporarily holds this data.
             ReturnBank
-                    
+
             LDA Object_status,x
             AND #OBJECT_OBSERVES_INPUT
             BNE +
@@ -166,7 +166,7 @@ doHandleObjects:
 
             ;; Input state
             .include SCR_INPUT_STATE
-                
+
             objectDoesNotRecieveInput:
 
             LDA Object_status,x
@@ -185,13 +185,13 @@ doHandleObjects:
                 PLA
                 TAX
             ReturnBank
-            
+
             objectDoesNotObservePhysics:
-            
+
             SwitchBank #$18
                 JSR doTileObservationLogic
             ReturnBank
-            
+
             LDA Object_status,x
             AND #OBJECT_OBSERVES_OBJECTS
             BNE +
@@ -202,7 +202,7 @@ doHandleObjects:
             SwitchBank #$1C
                 JSR doObjectCollisions_bank1C
             ReturnBank
-        
+
             objectDoesNotObserveObjects:
 
             ;; Update state
@@ -219,7 +219,7 @@ doHandleObjects:
                 PLA
                 TAX
             ReturnBank
-            
+
             ;; Timer
             SwitchBank #$1C
                 TXA
@@ -254,14 +254,14 @@ doHandleObjects:
         INX
         CPX #TOTAL_MAX_OBJECTS ;; A number that is configured in the
                                ;; Object Variables tab of project settings.
-                                
+
         ;; This space makes use of ObjectRam. By default, it is one page in
         ;; size (256 bytes), however, it could stretch into the scratch ram
         ;; if desired allowing for 512 bytes for object use.
 
         BEQ DoneHandlingObjects
     JMP -handleObjectsLoop
-    
+
     DoneHandlingObjects:
 
     RTS

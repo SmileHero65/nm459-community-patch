@@ -37,7 +37,7 @@ doHandleObjects:
         LDA Object_status,x
         AND #OBJECT_QUEUED_FOR_DESTRUCTION
         BEQ doNotDestroyThisObject
-            ;; Destroy 
+            ;; Destroy
             .include SCR_DESTROY_STATE
 
             LDA #$00
@@ -46,13 +46,13 @@ doHandleObjects:
             ;; destroying will automatically set this object to inactive.
             ;; END OF THE LINE FOR THIS OBJECT
         doNotDestroyThisObject:
-        
+
         LDA Object_status,x
         AND #OBJECT_IS_ACTIVE
         BEQ checkForObjectActivation
             JMP doActiveObject
         checkForObjectActivation:
-            
+
         LDA Object_status,x
         AND #OBJECT_QUEUED_FOR_ACTIVATION
         BNE doCreateThisNewObjectd
@@ -62,19 +62,19 @@ doHandleObjects:
         ;; create the new object.
         ;; Here, we create a new object.  It will exist upon the next frame.
         .include SCR_CREATE_STATE
-                    
+
         JSR doHandleCreateState
         SwitchBank #$1C
             LDY Object_type,x
             LDA ObjectFlags,y
             STA Object_flags,x
         ReturnBank
-                    
+
         JMP doObjectIsInactive
 
         ;; Below is everything that happens for an active object.
         doActiveObject:
-        
+
         ;; ORDER OF OPERATIONS
         ;;  1) Check to see if this object reads input (status byte).
         ;;     If not (0), skip input read.
@@ -120,7 +120,7 @@ doHandleObjects:
             LDA ObjectReaction,y
             STA EdgeSolidReaction ;; temporarily holds this data.
         ReturnBank
-                    
+
         LDA Object_status,x
         AND #OBJECT_OBSERVES_INPUT
         BNE ObjectReceivesInput
@@ -147,13 +147,13 @@ doHandleObjects:
             PLA
             TAX
         ReturnBank
-            
+
         ObjectDoesNotObservePhysics:
-            
+
         SwitchBank #$18
             JSR doTileObservationLogic
         ReturnBank
-        
+
         LDA Object_status,x
         AND #OBJECT_OBSERVES_OBJECTS
         BNE ObjectDoesObserveObjects
@@ -164,7 +164,7 @@ doHandleObjects:
         SwitchBank #$1C
             JSR doObjectCollisions_bank1C
         ReturnBank
-    
+
         ObjectDoesNotObserveObjects:
 
         SwitchBank #$18
@@ -181,7 +181,7 @@ doHandleObjects:
             PLA
             TAX
         ReturnBank
-        
+
         ;; Timer
         SwitchBank #$1C
             TXA
@@ -218,7 +218,7 @@ doHandleObjects:
         CPX #TOTAL_MAX_OBJECTS ;; a number that is configured
                                ;; in the Object Variables tab
                                ;; of project settings.
-                            
+
         ;; This space makes use of ObjectRam.  By default, it is one page in
         ;; size (256 bytes), However, it could stretch into the scratch ram if
         ;; desired allowing for 512 bytes for object use.

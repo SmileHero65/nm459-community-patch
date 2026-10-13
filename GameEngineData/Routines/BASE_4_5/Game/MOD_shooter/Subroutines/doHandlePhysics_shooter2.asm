@@ -10,7 +10,7 @@
     LDA Object_screen,x
     STA xHold_screen
     sta screenPrev
-    
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
@@ -39,7 +39,7 @@
     STA myAcc+1
     LDA ObjectAccAmount,y
     STA myAcc
-    
+
     LDA ObjectBboxLeft,y
     STA self_left
     CLC
@@ -49,7 +49,7 @@
     SBC self_left
     LSR
     STA self_center_x
-        
+
     LDA ObjectBboxTop,y
     STA self_top
     CLC
@@ -68,7 +68,7 @@
 
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;; Check to see if we are using aiming physics. If we are using aim physics,
     ;; Object_direction will have it's third bit flipped. xxxxXxxx
     LDA Object_direction,x
@@ -93,12 +93,12 @@
     STA xHold_lo
     LDA Object_x_hi,x
     STA xHold_hi
-        
+
     LDA Object_y_lo,x
     STA yHold_lo
     LDA Object_y_hi,x
     STA yHold_hi
-        
+
     LDA Object_h_speed_lo,x
     BPL AddHspeedToAimedX
 
@@ -129,11 +129,11 @@
             CLC
             ADC Object_h_speed_lo,x
             STA xHold_lo
-            
+
             LDA xHold_hi
             ADC Object_h_speed_hi,x
             STA xHold_hi
-            
+
             DEY
         BPL aimLoop2
     figureAimedVspeed:
@@ -144,7 +144,7 @@
         LDA Object_v_speed_lo,x
         EOR #$FF
         STA temp
-        
+
         LDY tempA
         doAimLoop3:
             LDA yHold_lo
@@ -158,7 +158,7 @@
 
             DEY
         BPL doAimLoop3
-        
+
         JMP doneWithAimedV
 
     AddVSpeedToAimedY:
@@ -176,7 +176,7 @@
             DEY
         BPL aimLoop4
     doneWithAimedV:
-        
+
     ;; check xHold_hi and yHold_hi against bounds.
     LDA yHold_hi
     CMP #BOUNDS_TOP
@@ -189,26 +189,26 @@
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-        
+
     +doneWithTop:
-        
+
     STA yHold_hi
     CLC
     ADC self_bottom
     CMP #BOUNDS_BOTTOM ;#240
     BCS +doBottomBounds
         JMP +doneWithBottom
-    
+
     +doBottomBounds:
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-        
+
     +doneWithBottom:
 
     LDA xHold_hi
     CLC
-    ADC self_right 
+    ADC self_right
     BCS +doRightBounds
         JMP +doneWithRight
 
@@ -217,7 +217,7 @@
         STA screenUpdateByte
         JSR doHandleBounds
         JMP +skipPhysics
-                    
+
     +doneWithRight:
 
     LDA xHold_hi
@@ -234,16 +234,16 @@
 
     +doneWithLeft:
 
-    JMP +skipPhysics ;; skips all the acc/dec stuff and goes right to movement 
+    JMP +skipPhysics ;; skips all the acc/dec stuff and goes right to movement
                      ;; based on speed, which was figured out in the directional
                      ;; macro.
-                            
+
 
     useNormalDirectionalPhysics:
-     
+
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     LDA Object_direction,x
     AND #%10000000
     BNE +isHorMovement
@@ -270,17 +270,17 @@
         LDA Object_screen,x
         ADC #$00
         STA xHold_screen
-            
+
         LDA xHold_hi
         CLC
         ADC #$10
         STA temp2
-            
+
         LDA Object_screen,x
         ADC #$00
         AND #%00001111
         STA temp
-            
+
         LDA camX
         CLC
         ADC #$FE
@@ -312,12 +312,12 @@
             JMP +noHorMovement
 
         +isLeftMovement:
-            
+
         LDA Object_x_lo,x
         SEC
         SBC myMaxSpeed
         STA xHold_lo
-        
+
         LDA Object_x_hi,x
         SBC myMaxSpeed+1
         STA xHold_hi
@@ -329,7 +329,7 @@
         LDA xHold_screen
         AND #%00001111
         STA temp
-        
+
         Compare16 camX_hi, camX, temp, xHold_hi
         +
             CPX player1_object
@@ -349,7 +349,7 @@
             ;DestroyObject
         ++
     +noHorMovement:
-    
+
     LDA Object_direction,x
     AND #%00100000
     BEQ +noVertMovement
@@ -411,7 +411,7 @@
             DestroyObject
             JMP +skipPhysics
         +isPlayer
-                    
+
         LDA yPrev
         STA yHold_hi
         STA Object_y_hi,x
@@ -430,11 +430,11 @@
     AND #%00010000
     BEQ +dontskipCamMovement
         JMP +skipCamMovement
-    +dontskipCamMovement               
+    +dontskipCamMovement
         LDA Object_vulnerability,x
         AND #%00000001 ;; set this to "static object"
         BNE +skipCamMovement
-          
+
         LDA screenSpeed
         CMP #$01
         BNE +notthis
@@ -442,63 +442,63 @@
             CLC
             ADC #$44
             STA xHold_lo
-            
+
             LDA xHold_hi
             ADC #$00
             STA xHold_hi
-            
+
             LDA xHold_screen
             ADC #$00
             STA xHold_screen
-            
+
             JMP +skipCamMovement
         +notthis
-        
+
         CMP #$02
         BNE +notthis
             LDA xHold_lo
             CLC
             ADC #$88
             STA xHold_lo
-            
+
             LDA xHold_hi
             ADC #$00
             STA xHold_hi
-            
+
             LDA xHold_screen
             ADC #$00
             STA xHold_screen
-            
+
             JMP +skipCamMovement
         +notthis
-        
+
         CMP #$03
         BNE +notthis
             LDA xHold_lo
             CLC
             ADC #$00
             STA xHold_lo
-            
+
             LDA xHold_hi
             ADC #$01
             STA xHold_hi
-            
+
             LDA xHold_screen
             ADC #$00
             STA xHold_screen
-            
+
             JMP +skipCamMovement
         +notthis
-        
+
         LDA xHold_lo
         CLC
         ADC #$22
         STA xHold_lo
-        
+
         LDA xHold_hi
         ADC #$00
         STA xHold_hi
-        
+
         LDA xHold_screen
         ADC #$00
         STA xHold_screen

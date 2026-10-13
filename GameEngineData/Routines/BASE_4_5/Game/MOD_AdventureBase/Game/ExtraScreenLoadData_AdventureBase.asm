@@ -8,7 +8,7 @@
     +show:
         ShowSprites
     +continue:
-    
+
     ;; UNDER WHAT CONDITIONS SHOULD WE HIDE THE HUD?
     LDA ScreenFlags00
     AND #%01000000
@@ -18,7 +18,7 @@
     +show:
         ShowHud
     +continue:
-    
+
 ;    ;; Are there any special considerations for triggered screens?
 ;    ;; For example: if a screen is triggered, should the lock block go away?
 ;
@@ -26,7 +26,7 @@
 ;    BNE +screenIsTriggered
 ;        JMP +noTrigger
 ;    +screenIsTriggered
-;        
+;
 ;    +noTrigger
 ;
 ;    doneWithExtraCheck:

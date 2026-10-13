@@ -10,7 +10,7 @@
     STA Object_x_lo,x
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-     
+
     LDA Object_v_speed_hi,x
     BMI +isJumpingUpWhenHittingSolid
         JMP +isFallingDownWhenHittingSolid
@@ -65,7 +65,7 @@
         ;; there is nothing above head.
         LDX tempx
         JMP +isFallingDownWhenHittingSolid
-                
+
         +isPrizeBlock:
 
         JSR GetTileAtPosition
@@ -101,7 +101,7 @@
         CreateObjectOnScreen tempA, tempB, #$02, #$00, tempC
         PLA
         TAX
-                
+
         +stopVerticalMovementOnSolidHit:
 
         LDA #$00

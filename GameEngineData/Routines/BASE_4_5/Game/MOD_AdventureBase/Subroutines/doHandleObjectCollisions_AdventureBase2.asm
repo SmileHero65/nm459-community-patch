@@ -40,7 +40,7 @@
         CLC
         ADC self_right
         STA bounds_right
-    
+
         LDA yHold_hi
         CLC
         ADC self_top
@@ -96,10 +96,10 @@
                 ;; monster is other.
                 STX otherObject
                 JSR doHandleHurtMonster
-                JMP +done                
+                JMP +done
             +skipCollision:
             +notAmonsterWeaponCollision:
-            
+
             INX
             CPX #TOTAL_MAX_OBJECTS
             BEQ +lastCollisionForThisObject
@@ -107,7 +107,7 @@
 
         +lastCollisionForThisObject:
         JMP +done
-            
+
         +notPlayerWeapon:
 
         LDA Object_flags,x
@@ -136,7 +136,7 @@
             BNE +isPlayerMonsterCol
                 JMP +notPlayerMonsterCollision
             +isPlayerMonsterCol
-                            
+
             JSR getOtherColBox
             JSR doCompareBoundingBoxes
             ;; if they have collided, it is a 1
@@ -173,7 +173,7 @@
             DestroyObject
             .include SCR_PICKUP_SCRIPTS
             JMP +done
-                                    
+
             +isNotPlayerPowerupCol:
 
             LDA Object_flags,x
@@ -191,18 +191,18 @@
                 ;; NPC is other.
                 STX otherObject
 
-                TXA 
+                TXA
                 PHA
 
                 LDX selfObject
                 LDA xPrev
                 STA Object_x_hi,x
                 STA xHold_hi
-                                        
+
                 LDA yPrev
                 STA Object_y_hi,x
                 STA yHold_hi
-                                        
+
                 LDA #$00
                 STA Object_h_speed_lo,x
                 STA Object_h_speed_hi,x
@@ -217,7 +217,7 @@
                 JMP +done
             +skipCollision:
             +isNotPlayerNPCCol:
-                    
+
             INX
             CPX #TOTAL_MAX_OBJECTS
             BEQ +lastCollisionForThisObject
@@ -227,7 +227,7 @@
 ;        JMP +done
 ;        ;; Add other object to object collision types here.
 ;        JMP +done
-;            
+;
         +notPlayerForCollisions:
         +done:
 

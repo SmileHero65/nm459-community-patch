@@ -2,14 +2,14 @@
 doUpdateHudNumber:
     ;; prevent this from happening if there are any other updates that
     ;; should have priority.
-    
+
     LDA tempy
     ASL
     ASL
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC tempx
     CLC
     ADC tempA ;; the width
@@ -60,7 +60,7 @@ doUpdateHudNumber:
         DEC tempA
     BNE loadUpdateHudNumberQueueLoop
     STY maxScrollOffsetCounter
-        
+
     ;; Turn on update screen on next frame.
     LDA updateScreenData
     ORA #%0000100

@@ -1,4 +1,4 @@
-    
+
     ;; object collions have to check from current index
     ;; through the rest of the objects on the field of play.
     ;; Objects prior to its index have already checked against this particular
@@ -35,7 +35,7 @@
         CLC
         ADC self_right
         STA bounds_right
-        
+
         LDA Object_y_hi,x
         CLC
         ADC self_top
@@ -61,7 +61,7 @@
 
             ;; set up "other" bounding box.
             LDA Object_x_hi,x
-            CLC 
+            CLC
             ADC ObjectBboxLeft,y
             STA other_left
 
@@ -73,7 +73,7 @@
             SBC other_left
             LSR
             STA other_center_x
-                    
+
             LDA Object_y_hi,x
             CLC
             ADC ObjectBboxTop,y
@@ -89,10 +89,10 @@
             STA other_center_y ;; self center in the vertical direction.
 
             ;; This is where we do the flag comparisons.
-            ;; For instance, if A is a player, it would usually check for 
+            ;; For instance, if A is a player, it would usually check for
             ;; all types of collisions.
             ;; A monster might ignore power ups and other monsters.
-            ;; Or, in a two player game, we might expect to see 
+            ;; Or, in a two player game, we might expect to see
             ;; same "team" identifiers ignore each other.
             ;; Here is a generic check against all types for a player type
             ;; object, assuming that in type,
@@ -116,7 +116,7 @@
             LDA tempB
             AND #%00011000 ;; is it a monster or monster weapon?
             BEQ notHarmfulToPlayer
-                            
+
                 ;; this was harmful to the player.
                 JSR doCompareBoundingBoxes
                 ;; the above routine returns 1 if there was a collision
@@ -147,9 +147,9 @@
                 JSR doCompareBoundingBoxes
                 BNE isPickupPowerup
                     JMP notPickupPowerup
-                isPickupPowerup:    
+                isPickupPowerup:
 
-                DestroyObject 
+                DestroyObject
                 ;SwitchBank #$18
                     ;; do pickup stuff here.
                 ;ReturnBank
@@ -176,7 +176,7 @@
                 LDA npcTrigger
                 ORA #%00000001
                 STA npcTrigger
-                                
+
                 JMP checkNextObjectCollision
             notNPCforPlayerCollision:
             notPlayer_forObjectCollisionCheck:
@@ -212,7 +212,7 @@
                         AND #%00001000
                         BEQ notMonsterForPlayerWeaponInteraction
 
-                            TXA 
+                            TXA
                             PHA
                             SwitchBank #$18
                                 LDX selfObject
@@ -233,7 +233,7 @@
                     notHarmfulToMonster:
                 notPlayerWeaponForMonsterCollision:
             notMonsterOrMonsterWeapon:
-                        
+
             LDA tempA
             AND #%00100000
             BEQ notPickupPowerup
@@ -256,14 +256,14 @@
                             .include SCR_PICKUP_SCRIPTS
                         ReturnBank
 
-                        PLA 
+                        PLA
                         TAX
                     doNotActivatePickup:
                 notPlayerForPickupCollision:
             notPickupPowerup:
             checkNextObjectCollision:
 
-            INX 
+            INX
             CPX #TOTAL_MAX_OBJECTS
             BNE moreObjectsToCheck
                 JMP doneWithObjectCollisionCheck
@@ -272,7 +272,7 @@
 
         doneWithObjectCollisionCheck:
     ReturnBank
-    
+
     PLA
     TAY
     PLA

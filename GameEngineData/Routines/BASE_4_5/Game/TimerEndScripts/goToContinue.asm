@@ -35,7 +35,7 @@
     STA gameHandler ;; this will set the next game loop to update the screen.
 
     ChangeActionStep player1_object, #$00
-    
+
     ;; Stop the Player from Moving
     LDX player1_object
     LDA #%00000000

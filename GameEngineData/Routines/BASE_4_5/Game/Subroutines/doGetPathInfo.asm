@@ -1,4 +1,4 @@
-     
+
 getPathInfo:
     LDA #$00
     STA TL_path
@@ -25,7 +25,7 @@ getPathInfo:
     notOnFirstPathRow:
 
     ;; find top left
-    TYA 
+    TYA
     SEC
     SBC #$11 ; one row up, one value to the left.
     TAY
@@ -36,7 +36,7 @@ getPathInfo:
                    ;; because it is not a path
         LDA temp
         STA TL_path
-    gotTLpath:     ;; top left path is figured.    
+    gotTLpath:     ;; top left path is figured.
 
     INY
     LDA (temp16),y ;; this is for top center.
@@ -92,10 +92,10 @@ getPathInfo:
     BNE gotCRpath
         LDA temp
         STA CR_path
-    gotCRpath:    
+    gotCRpath:
 
     ;; got center paths.
-    ;; now just need bottom paths, then we can 
+    ;; now just need bottom paths, then we can
     ;; do basic reads of those variables
     ;; to determine which tiles to draw.
     ;; first, are we in the bottom row?  The bottom row for this would be
@@ -229,7 +229,7 @@ getPathInfo:
         ;; so this is a wide open tile
         LDA temp
         STA currentPathTile_TL
-        ;; last possibility for TL 
+        ;; last possibility for TL
     topLeftCornerIsDone:
 
     ;; DO TOP RIGHT CORNER.
@@ -302,7 +302,7 @@ getPathInfo:
             ;; bottom is not a path
             ;; that means this is a bottom corner.
             LDA temp
-            CLC 
+            CLC
             ADC #$07
             STA currentPathTile_BL
             JMP bottomLeftCornerIsDone
@@ -407,9 +407,9 @@ getPathInfo:
 
     bottomRightIsDone:
 
-    LDA currentPathTile_TL ;; top left of curent tile / path tile    
+    LDA currentPathTile_TL ;; top left of curent tile / path tile
     STA updateTile_00
-            
+
     LDA currentPathTile_TR ;; top right of current tile.
     STA updateTile_01
 

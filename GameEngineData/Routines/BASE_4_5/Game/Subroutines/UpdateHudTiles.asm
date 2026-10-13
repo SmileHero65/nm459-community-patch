@@ -8,7 +8,7 @@ MACRO UpdateHudTiles arg0, arg1, arg2, arg3, arg4
     ;; arg0: bank
     ;; arg1: label
     ;; arg2: x
-    ;; arg3: y 
+    ;; arg3: y
     ;; arg4: offset
 
     LDA arg0
@@ -21,7 +21,7 @@ MACRO UpdateHudTiles arg0, arg1, arg2, arg3, arg4
     STA arg3_hold
     LDA arg4
     STA arg4_hold
-    
+
     JSR doUpdateHudTiles
 ENDM
 

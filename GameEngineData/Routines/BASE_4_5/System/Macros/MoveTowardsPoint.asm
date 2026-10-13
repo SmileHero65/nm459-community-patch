@@ -9,7 +9,7 @@ MACRO MoveTowardsPoint arg0, arg1, arg2, arg3
     PHA
     TYA
     PHA
-    
+
     LDA arg0
     STA arg0_hold
     LDA arg1

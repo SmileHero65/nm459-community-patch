@@ -10,7 +10,7 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;;;;;;;;; is the monster below our feet?
     ;;;;;;;;;; and are we moving downward?
-    
+
     LDA Object_v_speed_hi,x
     BEQ +doHurtPlayer ;; equal to zero
     BMI +doHurtPlayer ;; or negative
@@ -19,7 +19,7 @@
     PHA
         LDX otherObject
         DestroyObject
-        
+
         CountObjects #%00001000
             BNE +notZeroCount
                 LDA scrollByte
@@ -37,12 +37,12 @@
      ;; Do a hop
      LDA #$FC
      STA Object_v_speed_hi,x
-     
+
 
      JMP +skipHurt
 
-    
-+doHurtPlayer    
+
++doHurtPlayer
 
     Dec myLives
     LDA myLives
@@ -53,20 +53,20 @@ myLivesNotZero:
 
     LDA continueMap
     STA warpMap
-    
+
     LDA continueX
     STA newX
     LDA continueY
     STA newY
-    
+
     LDA continueScreen
     STA warpToScreen
     STA camScreen
-    
 
 
-    
-    
-    
+
+
+
+
     WarpToScreen warpToMap, warpToScreen, #$02
 +skipHurt

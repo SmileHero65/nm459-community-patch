@@ -1,12 +1,12 @@
 
-doUpdateCamera:    
+doUpdateCamera:
     LDX camObject
-    
+
     LDA Object_h_speed_lo,x
     STA tempA
     LDA Object_h_speed_hi,x
     STA tempB
-    
+
     LDA camX
     AND #%11110000
     STA tempz
@@ -26,7 +26,7 @@ doUpdateCamera:
     LDA scrollByte
     AND #%01000000
     BNE +updateRightCamera
-        
+
         ;; is left camera update
         LDA camX_lo
         SEC
@@ -44,7 +44,7 @@ doUpdateCamera:
         +skipCheckForScrollScreenEdge
         LDA temp
         STA camX
-        
+
         LDA camX_hi
         SBC #$00
         STA camX_hi
@@ -105,7 +105,7 @@ doUpdateCamera:
 
         .include ROOT\Game\CommonScripts\userScreenBytes_scrolling.asm
     ReturnBank
-    
+
     LDA scrollByte
     AND #%00000001
     BEQ +canUpdateScrollColumn
@@ -148,19 +148,19 @@ doUpdateCamera:
         LDA CollisionTables_Map1_Hi,y
         STA pointer6+1
     ReturnBank
-    
+
     ;; now we have pointers for the fetch.
     ;; We can read from the pointers to get metatile data.
 
     ;; jump to the bank
-    LDA scrollUpdateScreen    
+    LDA scrollUpdateScreen
     LSR
     LSR
     LSR
     LSR
     LSR
     STA temp ; bank
-        
+
     SwitchBank temp
         LDX screenState
         LDY Monster1ID,x
@@ -168,36 +168,36 @@ doUpdateCamera:
         STA tempD
         LDY Mon1SpawnLocation,x
         JSR checkSeamForMonsterPosition
-        
+
         LDX screenState
         LDY Monster2ID,x
         LDA (pointer6),y
         STA tempD
         LDY Mon2SpawnLocation,x
         JSR checkSeamForMonsterPosition
-        
+
         LDX screenState
         LDy Monster3ID,x
         LDA (pointer6),y
         STA tempD
         LDY Mon3SpawnLocation,x
         JSR checkSeamForMonsterPosition
-        
+
         LDX screenState
         LDy Monster4ID,x
         LDA (pointer6),y
         STA tempD
         LDY Mon4SpawnLocation,x
         JSR checkSeamForMonsterPosition
-    
+
         LDA scrollUpdateScreen
         AND #%00000001
         ASL
         ASL
         ORA #%00100000
         STA temp1
-        ;; temp 1 now represents the high byte of the address to place 
-        
+        ;; temp 1 now represents the high byte of the address to place
+
         LDA scrollUpdateColumn
         LSR
         LSR
@@ -205,7 +205,7 @@ doUpdateCamera:
         AND #%00011111
         STA temp2
         ;; temp 2 now represents the low byte of the pushes
-        
+
         LDA scrollUpdateColumn
         LSR
         LSR
@@ -213,10 +213,10 @@ doUpdateCamera:
         LSR
         STA temp3
         ;; temp 2 now represents the high byte of the pushes
-        
-                    
+
+
         LDX #$00 ;; will keep track of scroll update ram.
-        STX scrollOffsetCounter            
+        STX scrollOffsetCounter
         LDA #$0F
         STA tempA ;; will keep the track of how many tiles to draw.
                     ;; #$0f is an entire column.
@@ -226,7 +226,7 @@ doUpdateCamera:
             LDA (temp16),y
             STA temp
             JSR doGetSingleMetaTileValues
-                
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -235,8 +235,8 @@ doUpdateCamera:
             INX
             LDA updateTile_00
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -247,8 +247,8 @@ doUpdateCamera:
             INX
             LDA updateTile_01
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -259,8 +259,8 @@ doUpdateCamera:
             INX
             LDA updateTile_02
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -271,8 +271,8 @@ doUpdateCamera:
             INX
             LDA updateTile_03
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             DEC tempA
             LDA tempA
             BEQ +doneWithNtLoad
@@ -290,9 +290,9 @@ doUpdateCamera:
                 CLC
                 ADC #$10
                 STA temp3
-                JMP loop_LoadNametableMeta_column    
+                JMP loop_LoadNametableMeta_column
             +doneWithNtLoad
-    
+
         ;; add attributes to the update list.
         ;; 23 = 00100011
         ;; 27 = 00100111
@@ -319,7 +319,7 @@ doUpdateCamera:
 
         ;; don't need a temp3 to keep track of pull position, because it
         ;; will be 1 to 1.
-                
+
         LDA #$08
         STA tempA ;; will keep the track of how many tiles to draw.
                   ;; #$0f is an entire column.
@@ -328,7 +328,7 @@ doUpdateCamera:
             LDY temp2
             LDA (pointer),y
             STA temp
-            
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -339,7 +339,7 @@ doUpdateCamera:
             INX
             LDA temp
             STA scrollUpdateRam,x
-            INX 
+            INX
             DEC tempA
             LDA tempA
             BEQ +doneWithAtLoad
@@ -355,17 +355,17 @@ doUpdateCamera:
         LDA updateScreenData
         ORA #%00000100
         STA updateScreenData
-        
+
         LDA scrollUpdateColumn
         LSR
         LSR
         LSR
-        LSR 
+        LSR
         STA temp1 ;; keeps track of where to place on the collision table.
-        LSR 
+        LSR
         STA temp2 ;; keeps track of the nubble being pulled from.
         LDX #$0F ;; keep track of how many values to load are left.
-    
+
         LDA scrollUpdateScreen
         AND #%00000001
         BNE +doUpdateOddCt
@@ -384,10 +384,10 @@ doUpdateCamera:
                     LSR
                     JMP +pushToCol
                 +oddCol
-                LDY temp2    
+                LDY temp2
                 LDA (pointer6),y
                 AND #%00001111
-                
+
                 +pushToCol:
                 LDY temp1
                 STA collisionTable,y
@@ -419,10 +419,10 @@ doUpdateCamera:
                     LSR
                     JMP +pushToCol
                 +oddCol
-                LDY temp2    
+                LDY temp2
                 LDA (pointer6),y
                 AND #%00001111
-                
+
                 +pushToCol:
                 LDY temp1
                 STA collisionTable2,y
@@ -465,7 +465,7 @@ getCamSeam:
     CLC
     ADC camX_hi
     STA camScreen
-    
+
     LDA scrollByte
     AND #%01000000
     BNE +getRightScrollUpdate
@@ -514,13 +514,13 @@ checkForMonsterCameraClipping:
     AND #%00001111
     STA temp16+1 ;; high left cam clip
 
-+gotIt:    
++gotIt:
     LDA camX
     CLC
     ADC #$80
     STA pointer ;; low right cam clip
     LDA camX_hi
-    
+
     ADC #$01
     AND #%00001111
     STA pointer+1 ;; high right cam clip
@@ -539,7 +539,7 @@ checkForMonsterCameraClipping:
             AND #%00001111
             STA temp1
             Compare16 temp16+1, temp16, temp1, temp
-            +    
+            +
                 DestroyObject
                 JMP doEraseNonPlayerObjectsInThisColumnLoop
             ++
@@ -549,14 +549,14 @@ checkForMonsterCameraClipping:
                 JMP doEraseNonPlayerObjectsInThisColumnLoop
             ++
                 DestroyObject
-        
+
         doEraseNonPlayerObjectsInThisColumnLoop:
 
         INX
         CPX #TOTAL_MAX_OBJECTS
     BNE skipCheckingThisObject_forEraseColumnLoop
     RTS
-    
+
 checkSeamForMonsterPosition:
     ;; y is loaded before subroutine.
     LDA (pointer6),y

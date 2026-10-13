@@ -17,17 +17,17 @@ MACRO GetTrigger
     LDA screenType
     LSR
     LSR
-    LSR 
+    LSR
     TAY
     ;; now we have the right *byte* out of the 32 needed for 256 screen bytes
 
     LDA screenTriggers,y ;; now the right bit is loaded into the accumulator
     AND tempA
     STA tempB
-    
-    PLA 
-    TAY    
-    PLA 
+
+    PLA
+    TAY
+    PLA
     TAX
 
     LDA tempB

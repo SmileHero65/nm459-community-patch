@@ -43,7 +43,7 @@
     STA temp1
     STX temp
     StartMoving temp, temp1
-            
+
     LDA #$10
     STA bulletTimer
 
@@ -51,6 +51,6 @@
     TAY
     PLA
     TAX
-    
+
     RTS
 

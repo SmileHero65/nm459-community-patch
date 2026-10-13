@@ -15,7 +15,7 @@ MACRO LoadNametableDataFull arg0, arg1, arg2, arg3
     STA arg3_hold
 
     SwitchBank #$16
-        LDY arg1 
+        LDY arg1
         LDA arg2
         AND #%00000001
         BEQ loadFromMap1table_full

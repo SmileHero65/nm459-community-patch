@@ -16,16 +16,16 @@
     STA tempC
     LDA Object_y_hi,x
     STA tempD
-    
+
     LDX tempx
-        
+
     MoveTowardsPoint tempA, tempC, tempB, tempD
 
     LDA Object_direction,x
     AND #%00000111
     ORA #%00001000
     STA Object_direction,x
-    
+
     PLA
     TAX
     PLA

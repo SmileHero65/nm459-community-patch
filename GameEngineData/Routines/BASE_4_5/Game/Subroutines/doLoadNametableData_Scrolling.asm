@@ -14,15 +14,15 @@ doLoadNametableData:
     ;; arg4_hold = rows to load
     ;; arg5_hold = start position hi
     ;; arg6_hold = start position lo
-    ;; arg7_hold = start column   
-    
+    ;; arg7_hold = start column
+
     ;; decreasing arg3_holder / arg4_holder will track if there are more
     ;; columns/rows to load. If zero, that part is done.
     LDA arg6_hold
     STA pointer
     LDA arg5_hold
     STA pointer+1
-    
+
     LDA arg3_hold
     STA tempB ;; we will use tempB to hold the number of columns, so when we
               ;; start a new row, we can return to the proper number of columns.
@@ -41,7 +41,7 @@ doLoadNametableData:
             STA $2006
             LDA (temp16),y
             STA temp
-            
+
             ;; now we have to do an evaluation, to compare this to potential
             ;; "blank" values and paths.
             JSR doGetSingleMetaTileValues
@@ -56,12 +56,12 @@ doLoadNametableData:
                 CLC
                 ADC #$02
                 STA pointer
-                JMP loop_LoadNametableMeta   
+                JMP loop_LoadNametableMeta
             doneWithMetaTileColumn:
 
             DEC arg4_hold
             LDA arg4_hold
-            BEQ noMoreMetaTilesToLoad   
+            BEQ noMoreMetaTilesToLoad
                 CMP #$08
                 BNE dontWaitFrame
                     JSR doWaitFrame
@@ -136,7 +136,7 @@ doGetSingleMetaTileValues:
     INC temp
     LDA temp
     STA updateTile_01
-    
+
     ;; now, what we need is a row down from our current position...
     ;; updateNT_pointer and temp, increased to its next row.
     CLC
@@ -149,7 +149,7 @@ doGetSingleMetaTileValues:
     STA updateTile_03
 
     RTS
-    
+
 
 doDrawSingleMetatile:
     BIT $2002

@@ -5,7 +5,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 doCompareBoundingBoxes:
-   
+
     ;; Here we will check the horizontal collision. First we need to check the
     ;; RIGHT SCREEN + RIGHT BBOX of self against the LEFT SCREEN + LEFT BBOX of
     ;; other. If it is less, then there is no collision.
@@ -44,12 +44,12 @@ doCompareBoundingBoxes:
     LDA bounds_right
     CMP other_left
     BCC +noBboxCollision
-   
+
 +checkOtherSide:
     LDA self_screen_left
     CMP other_screen_right
     BEQ +theseAreEqual
-        JMP +noBboxCollision   
+        JMP +noBboxCollision
     +theseAreEqual:
 
     ;; check the *other* side
@@ -79,14 +79,14 @@ doCompareBoundingBoxes:
 +noBboxCollision: ;; there is no collision here horizontally.
     LDA #$00      ;; read that NO, there was no collision.
     RTS
-   
-   
+
+
 getOtherColBox:
     TYA
     PHA
 
     LDY Object_type,x
-   
+
     LDA Object_x_hi,x
     CLC
     ADC ObjectBboxLeft,y
@@ -95,7 +95,7 @@ getOtherColBox:
     LDA Object_screen,x
     ADC #$00
     STA other_screen_left
-   
+
     LDA other_left
     CLC
     ADC ObjectWidth,y
@@ -110,7 +110,7 @@ getOtherColBox:
     SBC other_left
     LSR
     STA other_center_x
-   
+
     LDA ObjectBboxTop,y
     CLC
     ADC Object_y_hi,x

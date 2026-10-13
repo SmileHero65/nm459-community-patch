@@ -35,7 +35,7 @@
     CLC
     ADC self_right
     STA bounds_right
-    
+
     LDA yHold_hi;Object_y_hi,x
     CLC
     ADC self_top
@@ -51,7 +51,7 @@
     ;;;; Right now, in this module, it is there by default.
     ;;;; If it is not, we will have to bankswap to 1c here.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-            
+
             LDA Object_flags,x
             AND #%00000010
             BNE +isPlayerForCol
@@ -75,7 +75,7 @@
                         BNE +isPlayerMonsterCol
                             JMP +notPlayerMonsterCollision
                         +isPlayerMonsterCol
-                            
+
                             JSR getOtherColBox
                             JSR doCompareBoundingBoxes
                                 ;;; if they have collided, it is a 1
@@ -88,13 +88,13 @@
                                     ;; player is self.
                                     ;; monster is other.
                                     ;JMP RESET
-                            
+
                                         JSR doHandleHurtPlayer
-                                
+
                                     JMP +done
-                                    
+
                         +notPlayerMonsterCollision:
-                        
+
                             LDA Object_flags,x
                             AND #%00100000
                             BNE +isPlayerPowerupCol
@@ -112,8 +112,8 @@
                                     DestroyObject
                                     .include SCR_PICKUP_SCRIPTS
                                     JMP +done
-                                    
-                        +isNotPlayerPowerupCol    
+
+                        +isNotPlayerPowerupCol
                             LDA Object_flags,x
                             AND #%10000000
                             BNE +isPlayerNPCCol
@@ -126,17 +126,17 @@
                                     ;; There was a collision between a player and a powerup.
                                     ;; player is self.
                                     ;; powerup is other.
-                                    TXA 
+                                    TXA
                                     PHA
                                         LDX selfObject
                                         LDA xPrev
                                         STA Object_x_hi,x
                                         STA xHold_hi
-                                        
+
                                         LDA yPrev
                                         STA Object_y_hi,x
                                         STA yHold_hi
-                                        
+
                                         LDA #$00
                                         STA Object_h_speed_lo,x
                                         STA Object_h_speed_hi,x
@@ -147,11 +147,11 @@
                                     PLA
                                     TAX
                                     JMP +done
-                                    
+
                             +isNotPlayerNPCCol
-                            
+
                             +skipCollision
-                    
+
                             INX
                             CPX #TOTAL_MAX_OBJECTS
                             BEQ +lastCollisionForThisObject
@@ -160,15 +160,15 @@
                             ; PLA
                             ; TAX
                             JMP +done
-                        
-                            
+
+
                             ;; Add other object to object collision types here.
                         JMP +done
-                            
-            
+
+
         +notPlayerForCollisions
-    
-+done    
+
++done
     PLA
     TAY
     PLA

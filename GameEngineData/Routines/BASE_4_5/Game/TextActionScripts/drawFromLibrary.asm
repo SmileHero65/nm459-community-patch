@@ -13,7 +13,7 @@
       ;; The library can have 256 values. Conceivably, you could make multiple
       ;; libraries, and assign them to different end of text reads.
       ;; So here is what this does.
-      ;; 
+      ;;
       ;; 1) Reads an #$F8, so it knows to read from the library.
       ;; 2) Increases position.  Gets the low value of var address to read
       ;; 3) Increases position.  Gets the high value of var address to read.
@@ -39,7 +39,7 @@
       LDY #$00
       LDA (textPointer),y
       STA pointer
-          
+
       LDA textPointer
       CLC
       ADC #$01
@@ -52,21 +52,21 @@
       LDY #$00
       LDA (textPointer),y
       STA pointer+1
-          
+
       LDY #$00
       LDA (pointer),y
       TAY ;; Y now represents the offset value from the Library pointer table
-          
+
       ;; store next offset position for a return point.
       LDA textPointer
       CLC
       ADC #$01
-      STA textPosHold 
+      STA textPosHold
 
       LDA textPointer+1
       ADC #$00
       STA textPosHold+1
-          
+
       ;; get the library table value
       LDA TextLibrary_lo,y
       STA textPointer

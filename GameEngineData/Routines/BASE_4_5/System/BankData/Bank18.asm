@@ -42,7 +42,7 @@ doTileObservationLogic:
     ;; If they were all zero, there is no collision to check for.
     BEQ ObjectDoesNotObserveTiles
         STA temp ;; Store the tile value into temp
-        
+
         ;; Now, we do the trampoline based on the tile type that is in
         ;; the accumulator.
         STY temp1 ;; This now holds the y offset of collisionTable,
@@ -50,7 +50,7 @@ doTileObservationLogic:
                   ;; temp2 is 0 if we were in collisionTable and 1 if we were
                   ;; in collisionTable2. The combination above will allow us
                   ;; to affect the tile that we just collided with.
-        
+
         LDY temp
         LDA TileTableLo,y
         STA temp16
@@ -78,73 +78,73 @@ doHandleTileCollisions:
 TileTableLo:
     .db <Tile_00, <Tile_01, <Tile_02, <Tile_03, <Tile_04, <Tile_05, <Tile_06, <Tile_07
     .db <Tile_08, <Tile_09, <Tile_10, <Tile_11, <Tile_12, <Tile_13, <Tile_14, <Tile_15
-    
+
 TileTableHi:
     .db >Tile_00, >Tile_01, >Tile_02, >Tile_03, >Tile_04, >Tile_05, >Tile_06, >Tile_07
     .db >Tile_08, >Tile_09, >Tile_10, >Tile_11, >Tile_12, >Tile_13, >Tile_14, >Tile_15
-    
+
 
 ;; Tile collision routines
 Tile_00:
     .include SCR_TILE_00
     RTS
-    
+
 Tile_01:
     .include SCR_TILE_01
     RTS
-    
+
 Tile_02:
     .include SCR_TILE_02
     RTS
-    
+
 Tile_03:
     .include SCR_TILE_03
     RTS
-    
+
 Tile_04:
     .include SCR_TILE_04
     RTS
-    
+
 Tile_05:
     .include SCR_TILE_05
     RTS
-    
+
 Tile_06:
     .include SCR_TILE_06
     RTS
-    
+
 Tile_07:
     .include SCR_TILE_07
     RTS
-    
+
 Tile_08:
     .include SCR_TILE_08
     RTS
-    
+
 Tile_09:
     .include SCR_TILE_09
     RTS
-    
+
 Tile_10:
     .include SCR_TILE_10
     RTS
-    
+
 Tile_11:
     .include SCR_TILE_11
     RTS
-    
+
 Tile_12:
     .include SCR_TILE_12
     RTS
-    
+
 Tile_13:
     .include SCR_TILE_13
     RTS
-    
+
 Tile_14:
     .include SCR_TILE_14
     RTS
-    
+
 Tile_15:
     .include SCR_TILE_15
     RTS
@@ -152,7 +152,7 @@ Tile_15:
 
 ;; Update state routine
 ;; @TODO  check if this is used at all, and remove if it isn't
-doUpdateState:    
+doUpdateState:
     .include SCR_UPDATE_STATE
     RTS
 
@@ -161,9 +161,9 @@ doUpdateState:
 doHandleObjectUpdate:
     .include SCR_HANDLE_OBJECT_UPDATE
     RTS
-    
 
-;; AI reaction routines    
+
+;; AI reaction routines
 doAiReaction1:
     .include SCR_AI_REACTION_1
     RTS
@@ -195,7 +195,7 @@ doAiReaction7:
 
 ;; Aimed physics helpers
 .include ROOT\Game\Subroutines\doMoveTowardsPoint.asm
-    
+
 octant_adjust:
     .db #%00111111
     .db #%00000000
@@ -205,7 +205,7 @@ octant_adjust:
     .db #%01111111
     .db #%10111111
     .db #%10000000
-    
+
 atan_tab:
         .db $00,$00,$00,$00,$00,$00,$00,$00
         .db $00,$00,$00,$00,$00,$00,$00,$00
@@ -273,7 +273,7 @@ log2_tab:
         .db $f9,$fa,$fa,$fa,$fa,$fa,$fb,$fb
         .db $fb,$fb,$fb,$fc,$fc,$fc,$fc,$fc
         .db $fd,$fd,$fd,$fd,$fd,$fd,$fe,$fe
-        .db $fe,$fe,$fe,$ff,$ff,$ff,$ff,$ff    
+        .db $fe,$fe,$fe,$ff,$ff,$ff,$ff,$ff
 
 AngleToHVelLo:
     .db $fe, $fe, $fe, $fe, $fd, $fd, $fd, $fc
@@ -336,7 +336,7 @@ doHandleBounds_bank18:
         .include SCR_EDGE_1
         JMP ignoreEdge
     notOneEdge
-    
+
     CMP #$02
     BEQ atTwoEdge
         JMP notTwoEdge
@@ -385,7 +385,7 @@ doHandleBounds_bank18:
         .include SCR_EDGE_7
         ;;jmp ignoreEdge
     ignoreEdge:
-    
+
     RTS
 
 
@@ -425,7 +425,7 @@ doDrawHud_bank18:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
 
@@ -464,7 +464,7 @@ doDrawHud_bank18:
         LDA temp2
         ADC #$00
         STA temp2
-        
+
         DEC tempB
         LDA tempB
     BNE -drawHudBoxLoop
@@ -477,12 +477,12 @@ doDrawHud_bank18:
     LDA #BOX_0_ORIGIN_Y
     LSR
     STA tempB
-        
+
     LDA #BOX_0_WIDTH
-    LSR 
+    LSR
     ;; @TODO  Allow for odd starts, if on odd, will need to add 1
     STA tempC
-    STA tempz    
+    STA tempz
 
     LDA #BOX_0_HEIGHT
     LSR
@@ -492,7 +492,7 @@ doDrawHud_bank18:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC tempA
     STA tempx ;; tempx is our offset for the Attribute table.
 
@@ -502,7 +502,7 @@ doDrawHud_bank18:
     CLC
     ADC tempx
     STA temp2
-            
+
     -drawHudAttLoop:
         LDA temp1
         STA $2006
@@ -528,13 +528,13 @@ doDrawHud_bank18:
         LDA tempz
         STA tempC
     JMP -drawHudAttLoop
-            
+
     +doneWithDrawHudAttLoop:
 
     RTS
-    
 
-;; Hud updates    
+
+;; Hud updates
 .include GameData\HUD_UPDATES.dat
 
 
@@ -633,7 +633,7 @@ doUpdateHudElement_bank18:
         AND #%01111111
         STA hudUpdates
     doneHudUpdate:
-    
+
     ;; Return
     RTS
 

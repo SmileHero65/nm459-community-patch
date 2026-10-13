@@ -8,20 +8,20 @@ doLoadCollisionTable:
     ;; arg3_hold = columns to load
     ;; arg4_hold = rows to load
     ;; arg5_hold = start row
-    ;; arg6_hold = start column    
+    ;; arg6_hold = start column
     ;; arg7_hold = which nametable.
 
-    
+
     LDA arg6_hold
     TAX ;; starting collision table write
 
     LSR
     TAY ;; starting rom read
-    
+
     LDA arg3_hold
     STA tempB ;; We will use tempB to hold the number of columns, so when we
               ;; start a new row, we can return to the proper number of columns.
-    
+
     ;; Now we can use the (pointer) to know the PPU address to write the
     ;; nametable, while (temp16) denotes where the nametable data is being
     ;; pulled from.
@@ -61,7 +61,7 @@ doLoadCollisionTable:
                 LDA tempC
                 STA collisionTable2,x
                 JMP checkColColumnCount
-        
+
             thisColTileIsOdd:
                 ;; this col tile is odd
                 LDA (temp16),y
@@ -104,7 +104,7 @@ doLoadCollisionTable:
 
             LDA arg3_hold
             STA tempB ;; reset column counter.
-        
+
             DEC arg4_hold
             LDA arg4_hold
             BEQ doneWithLoadingCOllisions
@@ -119,7 +119,7 @@ doLoadCollisionTable:
             SBC arg3_hold
             CLC
             ADC #$10
-            TAX 
+            TAX
 
             ;; end get x offset one row down.
             LDA arg3_hold

@@ -13,7 +13,7 @@ doLoadScreenData:
 
         ;; #121 Legacied
         ;; (was GraphicsBank - now screen bank is handled via logic.)
-        INY 
+        INY
 
         ;; #122 - Screen palette
         INY
@@ -69,12 +69,12 @@ doLoadScreenData:
             LDA (collisionPointer),y
             AND #%11110000
             STA newY
-        
+
             LDA (collisionPointer),y
             AND #%00001111
             ASL
             ASL
-            ASL 
+            ASL
             ASL
             STA newX
 
@@ -87,14 +87,14 @@ doLoadScreenData:
         ;; (used to be screen type and song number.)
         INY
 
-        ;; #130 - needed bits    
-        INY 
+        ;; #130 - needed bits
+        INY
         LDA (collisionPointer),y
         STA screenLoadTemps ;; this is whether screen should load 8x8 or 16x16.
 
-        AND #%00000001 ;; is this overworld or underworld map? 
+        AND #%00000001 ;; is this overworld or underworld map?
         STA warpToMap
-        
+
         LDA screenLoadTemps
         AND #%01110000
         LSR
@@ -121,7 +121,7 @@ doLoadScreenData:
         LDA (collisionPointer),y
         STA backgroundTilesToLoad
 
-        INY 
+        INY
         LDA (collisionPointer),y
         STA backgroundTilesToLoad+1
 
@@ -160,7 +160,7 @@ doLoadScreenData:
     ReturnBank
 
     SwitchBank #$16
-        LDA stringGroupPointer ;; this is the group of the string. 
+        LDA stringGroupPointer ;; this is the group of the string.
         ASL
         ASL
 
@@ -179,11 +179,11 @@ doLoadScreenData:
         INY
         LDA AllTextGroups,y
         STA screenText+3
-    ReturnBank    
+    ReturnBank
 
     RTS
 
-    
+
 GetScreenTriggerInfo:
     JSR doClearAllMonsters
 
@@ -191,7 +191,7 @@ GetScreenTriggerInfo:
     ;; constants for banks
 
     GetTrigger
-        
+
     ;; result of screenType trigger stored in temp3 and also in accum
     ;; x and y restored.
 
@@ -211,7 +211,7 @@ GetScreenTriggerInfo:
         LSR
         LSR
         LSR
-        LSR 
+        LSR
         STA monsterTableOffset
 
         JMP triggeredStateInfoIsLoaded
@@ -233,7 +233,7 @@ GetScreenTriggerInfo:
         LDA gameHandler
         AND #%00000001 ;; one = night
         BEQ isNormalDay
-                
+
     ;; normal and night:
         LDX #$01
         STX screenState
@@ -260,13 +260,13 @@ GetScreenTriggerInfo:
         STA monsterTableOffset
 
     triggeredStateInfoIsLoaded:
-    
+
     ;; Now, here, load all of the state specific stuff. This will use X as an
     ;; offset for small tables in ZeroOutAssets file. We'll have to use the
     ;; stack for any part of these routines that might need X.
 
     ;; considerations for the states.
-    ;; 1: Get Object Graphics Bank     
+    ;; 1: Get Object Graphics Bank
     ;; 2: String Data
     ;; 3: Monster Spawn positions
     ;; 4: Monster group (this is more complicated than a single digit)
@@ -286,7 +286,7 @@ GetScreenTriggerInfo:
     PHA
 
     JSR LoadMonster_1
-        
+
     LDY Mon2SpawnLocation,x
     LDA (collisionPointer),y
     STA temp
@@ -363,8 +363,8 @@ GetScreenTriggerInfo:
         STA Object_id,x
         PLA
         TAX
-    skipLoadingMonster3:    
-        
+    skipLoadingMonster3:
+
     ;; Handle monster 4
     LDY Mon4SpawnLocation,x
     LDA (collisionPointer),y
@@ -377,7 +377,7 @@ GetScreenTriggerInfo:
         AND #%00001111
         CMP #%00000011
         BEQ skipLoadingMonster4
-    loadMon4toPosition    
+    loadMon4toPosition
         ;; Load monster 4
         LDY Monster4ID,x
         LDA (collisionPointer),y
@@ -398,15 +398,14 @@ GetScreenTriggerInfo:
 
         TXA
         PHA
-        CreateObject tempB, tempC, mon4_type, #$00 
-        
+        CreateObject tempB, tempC, mon4_type, #$00
         LDA #$03
         STA Object_id,x
         PLA
         TAX
     skipLoadingMonster4:
 
-;       PLA 
+;       PLA
 ;       TAX
 
     ;; Load subpalettes
@@ -439,7 +438,7 @@ GetScreenTriggerInfo:
 
     TYA
     PHA
-    
+
     LDY #178
     LDA (collisionPointer),y
     STA temp
@@ -455,9 +454,9 @@ GetScreenTriggerInfo:
     BEQ skipSongToPlay ;; already playing this song
         PlaySong temp
     skipSongToPlay:
-    
+
     PLA
     TAY
-        
+
     RTS
 

@@ -6,7 +6,7 @@ doLoadScrollRow:
     RTS
 notFactoringVScroll:
     LDA updateScreenData
-    AND #%00000100 
+    AND #%00000100
     BEQ checkIfColumnIsUpdating
     ;;; this column is in the middle of being updated
     ;; so skip the update.
@@ -16,12 +16,12 @@ checkIfColumnIsUpdating:
     AND #%01000000
     BEQ doUpdateRow
         ;; column was updating.
-        RTS 
+        RTS
 
 
 
 doUpdateRow:
-    
+
     LDA scrollByte
     ORA #%10100000
     ;;      + vertical scrolling is happening.
@@ -63,13 +63,13 @@ doUpdateRow:
     ;;;; but will make four way scrolling work the most logically.
     ;;;; It won't matter which nametable we are in or what column we
     ;;;; are scrolled to.  We'll just blast the whole two screen row.
-    
+
     ;; so to make this work, we must:
 ;;;;;1) Find out the left and right nametable values:
     SwitchBank #$16
-    
+
         LDA temp
-        
+
         ASL
         ASL
         ASL
@@ -81,18 +81,18 @@ doUpdateRow:
         ADC temp
         STA tempA
         ;;;;;;;;; This is now the number of the screen, if we want it for any other purpose.
-    
+
         TAY
         JSR getScrollValueFromNametable
-        
+
         LDA tempA
         CLC
         ADC #$01
         STA temp
-    
+
         TAY
         JSR getScrollValueFromNametable2
-    
+
         LDA tempA
         SEC
         SBC #$01
@@ -101,8 +101,8 @@ doUpdateRow:
         TAY
         JSR getScrollValueFromNametable3
             ;; now nametable is loaded into temp16
-            
-            
+
+
         LDA tempA
         clc
         adc #$02
@@ -115,13 +115,13 @@ doUpdateRow:
             ;; "right" attribute table is loaded into pointer3.
             ;; "left" nametable is loaded into pointer4
             ;; "left" attribute table is loaded into pointer5
-                
-            
+
+
         ReturnBank
-        
-        
-        
-        
+
+
+
+
         LDA tempA ; nametable
         LSR
         LSR
@@ -129,16 +129,16 @@ doUpdateRow:
         LSR
         LSR
         STA temp ; bank
-        
+
         SwitchBank temp
-        
-        
+
+
 JSR doNonsense
 ;;;;; 2) Now we blast values into 192 consecutive bytes.
             ;; 32 tiles across, for two nametables
             ;; high byte, low byte, value for each.
             ;; 64 x 3 = 192.
-            
+
         LDA camY
 
         LSR
@@ -146,14 +146,14 @@ JSR doNonsense
             ;LSR
             ;LSR
             ;LSR
-            
+
             ;ASL
             ;ASL
             ;ASL
         AND #%11111000
         STA tempx ;; attribute positioning
 
-            
+
         LDA camY ;; how far are we scrolled down?
         LSR
         LSR
@@ -179,11 +179,11 @@ JSR doNonsense
         ASL
         ASL
         AND #%11100000
-    
-        STA tempD
-    
 
-        
+        STA tempD
+
+
+
         LDA camY ;tempz ;; here, tempz is the row of the camera
         AND #%11110000 ;; divided by 16, it gives the starting row to read from.
         STA temp
@@ -193,7 +193,7 @@ JSR doNonsense
         ADC temp
         TAY ;; now pull value is loaded into Y.
         LDX #$00
-        
+
             JSR updateTopRow
             STX maxScrollOffsetCounter
 
@@ -201,22 +201,22 @@ JSR doNonsense
 
     LDA #$00
     STA scrollOffsetCounter
-        
+
     LDA updateScreenData
     ORA #%0000100
     STA updateScreenData
     ReturnBank
-    
+
 
     RTS
-    
-    
-    
 
-    
 
-    
-    
+
+
+
+
+
+
 updateTopRow:
     LDA #$00
     STA nametableUpdateStep
@@ -236,7 +236,7 @@ updateTopRow:
     ;;;                draw nt+1
     ;;;            if tile to draw >=)camX+80/16)
     ;;;                draw nt-1
-    
+
     LDA camY
             ;;; Divide it by 8 to know what "row" we should be drawing.
             ;LSR
@@ -254,8 +254,8 @@ updateTopRow:
         STA tempD
     LDA camY ;tempz ;; here, tempz is the row of the camera
     AND #%11110000 ;; divided by 16, it gives the starting row to read from.
-    TAY    
-    
+    TAY
+
     LDA #$00
     STA tempB ;; will keep track of what tile to draw.
     LDA updateNametable
@@ -275,27 +275,27 @@ updateTopRow:
         ;; temp16 = current nametable
         ;; pointer2 = nametable + 1
         ;; pointer4 = nametable - 1
-        
-        
+
+
         ;;; tempB represents which tile is being updated.
         ;;; tempB / 2 represets it "in tiles".
         ;;; camX / 16 represents the camera position in tiles.
         ;;; camX_hi and 00000001 = if we're updating the left or the right nametable.
         ;;; tempy is how many tiles are drawn...so if it is less than 10 it is drawing the second page.
-        
+
         LDA camX
         LSR
         LSR
         LSR
         LSR
         STA tempx ;; tempx now holds the position of the camera in tiles.
-        
-        
 
-            LDA camX 
+
+
+            LDA camX
             CMP #$80
             BCC camIsLessThanHalf
-            
+
                 ;; cam is more than half
                 LDA tempy ;; have we crossed the threshold of pages?
                 CMP #$10
@@ -305,7 +305,7 @@ updateTopRow:
                     ;; we have crossed the page
                     JSR readFromNTplus1
                     JMP gotLoadedNametable
-                    
+
                     LDA tempB
                     LSR
                     CLC
@@ -326,7 +326,7 @@ updateTopRow:
                     ADC #$08
                     CMP tempx
                     BCC drawNT_plus_2
-                        
+
                         ;;; draw NT + 1
                         JSR readFromCurrentNT
                         JMP gotLoadedNametable
@@ -335,7 +335,7 @@ updateTopRow:
                         JSR readFromNTplus2
                         JMP gotLoadedNametable
             camIsLessThanHalf:
-                
+
                 ;; cam is less than half
                 LDA tempy
                 CMP #$10
@@ -351,7 +351,7 @@ updateTopRow:
                     ADC #$08
                     CMP temp
                     BCS drawNT_plus_1b
-                        
+
                         JSR readFromNTminus1
                         JMP gotLoadedNametable
                     drawNT_plus_1b:
@@ -363,11 +363,11 @@ updateTopRow:
                     ;; will be nt1
                     JSR readFromCurrentNT
                     JMP gotLoadedNametable
-                    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Subroutine reads;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             readFromCurrentNT:
                 TYA
                 PHA
@@ -376,9 +376,9 @@ updateTopRow:
                     STA temp
                     JSR doGetSingleMetaTileValues
                 PLA
-                TAY    
+                TAY
                 RTS
-                
+
             readFromNTplus1:
                 TYA
                 PHA
@@ -387,9 +387,9 @@ updateTopRow:
                     STA temp
                     JSR doGetSingleMetaTileValues
                 PLA
-                TAY    
+                TAY
                 RTS
-            
+
             readFromNTminus1:
                 TYA
                 PHA
@@ -398,11 +398,11 @@ updateTopRow:
                     STA temp
                     JSR doGetSingleMetaTileValues
                 PLA
-                TAY    
+                TAY
                 RTS
-                
-            
-                
+
+
+
             readFromNTplus2:
                 TYA
                 PHA
@@ -411,15 +411,15 @@ updateTopRow:
                     STA temp
                     JSR doGetSingleMetaTileValues
                 PLA
-                TAY    
+                TAY
                 RTS
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;END Subroutine reads;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                
-            
-        
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
         gotLoadedNametable:
-        
+
         LDA camY ;; the ROW video being opened.
         AND #%00001000
         BNE doUpdateBottomRowTiles
@@ -434,11 +434,11 @@ updateTopRow:
             LDA updateTile_03
             STA temp2
         gotRowTilesToUpdate:
-        
+
         LDA temp1
         STA scrollUpdateRam,x
         INX
-        
+
 
         ;;;;;;;;;;;;;;;;;;;;;
         ;; increase tempB but evaluate for position in regards to camera.
@@ -464,7 +464,7 @@ updateTopRow:
         BEQ doneLoadingFirstNTforTopRowScrollV
             JMP doDrawTopRowVscrollLoop
         doneLoadingFirstNTforTopRowScrollV:
-            
+
             JSR ToggleNametable
             LDA camY ;; how far are we scrolled down?
             LSR
@@ -498,20 +498,20 @@ updateTopRow:
             TAY
             JMP doDrawTopRowVscrollLoop
     doneLoadingTopRowScrollV
-    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Now load attributes the same way.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     LDA #$10
-    STA tempy ;; tiles to update.  Two nametables worth.    
+    STA tempy ;; tiles to update.  Two nametables worth.
     ; LDA camY
     ; LSR
     ; LSR
     ; AND #%11111000
     ; STA tempx ;; attribute positioning
 
-    
+
     LDA camX
     CLC
     ADC #$08
@@ -521,23 +521,23 @@ updateTopRow:
     LSR
     LSR
     STA tempx
-    
+
     LDA #$00
     STA tempB
-    
+
     LDA updateAttributeTable
     STA tempC
-    
+
     LDA camY
     LSR
     LSR
     AND #%11111000
     STA tempD
     TAY
-    
-    
-    
-    
+
+
+
+
     doDrawAttVScrollLoop:
         LDA tempC
         STA scrollUpdateRam,x
@@ -547,9 +547,9 @@ updateTopRow:
         ADC tempD
         STA scrollUpdateRam,x
         INX
-        
-        
-            LDA camX 
+
+
+            LDA camX
             CMP #$80
             BCC camIsLessThanHalf_attributes
                 ;; cam is more than half
@@ -561,7 +561,7 @@ updateTopRow:
                     ;; we have crossed the page
                     JSR readFromAttplus1
                     JMP gotLoadedAttTable
-            
+
                 haveNotCrossedPage_attributes:
                     ;; we have not crossed the page.
                     LDA tempB
@@ -584,13 +584,13 @@ updateTopRow:
                 BCS haveNotCrossedPage2_attributes
                     haveCrossedPage_att2:
                     ;; we have crossed the page.
-                    
+
                     LDA tempx
                     CLC
                     ADC #$04
                     CMP tempB
                     BCS drawAtt_plus_1b
-                        
+
                         JSR readFromAttminus1
                         JMP gotLoadedAttTable
                     drawAtt_plus_1b:
@@ -602,42 +602,42 @@ updateTopRow:
                     ;; will be nt1
                     JSR readFromCurrentAtt
                     JMP gotLoadedAttTable
-                    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Subroutine reads;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             readFromCurrentAtt:
-        
+
                     ;STA tempz
                     LDA (pointer),y
-            
+
                 RTS
-                
+
             readFromAttplus1:
-            
+
                     ;STA tempz
                     LDA (pointer3),y
-                
+
                 RTS
-            
+
             readFromAttminus1:
-                
+
                     ;STA tempz
                     LDA (pointer5),y
-            
+
                 RTS
-                
-            
-                
+
+
+
             readFromAttplus2:
-                
+
                     ;STA tempz
                     LDA (pointer7),y
-                
+
                 RTS
-                
-                
+
+
         gotLoadedAttTable:
             STA scrollUpdateRam,x
             INX
@@ -674,33 +674,33 @@ doNonsense:
 
     LDA #$20
     STA tempy ;; collision tiles to update.  Two nametables worth.
-    
+
     LDA camX
         LSR
         LSR
         LSR
         LSR
         STA tempx ;; tempx now holds the position of the camera in tiles.
-        
-    
-    
+
+
+
     LDA camY
     AND #%11110000
     TAX ;; use this for the push.
-    
+
     LDA camY
     LSR
     AND #%11111000
     TAY
-    
-    
+
+
     doLoadCollisionRowLoop:
             STY tempB
-            
-            LDA camX 
+
+            LDA camX
             CMP #$80
             BCC camIsLessThanHalf_collisions
-            
+
                 ;; cam is more than half
                 LDA tempy ;; have we crossed the threshold of pages?
                 CMP #$10
@@ -708,12 +708,12 @@ doNonsense:
                 BCS haveNotCrossedPage_collisions
                     haveCrossedPage_collisions
                     LDA #$01
-                    STA tempD ;; used to determine whether to write to 
+                    STA tempD ;; used to determine whether to write to
                     ;;; collision table 1 or 2.
                     ;; we have crossed the page
                     JSR readFromNTplus1_collisions
                     JMP gotLoadedCollisionTable
-                    
+
                     LDA tempB
                     ;LSR
                     CLC
@@ -736,7 +736,7 @@ doNonsense:
                     ADC #$08
                     CMP tempx
                     BCC drawNT_plus_2_collisions
-                        
+
                         ;;; draw NT + 1
                         JSR readFromCurrentNT_collisions
                         JMP gotLoadedCollisionTable
@@ -745,7 +745,7 @@ doNonsense:
                         JSR readFromNTplus2_collisions
                         JMP gotLoadedCollisionTable
             camIsLessThanHalf_collisions:
-                
+
                 ;; cam is less than half
                 LDA tempy
                 CMP #$10
@@ -761,7 +761,7 @@ doNonsense:
                     ADC #$08
                     CMP temp
                     BCS drawNT_plus_1b_collisions
-                        
+
                         JSR readFromNTminus1_collisions
                         JMP gotLoadedCollisionTable
                     drawNT_plus_1b_collisions:
@@ -777,42 +777,42 @@ doNonsense:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Subroutine reads;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             readFromCurrentNT_collisions:
-        
+
                     ;STA tempz
                     LDA (pointer8),y
-            
+
                 RTS
-                
+
             readFromNTplus1_collisions
-            
+
                     ;STA tempz
                     LDA (pointer9),y
-                
+
                 RTS
-            
+
             readFromNTminus1_collisions
-                
+
                     ;STA tempz
                     LDA (pointer10),y
-            
+
                 RTS
-                
-            
-                
+
+
+
             readFromNTplus2_collisions:
-                
+
                     ;STA tempz
                     LDA (pointer11),y
-                
+
                 RTS
-                
+
 gotLoadedCollisionTable:
 
-        
+
     STA temp
-    
+
     LDA tempD
     BNE pushToSecondColTable
     ;; push to first col table.
@@ -825,7 +825,7 @@ pushToSecondColTable:
     AND #%00000001
     BEQ pushToCol2
     JMP pushToCol1
-    
+
 pushToCol1:
     TYA
     AND #%00000001
@@ -860,9 +860,9 @@ pushToCol2:
         AND #%00001111
         STA collisionTable2,x
         JMP doneWritingNewColValue
-    
+
 doneWritingNewColValue:
-    
+
     INX
     TXA
     AND #%00001111
@@ -873,120 +873,120 @@ doneWritingNewColValue:
     JMP doLoadCollisionRowLoop
 doneWithUpdatingCollisionRow:
     RTS
-    
-    
-    
+
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;        
-        
-        
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
     RTS
-    
-    
-    
+
+
+
 updateBottomRow:
-        
-        
-    RTS
-    
 
-updateAttributeRow:    
 
-    
-    
     RTS
 
-    
+
+updateAttributeRow:
 
 
 
-    
-    
+    RTS
+
+
+
+
+
+
+
 getScrollValueFromNametable
         LDA NameTablePointers_Map1_lo,y
             STA temp16
             LDA NameTablePointers_Map1_hi,y
             STA temp16+1
-            
+
             LDY tempA
             LDA AttributeTables_Map1_Lo,y
             STA pointer
             LDA AttributeTables_Map1_Hi,y
             STA pointer+1
-            
+
             LDA CollisionTables_Map1_Lo,y
             STA pointer8
             LDA CollisionTables_Map1_Hi,y
             STA pointer8+1
-            
+
     RTS
-    
+
 getScrollValueFromNametable2
             LDA NameTablePointers_Map1_lo,y
             STA pointer2
             LDA NameTablePointers_Map1_hi,y
             STA pointer2+1
-            
+
             LDY temp
              LDA AttributeTables_Map1_Lo,y
              STA pointer3
              LDA AttributeTables_Map1_Hi,y
              STA pointer3+1
-             
+
              LDA CollisionTables_Map1_Lo,y
             STA pointer9
             LDA CollisionTables_Map1_Hi,y
             STA pointer9+1
-            
+
     RTS
-        
+
 getScrollValueFromNametable3:
             LDA NameTablePointers_Map1_lo,y
             STA pointer4
             LDA NameTablePointers_Map1_hi,y
             STA pointer4+1
-            
+
             LDY temp
             LDA AttributeTables_Map1_Lo,y
             STA pointer5
             LDA AttributeTables_Map1_Hi,y
             STA pointer5+1
-            
+
             LDA CollisionTables_Map1_Lo,y
             STA pointer10
             LDA CollisionTables_Map1_Hi,y
             STA pointer11+1
-            
+
     RTS
-    
+
 getScrollValueFromNametable4:
             LDA NameTablePointers_Map1_lo,y
             STA pointer6
             LDA NameTablePointers_Map1_hi,y
             STA pointer6+1
-            
+
             LDY temp
             LDA AttributeTables_Map1_Lo,y
             STA pointer7
             LDA AttributeTables_Map1_Hi,y
             STA pointer7+1
-            
+
             LDA CollisionTables_Map1_Lo,y
             STA pointer11
             LDA CollisionTables_Map1_Hi,y
             STA pointer11+1
-            
+
     RTS
-    
+
 CheckCamXPositionForScreen:
     ;;; if camX normalized is < half way into scroll,
     ;;; load both nametables as normal.
-    
+
     ;;; otherwise, find how many rows are the difference.
     ;;; these should be current nametable + 2 (if moving right).
-    
+
     LDA camX
     LSR
     LSR
@@ -999,9 +999,9 @@ CheckCamXPositionForScreen:
 normalDualNtUpdate
 
     RTS
-    
-    
-    
+
+
+
 GetRowTileIndex:
         LDA camY
             ;;; Divide it by 8 to know what "row" we should be drawing.
@@ -1022,14 +1022,14 @@ GetRowTileIndex:
         LSR
         LSR
         LSR
-        
+
 
         CLC
         ADC temp
         STA tempD
-    
+
     RTS
-    
+
 IncreaseRowUpdateTile:
     LDA tempD
     AND #%00011111
@@ -1048,8 +1048,8 @@ IncreaseRowUpdateTile:
         ADC updateNametable ;; add to current nametable.  updateNametable
 
         STA tempC  ;; tempC becomes the high address byte to write to.
-    
-    
+
+
     LDA tempD
     SEC
     SBC #%00011111
@@ -1073,8 +1073,8 @@ IncreaseRowUpdateTile:
 notInLastColumn_forRowUpdateTile:
     inc tempD
     RTS
-    
-    
+
+
 IncreaseRowUpdateAttribute
     LDA tempx
     AND #%00000111
@@ -1089,7 +1089,7 @@ IncreaseRowUpdateAttribute
             ;LSR
             ;LSR
             ;LSR
-            
+
             ;ASL
             ;ASL
             ;ASL
@@ -1098,8 +1098,8 @@ IncreaseRowUpdateAttribute
     TAY
 
     RTS
-    
+
 notInLastColumn_forRowUpdateAttribute:
     INC tempx
     RTS
-    
+

@@ -5,7 +5,7 @@
     LSR
     AND #%00000111
     STA tempB
-    
+
     STX tempA
     DoObjectAction tempA, tempB
 

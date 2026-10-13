@@ -4,7 +4,7 @@ MACRO GetCollisionPoint arg0, arg1, arg2
     ;; arg1 = y
     ;; arg2 = which collision table, left or right? 0 = left, 1 = right
     ;; assumes object calling is in X.
-    
+
     LDA arg0
     STA tileX
 

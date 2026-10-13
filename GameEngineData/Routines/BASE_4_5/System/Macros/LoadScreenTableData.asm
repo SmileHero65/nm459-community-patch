@@ -10,9 +10,9 @@ MACRO LoadScreenTableData arg0, arg1, arg2
     STA arg0_hold
     ;LDA arg1
     ;STA arg1_hold
-    
+
     SwitchBank #$16
-        LDY arg1 
+        LDY arg1
         LDA arg2
         AND #%00000001
         BEQ loadFromMap1table_ScreenData

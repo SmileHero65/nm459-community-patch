@@ -3,7 +3,7 @@
 ;;https://www.nesmakers.com/index.php?threads/4-5-9-prevent-button-mashing-during-text-boxes.8424/
 
 NPC_WIDTH = #$10
-NPC_HEIGHT = #$10   
+NPC_HEIGHT = #$10
 
 
     ;; checking if the text box is already displayed
@@ -16,7 +16,7 @@ NPC_HEIGHT = #$10
         BEQ +skip
             JMP dontSkipNPCtext
         +skip:
-        
+
         RTS
     +continue:
 
@@ -24,22 +24,22 @@ NPC_HEIGHT = #$10
     LDA Object_direction,x
     AND #%00000111
     TAY
-    
+
     LDA NpcFocusTableX,y
     STA tempA
     LDA NpcFocusTableY,y
     STA tempB
-    
+
     LDA Object_x_hi,x
     CLC
     ADC tempA
     STA tempC
-    
+
     LDA Object_y_hi,x
     CLC
     ADC tempB
     STA tempD
-    
+
     LDX #$00
     checkForNpcLoop:
         LDA Object_status,x
@@ -62,7 +62,7 @@ NPC_HEIGHT = #$10
 
         ;; still possible.
         LDA Object_x_hi,x
-        CLC 
+        CLC
         ADC #NPC_WIDTH
         CMP tempC
         BCC +noNPCcollision

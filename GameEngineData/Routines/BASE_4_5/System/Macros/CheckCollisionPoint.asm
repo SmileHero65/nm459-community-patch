@@ -5,7 +5,7 @@ MACRO CheckCollisionPoint arg0, arg1, arg2, arg3
     ;; arg2 = collision type to check for.
     ;; arg3 = which collision table, left or right? 0 = left, 1 = right
     ;; assumes object calling is in X.
-    
+
     LDA arg0
     STA tileX
     LDA arg1

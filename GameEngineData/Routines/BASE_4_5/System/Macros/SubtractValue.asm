@@ -4,7 +4,7 @@ MACRO SubtractValue arg0, arg1, arg2, arg3
     ;; arg1 = home variable
     ;; arg2 = amount to subtract
     ;; arg3 = what place value is receiving the subtraction?
-    
+
     TXA
     PHA
 
@@ -28,8 +28,8 @@ MACRO SubtractValue arg0, arg1, arg2, arg3
         STA arg1,x
         DEX
     BPL -
-    
-    PLA 
+
+    PLA
     TAX
 ENDM
 

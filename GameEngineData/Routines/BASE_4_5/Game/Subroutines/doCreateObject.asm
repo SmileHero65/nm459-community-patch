@@ -3,14 +3,14 @@ doCreateObject:
 
     LDA #%01111110
     STA Object_status,x
-    
+
     LDA arg0_hold
     STA Object_x_hi,x
     LDA arg1_hold
     STA Object_y_hi,x
     LDA arg2_hold
     STA Object_type,x
-    
+
     LDA arg3_hold ;; this is the behavior step that is to be called.
     ASL
     ASL

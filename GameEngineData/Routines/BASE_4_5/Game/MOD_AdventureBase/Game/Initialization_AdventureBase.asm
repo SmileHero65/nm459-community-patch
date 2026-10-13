@@ -11,7 +11,7 @@
     STA soft2001
     JSR doWaitFrame
     ;; turn off rendering to load graphics.
-        
+
     LDA #$FF
     STA songToPlay  ;; This will force "none" to play, which means that the
                     ;; first screen with a song that is not none will not be
@@ -22,7 +22,7 @@
     STA continueScreen
     STA currentNametable
     STA camScreen
-    
+
     AND #%00001111
     STA camX_hi
 
@@ -32,7 +32,7 @@
     LSR
     LSR
     STA camY_hi
-    
+
     LDA #START_LEVEL ;; Right now, this is set up backwards,
                      ;; where 0 is underground.
     EOR #%00000001
@@ -44,19 +44,19 @@
 
     LDX #$00
     CreateObject #START_POSITION_PIX_X, #START_POSITION_PIX_Y, #$00, #$00
-    STX player1_object    
+    STX player1_object
     STX camObject
 
     LDA currentNametable
     STA Object_screen,x
-    
+
     LDA #START_POSITION_PIX_X
     STA newX
     STA continueX
     LDA #START_POSITION_PIX_Y
     STA newY
     STA continueY
-    
+
     LDA #$00
     STA scrollTrigger
     ;; this sets up to ignore "screen edge" behavior for scrolling games.
@@ -67,32 +67,32 @@
 
 
     ;; Switch to the music bank, which contains the initializtion scripts.
-    SwitchBank #$1B 
+    SwitchBank #$1B
         ;; This sets up the music engine. If you use a different engine,
         ;; change this to fit your needs of initializing your music engine.
         LDA #SOUND_REGION_NTSC ;; #SOUND_REGION_PAL | #SOUND_REGION_DENDY
         STA sound_param_byte_0
-        
+
         LDA #<(song_list)
         STA sound_param_word_0
         LDA #>(song_list)
         STA sound_param_word_0+1
-        
+
         LDA #<(sfx_list)
         STA sound_param_word_1
         LDA #>(sfx_list)
         STA sound_param_word_1+1
-        
+
         LDA #<(instrument_list)
         STA sound_param_word_2
         LDA #>(instrument_list)
         STA sound_param_word_2+1
-        
+
 ;       LDA #<dpcm_list
 ;       STA sound_param_word_3
 ;       LDA #>dpcm_list
 ;       STA sound_param_word_3+1
-        
+
         JSR sound_initialize
     ReturnBank
 

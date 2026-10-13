@@ -7,7 +7,7 @@ ObjectReaction:
 doScreenPreDraw:
     .include SCR_SPRITE_PREDRAW
     RTS
-    
+
 doScreenPostDraw:
     .include SCR_SPRITE_POSTDRAW
     RTS
@@ -18,12 +18,12 @@ doTileObservationLogic
     BNE +
         JMP ObjectDoesNotObserveTiles
     +
-            
+
     LDA #$00
     STA ObjectUpdateByte ;; reset ObjectUpdateByte
-                         ;; the collision routines will set up 
+                         ;; the collision routines will set up
                          ;; what should happen on this update.
-                         ;; for instance, by default, bit 0 
+                         ;; for instance, by default, bit 0
                          ;; lets the update know there was a solic collision
                          ;; so skip the positioning update.
 
@@ -36,7 +36,7 @@ doTileObservationLogic
     BEQ ObjectDoesNotObserveTiles
 
         STA temp ;; store the tile value into temp
-        
+
         ;; now, we do the trampoline based on the tile type that is in the
         ;; accumulator.
 
@@ -45,7 +45,7 @@ doTileObservationLogic
                   ;; collisionTable and 1 if we were in collisionTable2. The
                   ;; combination above will allow us to affect the tile that we
                   ;; just collided with.
-                    
+
         ;; if it is hurt and it hit a non 0 tile type, it should probably regard
         ;; it as solid. Otherwise, it will fly through doors and whatnot if they
         ;; are not simply solid tile types.
@@ -82,80 +82,80 @@ doHandleTileCollisions:
 TileTableLo:
     .db <Tile_00, <Tile_01, <Tile_02, <Tile_03, <Tile_04, <Tile_05, <Tile_06, <Tile_07
     .db <Tile_08, <Tile_09, <Tile_10, <Tile_11, <Tile_12, <Tile_13, <Tile_14, <Tile_15
-    
+
 TileTableHi:
     .db >Tile_00, >Tile_01, >Tile_02, >Tile_03, >Tile_04, >Tile_05, >Tile_06, >Tile_07
     .db >Tile_08, >Tile_09, >Tile_10, >Tile_11, >Tile_12, >Tile_13, >Tile_14, >Tile_15
-    
+
 
 Tile_00:
     .include SCR_TILE_00
     RTS
-    
+
 Tile_01:
     .include SCR_TILE_01
     RTS
-    
+
 Tile_02:
     .include SCR_TILE_02
     RTS
-    
+
 Tile_03:
     .include SCR_TILE_03
     RTS
-    
+
 Tile_04:
     .include SCR_TILE_04
     RTS
-    
+
 Tile_05:
     .include SCR_TILE_05
     RTS
-    
+
 Tile_06:
     .include SCR_TILE_06
     RTS
-    
+
 Tile_07:
     .include SCR_TILE_07
     RTS
-    
+
 Tile_08:
     .include SCR_TILE_08
     RTS
-    
+
 Tile_09:
     .include SCR_TILE_09
     RTS
-    
+
 Tile_10:
     .include SCR_TILE_10
     RTS
-    
+
 Tile_11:
     .include SCR_TILE_11
     RTS
-    
+
 Tile_12:
     .include SCR_TILE_12
     RTS
-    
+
 Tile_13:
     .include SCR_TILE_13
     RTS
-    
+
 Tile_14:
     .include SCR_TILE_14
     RTS
-    
+
 Tile_15:
     .include SCR_TILE_15
     RTS
-    
+
 
 ;; Object overflow
 
-doUpdateState:    
+doUpdateState:
     .include SCR_UPDATE_STATE
     RTS
 
@@ -195,7 +195,7 @@ doAiReaction7:
 
 ;; Aimed physics
 .include ROOT\Game\Subroutines\doMoveTowardsPoint.asm
-    
+
 octant_adjust:
     .db #%00111111
     .db #%00000000
@@ -205,7 +205,7 @@ octant_adjust:
     .db #%01111111
     .db #%10111111
     .db #%10000000
-    
+
 atan_tab:
         .db $00,$00,$00,$00,$00,$00,$00,$00
         .db $00,$00,$00,$00,$00,$00,$00,$00
@@ -272,8 +272,8 @@ log2_tab:
         .db $f9,$fa,$fa,$fa,$fa,$fa,$fb,$fb
         .db $fb,$fb,$fb,$fc,$fc,$fc,$fc,$fc
         .db $fd,$fd,$fd,$fd,$fd,$fd,$fe,$fe
-        .db $fe,$fe,$fe,$ff,$ff,$ff,$ff,$ff    
-        
+        .db $fe,$fe,$fe,$ff,$ff,$ff,$ff,$ff
+
 AngleToHVelLo:
     .db $fe, $fe, $fe, $fe, $fd, $fd, $fd, $fc
     .db $fc, $fb, $fa, $f9, $f9, $f8, $f7, $f5
@@ -318,7 +318,7 @@ AngleToVVelLo:
     .db $b0, $ad, $aa, $a7, $a4, $a1, $9e, $9b
     .db $98, $95, $92, $8f, $8b, $88, $85, $82
 
-    
+
 doHandleBounds_bank18:
     ;; stop monster at edge if hurt
     LDA EdgeSolidReaction
@@ -336,7 +336,7 @@ doHandleBounds_bank18:
         .include SCR_EDGE_1
         RTS
     notOneEdge
-    
+
     CMP #$02
     BEQ atTwoEdge
         JMP notTwoEdge
@@ -411,23 +411,23 @@ StopObjectFromMovingAtEdge:
 doEraseBox_bank18:
     RTS
 
-    
+
 doDrawHud_bank18:
     LDA gameHandler
     AND #%00100000
     BEQ +
         JMP doneHudUpdate
     +
-    
+
     ;; draw hud box
     LDA #BOX_0_WIDTH
     ASL
     STA tempA
-    
+
     LDA #BOX_0_HEIGHT
     ASL
     STA tempB
-    
+
     LDA #BOX_0_ORIGIN_X ;; the x value, in metatiles, of the box draw.
     ASL                 ;; multiplied by two, since metatiles are 16x16, but
                         ;; PPU addresses are 8x8.
@@ -443,7 +443,7 @@ doDrawHud_bank18:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
 
@@ -484,7 +484,7 @@ doDrawHud_bank18:
         LDA temp2
         ADC #$00
         STA temp2
-            
+
         DEC tempB
         LDA tempB
     BNE -drawHudBoxLoop
@@ -497,12 +497,12 @@ doDrawHud_bank18:
     LDA #BOX_0_ORIGIN_Y
     LSR
     STA tempB
-        
+
     ;; @TODO  allow for odd starts, if on odd, will need to add 1
     LDA #BOX_0_WIDTH
-    LSR 
+    LSR
     STA tempC
-    STA tempz 
+    STA tempz
 
     LDA #BOX_0_HEIGHT
     LSR
@@ -512,7 +512,7 @@ doDrawHud_bank18:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC tempA
     STA tempx ;; tempx is our offset for the attribute table.
 
@@ -524,7 +524,7 @@ doDrawHud_bank18:
     CLC
     ADC tempx
     STA temp2
-            
+
     -drawHudAttLoop:
         LDA temp1
         STA $2006
@@ -648,6 +648,6 @@ doUpdateHudElement_bank18:
         AND #%01111111
         STA hudUpdates
     +doneHudUpdate:
-    
+
     RTS
-        
+

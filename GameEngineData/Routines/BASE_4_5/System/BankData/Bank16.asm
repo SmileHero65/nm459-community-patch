@@ -4,7 +4,7 @@
 .include SCR_LOADSCREEN16
 
 
-AllTextGroups:    
+AllTextGroups:
     .include "ScreenData\npcTextGroup.dat"
 
 
@@ -18,8 +18,8 @@ GameBckPalLo:
     .db <BckPal28, <BckPal29, <BckPal2a, <BckPal2b, <BckPal2c, <BckPal2d, <BckPal2e, <BckPal2f
     .db <BckPal30, <BckPal31, <BckPal32, <BckPal33, <BckPal34, <BckPal35, <BckPal36, <BckPal37
     .db <BckPal38, <BckPal39, <BckPal3a, <BckPal3b, <BckPal3c, <BckPal3d, <BckPal3e, <BckPal3f
-    
-GameBckPalHi:    
+
+GameBckPalHi:
     .db >BckPal00, >BckPal01, >BckPal02, >BckPal03, >BckPal04, >BckPal05, >BckPal06, >BckPal07
     .db >BckPal08, >BckPal09, >BckPal0a, >BckPal0b, >BckPal0c, >BckPal0d, >BckPal0e, >BckPal0f
     .db >BckPal10, >BckPal11, >BckPal12, >BckPal13, >BckPal14, >BckPal15, >BckPal16, >BckPal17
@@ -28,27 +28,27 @@ GameBckPalHi:
     .db >BckPal28, >BckPal29, >BckPal2a, >BckPal2b, >BckPal2c, >BckPal2d, >BckPal2e, >BckPal2f
     .db >BckPal30, >BckPal31, >BckPal32, >BckPal33, >BckPal34, >BckPal35, >BckPal36, >BckPal37
     .db >BckPal38, >BckPal39, >BckPal3a, >BckPal3b, >BckPal3c, >BckPal3d, >BckPal3e, >BckPal3f
-    
+
 
 ;; Sprite palette pointers
 ObjectPaletteDataLo:
     .db <objectPal_0, <objectPal_1, <objectPal_2, <objectPal_3, <objectPal_4, <objectPal_5, <objectPal_6, <objectPal_7
     .db <objectPal_8, <objectPal_9, <objectPal_10, <objectPal_11, <objectPal_12, <objectPal_13, <objectPal_14, <objectPal_15
-    .db <objectPal_16, <objectPal_17, <objectPal_18, <objectPal_19, <objectPal_20, <objectPal_21, <objectPal_22, <objectPal_23 
-    .db <objectPal_24, <objectPal_25, <objectPal_26, <objectPal_27, <objectPal_28, <objectPal_29, <objectPal_30, <objectPal_31 
-    .db <objectPal_32, <objectPal_33, <objectPal_34, <objectPal_35, <objectPal_36, <objectPal_37, <objectPal_38, <objectPal_39 
-    .db <objectPal_40, <objectPal_41, <objectPal_42, <objectPal_43, <objectPal_44, <objectPal_45, <objectPal_46, <objectPal_47 
-    .db <objectPal_48, <objectPal_49, <objectPal_50, <objectPal_51, <objectPal_52, <objectPal_53, <objectPal_54, <objectPal_55 
-    .db <objectPal_56, <objectPal_57, <objectPal_58, <objectPal_59, <objectPal_60, <objectPal_61, <objectPal_62, <objectPal_63 
+    .db <objectPal_16, <objectPal_17, <objectPal_18, <objectPal_19, <objectPal_20, <objectPal_21, <objectPal_22, <objectPal_23
+    .db <objectPal_24, <objectPal_25, <objectPal_26, <objectPal_27, <objectPal_28, <objectPal_29, <objectPal_30, <objectPal_31
+    .db <objectPal_32, <objectPal_33, <objectPal_34, <objectPal_35, <objectPal_36, <objectPal_37, <objectPal_38, <objectPal_39
+    .db <objectPal_40, <objectPal_41, <objectPal_42, <objectPal_43, <objectPal_44, <objectPal_45, <objectPal_46, <objectPal_47
+    .db <objectPal_48, <objectPal_49, <objectPal_50, <objectPal_51, <objectPal_52, <objectPal_53, <objectPal_54, <objectPal_55
+    .db <objectPal_56, <objectPal_57, <objectPal_58, <objectPal_59, <objectPal_60, <objectPal_61, <objectPal_62, <objectPal_63
 
 ObjectPaletteDataHi:
     .db >objectPal_0, >objectPal_1, >objectPal_2, >objectPal_3, >objectPal_4, >objectPal_5, >objectPal_6, >objectPal_7
     .db >objectPal_8, >objectPal_9, >objectPal_10, >objectPal_11, >objectPal_12, >objectPal_13, >objectPal_14, >objectPal_15
-    .db >objectPal_16, >objectPal_17, >objectPal_18, >objectPal_19, >objectPal_20, >objectPal_21, >objectPal_22, >objectPal_23 
-    .db >objectPal_24, >objectPal_25, >objectPal_26, >objectPal_27, >objectPal_28, >objectPal_29, >objectPal_30, >objectPal_31 
-    .db >objectPal_32, >objectPal_33, >objectPal_34, >objectPal_35, >objectPal_36, >objectPal_37, >objectPal_38, >objectPal_39 
-    .db >objectPal_40, >objectPal_41, >objectPal_42, >objectPal_43, >objectPal_44, >objectPal_45, >objectPal_46, >objectPal_47 
-    .db >objectPal_48, >objectPal_49, >objectPal_50, >objectPal_51, >objectPal_52, >objectPal_53, >objectPal_54, >objectPal_55 
+    .db >objectPal_16, >objectPal_17, >objectPal_18, >objectPal_19, >objectPal_20, >objectPal_21, >objectPal_22, >objectPal_23
+    .db >objectPal_24, >objectPal_25, >objectPal_26, >objectPal_27, >objectPal_28, >objectPal_29, >objectPal_30, >objectPal_31
+    .db >objectPal_32, >objectPal_33, >objectPal_34, >objectPal_35, >objectPal_36, >objectPal_37, >objectPal_38, >objectPal_39
+    .db >objectPal_40, >objectPal_41, >objectPal_42, >objectPal_43, >objectPal_44, >objectPal_45, >objectPal_46, >objectPal_47
+    .db >objectPal_48, >objectPal_49, >objectPal_50, >objectPal_51, >objectPal_52, >objectPal_53, >objectPal_54, >objectPal_55
     .db >objectPal_56, >objectPal_57, >objectPal_58, >objectPal_59, >objectPal_60, >objectPal_61, >objectPal_62, >objectPal_63
 
 
@@ -56,77 +56,77 @@ ObjectPaletteDataHi:
 NameTablePointers_Map1_lo:
     .db <NT_Rm00, <NT_Rm01, <NT_Rm02, <NT_Rm03, <NT_Rm04, <NT_Rm05, <NT_Rm06, <NT_Rm07, <NT_Rm08
     .db <NT_Rm09, <NT_Rm10, <NT_Rm11, <NT_Rm12, <NT_Rm13, <NT_Rm14, <NT_Rm15, <NT_Rm16, <NT_Rm17
-    .db <NT_Rm18, <NT_Rm19, <NT_Rm20, <NT_Rm21, <NT_Rm22, <NT_Rm23, <NT_Rm24, <NT_Rm25, <NT_Rm26 
-    .db <NT_Rm27, <NT_Rm28, <NT_Rm29, <NT_Rm30, <NT_Rm31, <NT_Rm32, <NT_Rm33, <NT_Rm34, <NT_Rm35 
-    .db <NT_Rm36, <NT_Rm37, <NT_Rm38, <NT_Rm39, <NT_Rm40, <NT_Rm41, <NT_Rm42, <NT_Rm43, <NT_Rm44 
-    .db <NT_Rm45, <NT_Rm46, <NT_Rm47, <NT_Rm48, <NT_Rm49, <NT_Rm50, <NT_Rm51, <NT_Rm52, <NT_Rm53 
-    .db <NT_Rm54, <NT_Rm55, <NT_Rm56, <NT_Rm57, <NT_Rm58, <NT_Rm59, <NT_Rm60, <NT_Rm61, <NT_Rm62 
-    .db <NT_Rm63, <NT_Rm64, <NT_Rm65, <NT_Rm66, <NT_Rm67, <NT_Rm68, <NT_Rm69, <NT_Rm70, <NT_Rm71 
-    .db <NT_Rm72, <NT_Rm73, <NT_Rm74, <NT_Rm75, <NT_Rm76, <NT_Rm77, <NT_Rm78, <NT_Rm79, <NT_Rm80 
+    .db <NT_Rm18, <NT_Rm19, <NT_Rm20, <NT_Rm21, <NT_Rm22, <NT_Rm23, <NT_Rm24, <NT_Rm25, <NT_Rm26
+    .db <NT_Rm27, <NT_Rm28, <NT_Rm29, <NT_Rm30, <NT_Rm31, <NT_Rm32, <NT_Rm33, <NT_Rm34, <NT_Rm35
+    .db <NT_Rm36, <NT_Rm37, <NT_Rm38, <NT_Rm39, <NT_Rm40, <NT_Rm41, <NT_Rm42, <NT_Rm43, <NT_Rm44
+    .db <NT_Rm45, <NT_Rm46, <NT_Rm47, <NT_Rm48, <NT_Rm49, <NT_Rm50, <NT_Rm51, <NT_Rm52, <NT_Rm53
+    .db <NT_Rm54, <NT_Rm55, <NT_Rm56, <NT_Rm57, <NT_Rm58, <NT_Rm59, <NT_Rm60, <NT_Rm61, <NT_Rm62
+    .db <NT_Rm63, <NT_Rm64, <NT_Rm65, <NT_Rm66, <NT_Rm67, <NT_Rm68, <NT_Rm69, <NT_Rm70, <NT_Rm71
+    .db <NT_Rm72, <NT_Rm73, <NT_Rm74, <NT_Rm75, <NT_Rm76, <NT_Rm77, <NT_Rm78, <NT_Rm79, <NT_Rm80
     .db <NT_Rm81, <NT_Rm82, <NT_Rm83, <NT_Rm84, <NT_Rm85, <NT_Rm86, <NT_Rm87, <NT_Rm88, <NT_Rm89
     .db <NT_Rm90, <NT_Rm91, <NT_Rm92, <NT_Rm93, <NT_Rm94, <NT_Rm95, <NT_Rm96, <NT_Rm97, <NT_Rm98
     .db <NT_Rm99, <NT_Rm100, <NT_Rm101, <NT_Rm102, <NT_Rm103, <NT_Rm104, <NT_Rm105, <NT_Rm106, <NT_Rm107
-    .db <NT_Rm108, <NT_Rm109, <NT_Rm110, <NT_Rm111, <NT_Rm112, <NT_Rm113, <NT_Rm114, <NT_Rm115, <NT_Rm116 
-    .db <NT_Rm117, <NT_Rm118, <NT_Rm119, <NT_Rm120, <NT_Rm121, <NT_Rm122, <NT_Rm123, <NT_Rm124, <NT_Rm125 
+    .db <NT_Rm108, <NT_Rm109, <NT_Rm110, <NT_Rm111, <NT_Rm112, <NT_Rm113, <NT_Rm114, <NT_Rm115, <NT_Rm116
+    .db <NT_Rm117, <NT_Rm118, <NT_Rm119, <NT_Rm120, <NT_Rm121, <NT_Rm122, <NT_Rm123, <NT_Rm124, <NT_Rm125
     .db <NT_Rm126, <NT_Rm127, <NT_Rm128, <NT_Rm129, <NT_Rm130, <NT_Rm131, <NT_Rm132, <NT_Rm133, <NT_Rm134
-    .db <NT_Rm135, <NT_Rm136, <NT_Rm137, <NT_Rm138, <NT_Rm139, <NT_Rm140, <NT_Rm141, <NT_Rm142, <NT_Rm143 
-    .db <NT_Rm144, <NT_Rm145, <NT_Rm146, <NT_Rm147, <NT_Rm148, <NT_Rm149, <NT_Rm150, <NT_Rm151, <NT_Rm152 
-    .db <NT_Rm153, <NT_Rm154, <NT_Rm155, <NT_Rm156, <NT_Rm157, <NT_Rm158, <NT_Rm159, <NT_Rm160, <NT_Rm161 
+    .db <NT_Rm135, <NT_Rm136, <NT_Rm137, <NT_Rm138, <NT_Rm139, <NT_Rm140, <NT_Rm141, <NT_Rm142, <NT_Rm143
+    .db <NT_Rm144, <NT_Rm145, <NT_Rm146, <NT_Rm147, <NT_Rm148, <NT_Rm149, <NT_Rm150, <NT_Rm151, <NT_Rm152
+    .db <NT_Rm153, <NT_Rm154, <NT_Rm155, <NT_Rm156, <NT_Rm157, <NT_Rm158, <NT_Rm159, <NT_Rm160, <NT_Rm161
     .db <NT_Rm162, <NT_Rm163, <NT_Rm164, <NT_Rm165, <NT_Rm166, <NT_Rm167, <NT_Rm168, <NT_Rm169, <NT_Rm170
-    .db <NT_Rm171, <NT_Rm172, <NT_Rm173, <NT_Rm174, <NT_Rm175, <NT_Rm176, <NT_Rm177, <NT_Rm178, <NT_Rm179 
-    .db <NT_Rm180, <NT_Rm181, <NT_Rm182, <NT_Rm183, <NT_Rm184, <NT_Rm185, <NT_Rm186, <NT_Rm187, <NT_Rm188 
+    .db <NT_Rm171, <NT_Rm172, <NT_Rm173, <NT_Rm174, <NT_Rm175, <NT_Rm176, <NT_Rm177, <NT_Rm178, <NT_Rm179
+    .db <NT_Rm180, <NT_Rm181, <NT_Rm182, <NT_Rm183, <NT_Rm184, <NT_Rm185, <NT_Rm186, <NT_Rm187, <NT_Rm188
     .db <NT_Rm189, <NT_Rm190, <NT_Rm191, <NT_Rm192, <NT_Rm193, <NT_Rm194, <NT_Rm195, <NT_Rm196, <NT_Rm197
-    .db <NT_Rm198, <NT_Rm199, <NT_Rm200, <NT_Rm201, <NT_Rm202, <NT_Rm203, <NT_Rm204, <NT_Rm205, <NT_Rm206 
+    .db <NT_Rm198, <NT_Rm199, <NT_Rm200, <NT_Rm201, <NT_Rm202, <NT_Rm203, <NT_Rm204, <NT_Rm205, <NT_Rm206
     .db <NT_Rm207, <NT_Rm208, <NT_Rm209, <NT_Rm210, <NT_Rm211, <NT_Rm212, <NT_Rm213, <NT_Rm214, <NT_Rm215
-    .db <NT_Rm216, <NT_Rm217, <NT_Rm218, <NT_Rm219, <NT_Rm220, <NT_Rm221, <NT_Rm222, <NT_Rm223, <NT_Rm224 
-    .db <NT_Rm225, <NT_Rm226, <NT_Rm227, <NT_Rm228, <NT_Rm229, <NT_Rm230, <NT_Rm231, <NT_Rm232, <NT_Rm233 
+    .db <NT_Rm216, <NT_Rm217, <NT_Rm218, <NT_Rm219, <NT_Rm220, <NT_Rm221, <NT_Rm222, <NT_Rm223, <NT_Rm224
+    .db <NT_Rm225, <NT_Rm226, <NT_Rm227, <NT_Rm228, <NT_Rm229, <NT_Rm230, <NT_Rm231, <NT_Rm232, <NT_Rm233
     .db <NT_Rm234, <NT_Rm235, <NT_Rm236, <NT_Rm237, <NT_Rm238, <NT_Rm239, <NT_Rm240, <NT_Rm241, <NT_Rm242
-    .db <NT_Rm243, <NT_Rm244, <NT_Rm245, <NT_Rm246, <NT_Rm247, <NT_Rm248, <NT_Rm249, <NT_Rm250, <NT_Rm251 
+    .db <NT_Rm243, <NT_Rm244, <NT_Rm245, <NT_Rm246, <NT_Rm247, <NT_Rm248, <NT_Rm249, <NT_Rm250, <NT_Rm251
     .db <NT_Rm252, <NT_Rm253, <NT_Rm254, <NT_Rm255
 
 NameTablePointers_Map1_hi:
     .db >NT_Rm00, >NT_Rm01, >NT_Rm02, >NT_Rm03, >NT_Rm04, >NT_Rm05, >NT_Rm06, >NT_Rm07, >NT_Rm08
     .db >NT_Rm09, >NT_Rm10, >NT_Rm11, >NT_Rm12, >NT_Rm13, >NT_Rm14, >NT_Rm15, >NT_Rm16, >NT_Rm17
-    .db >NT_Rm18, >NT_Rm19, >NT_Rm20, >NT_Rm21, >NT_Rm22, >NT_Rm23, >NT_Rm24, >NT_Rm25, >NT_Rm26 
-    .db >NT_Rm27, >NT_Rm28, >NT_Rm29, >NT_Rm30, >NT_Rm31, >NT_Rm32, >NT_Rm33, >NT_Rm34, >NT_Rm35 
-    .db >NT_Rm36, >NT_Rm37, >NT_Rm38, >NT_Rm39, >NT_Rm40, >NT_Rm41, >NT_Rm42, >NT_Rm43, >NT_Rm44 
-    .db >NT_Rm45, >NT_Rm46, >NT_Rm47, >NT_Rm48, >NT_Rm49, >NT_Rm50, >NT_Rm51, >NT_Rm52, >NT_Rm53 
-    .db >NT_Rm54, >NT_Rm55, >NT_Rm56, >NT_Rm57, >NT_Rm58, >NT_Rm59, >NT_Rm60, >NT_Rm61, >NT_Rm62 
-    .db >NT_Rm63, >NT_Rm64, >NT_Rm65, >NT_Rm66, >NT_Rm67, >NT_Rm68, >NT_Rm69, >NT_Rm70, >NT_Rm71 
-    .db >NT_Rm72, >NT_Rm73, >NT_Rm74, >NT_Rm75, >NT_Rm76, >NT_Rm77, >NT_Rm78, >NT_Rm79, >NT_Rm80 
+    .db >NT_Rm18, >NT_Rm19, >NT_Rm20, >NT_Rm21, >NT_Rm22, >NT_Rm23, >NT_Rm24, >NT_Rm25, >NT_Rm26
+    .db >NT_Rm27, >NT_Rm28, >NT_Rm29, >NT_Rm30, >NT_Rm31, >NT_Rm32, >NT_Rm33, >NT_Rm34, >NT_Rm35
+    .db >NT_Rm36, >NT_Rm37, >NT_Rm38, >NT_Rm39, >NT_Rm40, >NT_Rm41, >NT_Rm42, >NT_Rm43, >NT_Rm44
+    .db >NT_Rm45, >NT_Rm46, >NT_Rm47, >NT_Rm48, >NT_Rm49, >NT_Rm50, >NT_Rm51, >NT_Rm52, >NT_Rm53
+    .db >NT_Rm54, >NT_Rm55, >NT_Rm56, >NT_Rm57, >NT_Rm58, >NT_Rm59, >NT_Rm60, >NT_Rm61, >NT_Rm62
+    .db >NT_Rm63, >NT_Rm64, >NT_Rm65, >NT_Rm66, >NT_Rm67, >NT_Rm68, >NT_Rm69, >NT_Rm70, >NT_Rm71
+    .db >NT_Rm72, >NT_Rm73, >NT_Rm74, >NT_Rm75, >NT_Rm76, >NT_Rm77, >NT_Rm78, >NT_Rm79, >NT_Rm80
     .db >NT_Rm81, >NT_Rm82, >NT_Rm83, >NT_Rm84, >NT_Rm85, >NT_Rm86, >NT_Rm87, >NT_Rm88, >NT_Rm89
     .db >NT_Rm90, >NT_Rm91, >NT_Rm92, >NT_Rm93, >NT_Rm94, >NT_Rm95, >NT_Rm96, >NT_Rm97, >NT_Rm98
     .db >NT_Rm99, >NT_Rm100, >NT_Rm101, >NT_Rm102, >NT_Rm103, >NT_Rm104, >NT_Rm105, >NT_Rm106, >NT_Rm107
-    .db >NT_Rm108, >NT_Rm109, >NT_Rm110, >NT_Rm111, >NT_Rm112, >NT_Rm113, >NT_Rm114, >NT_Rm115, >NT_Rm116 
-    .db >NT_Rm117, >NT_Rm118, >NT_Rm119, >NT_Rm120, >NT_Rm121, >NT_Rm122, >NT_Rm123, >NT_Rm124, >NT_Rm125 
+    .db >NT_Rm108, >NT_Rm109, >NT_Rm110, >NT_Rm111, >NT_Rm112, >NT_Rm113, >NT_Rm114, >NT_Rm115, >NT_Rm116
+    .db >NT_Rm117, >NT_Rm118, >NT_Rm119, >NT_Rm120, >NT_Rm121, >NT_Rm122, >NT_Rm123, >NT_Rm124, >NT_Rm125
     .db >NT_Rm126, >NT_Rm127, >NT_Rm128, >NT_Rm129, >NT_Rm130, >NT_Rm131, >NT_Rm132, >NT_Rm133, >NT_Rm134
-    .db >NT_Rm135, >NT_Rm136, >NT_Rm137, >NT_Rm138, >NT_Rm139, >NT_Rm140, >NT_Rm141, >NT_Rm142, >NT_Rm143 
-    .db >NT_Rm144, >NT_Rm145, >NT_Rm146, >NT_Rm147, >NT_Rm148, >NT_Rm149, >NT_Rm150, >NT_Rm151, >NT_Rm152 
-    .db >NT_Rm153, >NT_Rm154, >NT_Rm155, >NT_Rm156, >NT_Rm157, >NT_Rm158, >NT_Rm159, >NT_Rm160, >NT_Rm161 
+    .db >NT_Rm135, >NT_Rm136, >NT_Rm137, >NT_Rm138, >NT_Rm139, >NT_Rm140, >NT_Rm141, >NT_Rm142, >NT_Rm143
+    .db >NT_Rm144, >NT_Rm145, >NT_Rm146, >NT_Rm147, >NT_Rm148, >NT_Rm149, >NT_Rm150, >NT_Rm151, >NT_Rm152
+    .db >NT_Rm153, >NT_Rm154, >NT_Rm155, >NT_Rm156, >NT_Rm157, >NT_Rm158, >NT_Rm159, >NT_Rm160, >NT_Rm161
     .db >NT_Rm162, >NT_Rm163, >NT_Rm164, >NT_Rm165, >NT_Rm166, >NT_Rm167, >NT_Rm168, >NT_Rm169, >NT_Rm170
-    .db >NT_Rm171, >NT_Rm172, >NT_Rm173, >NT_Rm174, >NT_Rm175, >NT_Rm176, >NT_Rm177, >NT_Rm178, >NT_Rm179 
-    .db >NT_Rm180, >NT_Rm181, >NT_Rm182, >NT_Rm183, >NT_Rm184, >NT_Rm185, >NT_Rm186, >NT_Rm187, >NT_Rm188 
+    .db >NT_Rm171, >NT_Rm172, >NT_Rm173, >NT_Rm174, >NT_Rm175, >NT_Rm176, >NT_Rm177, >NT_Rm178, >NT_Rm179
+    .db >NT_Rm180, >NT_Rm181, >NT_Rm182, >NT_Rm183, >NT_Rm184, >NT_Rm185, >NT_Rm186, >NT_Rm187, >NT_Rm188
     .db >NT_Rm189, >NT_Rm190, >NT_Rm191, >NT_Rm192, >NT_Rm193, >NT_Rm194, >NT_Rm195, >NT_Rm196, >NT_Rm197
-    .db >NT_Rm198, >NT_Rm199, >NT_Rm200, >NT_Rm201, >NT_Rm202, >NT_Rm203, >NT_Rm204, >NT_Rm205, >NT_Rm206 
+    .db >NT_Rm198, >NT_Rm199, >NT_Rm200, >NT_Rm201, >NT_Rm202, >NT_Rm203, >NT_Rm204, >NT_Rm205, >NT_Rm206
     .db >NT_Rm207, >NT_Rm208, >NT_Rm209, >NT_Rm210, >NT_Rm211, >NT_Rm212, >NT_Rm213, >NT_Rm214, >NT_Rm215
-    .db >NT_Rm216, >NT_Rm217, >NT_Rm218, >NT_Rm219, >NT_Rm220, >NT_Rm221, >NT_Rm222, >NT_Rm223, >NT_Rm224 
-    .db >NT_Rm225, >NT_Rm226, >NT_Rm227, >NT_Rm228, >NT_Rm229, >NT_Rm230, >NT_Rm231, >NT_Rm232, >NT_Rm233 
+    .db >NT_Rm216, >NT_Rm217, >NT_Rm218, >NT_Rm219, >NT_Rm220, >NT_Rm221, >NT_Rm222, >NT_Rm223, >NT_Rm224
+    .db >NT_Rm225, >NT_Rm226, >NT_Rm227, >NT_Rm228, >NT_Rm229, >NT_Rm230, >NT_Rm231, >NT_Rm232, >NT_Rm233
     .db >NT_Rm234, >NT_Rm235, >NT_Rm236, >NT_Rm237, >NT_Rm238, >NT_Rm239, >NT_Rm240, >NT_Rm241, >NT_Rm242
-    .db >NT_Rm243, >NT_Rm244, >NT_Rm245, >NT_Rm246, >NT_Rm247, >NT_Rm248, >NT_Rm249, >NT_Rm250, >NT_Rm251 
-    .db >NT_Rm252, >NT_Rm253, >NT_Rm254, >NT_Rm255    
+    .db >NT_Rm243, >NT_Rm244, >NT_Rm245, >NT_Rm246, >NT_Rm247, >NT_Rm248, >NT_Rm249, >NT_Rm250, >NT_Rm251
+    .db >NT_Rm252, >NT_Rm253, >NT_Rm254, >NT_Rm255
 
 NameTablePointers_Map2_lo:
-    .db <bNT_Rm00, <bNT_Rm01, <bNT_Rm02, <bNT_Rm03, <bNT_Rm04, <bNT_Rm05, <bNT_Rm06, <bNT_Rm07, <bNT_Rm08, <bNT_Rm09, <bNT_Rm10 
-    .db <bNT_Rm11, <bNT_Rm12, <bNT_Rm13, <bNT_Rm14, <bNT_Rm15, <bNT_Rm16, <bNT_Rm17, <bNT_Rm18, <bNT_Rm19, <bNT_Rm20 
+    .db <bNT_Rm00, <bNT_Rm01, <bNT_Rm02, <bNT_Rm03, <bNT_Rm04, <bNT_Rm05, <bNT_Rm06, <bNT_Rm07, <bNT_Rm08, <bNT_Rm09, <bNT_Rm10
+    .db <bNT_Rm11, <bNT_Rm12, <bNT_Rm13, <bNT_Rm14, <bNT_Rm15, <bNT_Rm16, <bNT_Rm17, <bNT_Rm18, <bNT_Rm19, <bNT_Rm20
     .db <bNT_Rm21, <bNT_Rm22, <bNT_Rm23, <bNT_Rm24, <bNT_Rm25, <bNT_Rm26, <bNT_Rm27, <bNT_Rm28, <bNT_Rm29, <bNT_Rm30
     .db <bNT_Rm31, <bNT_Rm32, <bNT_Rm33, <bNT_Rm34, <bNT_Rm35, <bNT_Rm36, <bNT_Rm37, <bNT_Rm38, <bNT_Rm39, <bNT_Rm40
     .db <bNT_Rm41, <bNT_Rm42, <bNT_Rm43, <bNT_Rm44, <bNT_Rm45, <bNT_Rm46, <bNT_Rm47, <bNT_Rm48, <bNT_Rm49, <bNT_Rm50
     .db <bNT_Rm51, <bNT_Rm52, <bNT_Rm53, <bNT_Rm54, <bNT_Rm55, <bNT_Rm56, <bNT_Rm57, <bNT_Rm58, <bNT_Rm59, <bNT_Rm60
     .db <bNT_Rm61, <bNT_Rm62, <bNT_Rm63, <bNT_Rm64, <bNT_Rm65, <bNT_Rm66, <bNT_Rm67, <bNT_Rm68, <bNT_Rm69, <bNT_Rm70
-    .db <bNT_Rm71, <bNT_Rm72, <bNT_Rm73, <bNT_Rm74, <bNT_Rm75, <bNT_Rm76, <bNT_Rm77, <bNT_Rm78, <bNT_Rm79, <bNT_Rm80 
-    .db <bNT_Rm81, <bNT_Rm82, <bNT_Rm83, <bNT_Rm84, <bNT_Rm85, <bNT_Rm86, <bNT_Rm87, <bNT_Rm88, <bNT_Rm89, <bNT_Rm90 
+    .db <bNT_Rm71, <bNT_Rm72, <bNT_Rm73, <bNT_Rm74, <bNT_Rm75, <bNT_Rm76, <bNT_Rm77, <bNT_Rm78, <bNT_Rm79, <bNT_Rm80
+    .db <bNT_Rm81, <bNT_Rm82, <bNT_Rm83, <bNT_Rm84, <bNT_Rm85, <bNT_Rm86, <bNT_Rm87, <bNT_Rm88, <bNT_Rm89, <bNT_Rm90
     .db <bNT_Rm91, <bNT_Rm92, <bNT_Rm93, <bNT_Rm94, <bNT_Rm95, <bNT_Rm96, <bNT_Rm97, <bNT_Rm98, <bNT_Rm99, <bNT_Rm100
-    .db <bNT_Rm101, <bNT_Rm102, <bNT_Rm103, <bNT_Rm104, <bNT_Rm105, <bNT_Rm106, <bNT_Rm107, <bNT_Rm108, <bNT_Rm109, <bNT_Rm110 
+    .db <bNT_Rm101, <bNT_Rm102, <bNT_Rm103, <bNT_Rm104, <bNT_Rm105, <bNT_Rm106, <bNT_Rm107, <bNT_Rm108, <bNT_Rm109, <bNT_Rm110
     .db <bNT_Rm111, <bNT_Rm112, <bNT_Rm113, <bNT_Rm114, <bNT_Rm115, <bNT_Rm116, <bNT_Rm117, <bNT_Rm118, <bNT_Rm119, <bNT_Rm120
     .db <bNT_Rm121, <bNT_Rm122, <bNT_Rm123, <bNT_Rm124, <bNT_Rm125, <bNT_Rm126, <bNT_Rm127, <bNT_Rm128, <bNT_Rm129, <bNT_Rm130
     .db <bNT_Rm131, <bNT_Rm132, <bNT_Rm133, <bNT_Rm134, <bNT_Rm135, <bNT_Rm136, <bNT_Rm137, <bNT_Rm138, <bNT_Rm139, <bNT_Rm140
@@ -144,17 +144,17 @@ NameTablePointers_Map2_lo:
     .db <bNT_Rm251, <bNT_Rm252, <bNT_Rm253, <bNT_Rm254, <bNT_Rm255
 
 NameTablePointers_Map2_hi:
-    .db >bNT_Rm00, >bNT_Rm01, >bNT_Rm02, >bNT_Rm03, >bNT_Rm04, >bNT_Rm05, >bNT_Rm06, >bNT_Rm07, >bNT_Rm08, >bNT_Rm09, >bNT_Rm10 
-    .db >bNT_Rm11, >bNT_Rm12, >bNT_Rm13, >bNT_Rm14, >bNT_Rm15, >bNT_Rm16, >bNT_Rm17, >bNT_Rm18, >bNT_Rm19, >bNT_Rm20 
+    .db >bNT_Rm00, >bNT_Rm01, >bNT_Rm02, >bNT_Rm03, >bNT_Rm04, >bNT_Rm05, >bNT_Rm06, >bNT_Rm07, >bNT_Rm08, >bNT_Rm09, >bNT_Rm10
+    .db >bNT_Rm11, >bNT_Rm12, >bNT_Rm13, >bNT_Rm14, >bNT_Rm15, >bNT_Rm16, >bNT_Rm17, >bNT_Rm18, >bNT_Rm19, >bNT_Rm20
     .db >bNT_Rm21, >bNT_Rm22, >bNT_Rm23, >bNT_Rm24, >bNT_Rm25, >bNT_Rm26, >bNT_Rm27, >bNT_Rm28, >bNT_Rm29, >bNT_Rm30
     .db >bNT_Rm31, >bNT_Rm32, >bNT_Rm33, >bNT_Rm34, >bNT_Rm35, >bNT_Rm36, >bNT_Rm37, >bNT_Rm38, >bNT_Rm39, >bNT_Rm40
     .db >bNT_Rm41, >bNT_Rm42, >bNT_Rm43, >bNT_Rm44, >bNT_Rm45, >bNT_Rm46, >bNT_Rm47, >bNT_Rm48, >bNT_Rm49, >bNT_Rm50
     .db >bNT_Rm51, >bNT_Rm52, >bNT_Rm53, >bNT_Rm54, >bNT_Rm55, >bNT_Rm56, >bNT_Rm57, >bNT_Rm58, >bNT_Rm59, >bNT_Rm60
     .db >bNT_Rm61, >bNT_Rm62, >bNT_Rm63, >bNT_Rm64, >bNT_Rm65, >bNT_Rm66, >bNT_Rm67, >bNT_Rm68, >bNT_Rm69, >bNT_Rm70
-    .db >bNT_Rm71, >bNT_Rm72, >bNT_Rm73, >bNT_Rm74, >bNT_Rm75, >bNT_Rm76, >bNT_Rm77, >bNT_Rm78, >bNT_Rm79, >bNT_Rm80 
-    .db >bNT_Rm81, >bNT_Rm82, >bNT_Rm83, >bNT_Rm84, >bNT_Rm85, >bNT_Rm86, >bNT_Rm87, >bNT_Rm88, >bNT_Rm89, >bNT_Rm90 
+    .db >bNT_Rm71, >bNT_Rm72, >bNT_Rm73, >bNT_Rm74, >bNT_Rm75, >bNT_Rm76, >bNT_Rm77, >bNT_Rm78, >bNT_Rm79, >bNT_Rm80
+    .db >bNT_Rm81, >bNT_Rm82, >bNT_Rm83, >bNT_Rm84, >bNT_Rm85, >bNT_Rm86, >bNT_Rm87, >bNT_Rm88, >bNT_Rm89, >bNT_Rm90
     .db >bNT_Rm91, >bNT_Rm92, >bNT_Rm93, >bNT_Rm94, >bNT_Rm95, >bNT_Rm96, >bNT_Rm97, >bNT_Rm98, >bNT_Rm99, >bNT_Rm100
-    .db >bNT_Rm101, >bNT_Rm102, >bNT_Rm103, >bNT_Rm104, >bNT_Rm105, >bNT_Rm106, >bNT_Rm107, >bNT_Rm108, >bNT_Rm109, >bNT_Rm110 
+    .db >bNT_Rm101, >bNT_Rm102, >bNT_Rm103, >bNT_Rm104, >bNT_Rm105, >bNT_Rm106, >bNT_Rm107, >bNT_Rm108, >bNT_Rm109, >bNT_Rm110
     .db >bNT_Rm111, >bNT_Rm112, >bNT_Rm113, >bNT_Rm114, >bNT_Rm115, >bNT_Rm116, >bNT_Rm117, >bNT_Rm118, >bNT_Rm119, >bNT_Rm120
     .db >bNT_Rm121, >bNT_Rm122, >bNT_Rm123, >bNT_Rm124, >bNT_Rm125, >bNT_Rm126, >bNT_Rm127, >bNT_Rm128, >bNT_Rm129, >bNT_Rm130
     .db >bNT_Rm131, >bNT_Rm132, >bNT_Rm133, >bNT_Rm134, >bNT_Rm135, >bNT_Rm136, >bNT_Rm137, >bNT_Rm138, >bNT_Rm139, >bNT_Rm140
@@ -175,7 +175,7 @@ NameTablePointers_Map2_hi:
 ;; Attribute table pointers
 AttributeTables_Map1_Lo:
     .db <AT_Rm00, <AT_Rm01, <AT_Rm02, <AT_Rm03, <AT_Rm04, <AT_Rm05, <AT_Rm06, <AT_Rm07, <AT_Rm08, <AT_Rm09
-    .db <AT_Rm10, <AT_Rm11, <AT_Rm12, <AT_Rm13, <AT_Rm14, <AT_Rm15, <AT_Rm16, <AT_Rm17, <AT_Rm18, <AT_Rm19 
+    .db <AT_Rm10, <AT_Rm11, <AT_Rm12, <AT_Rm13, <AT_Rm14, <AT_Rm15, <AT_Rm16, <AT_Rm17, <AT_Rm18, <AT_Rm19
     .db <AT_Rm20, <AT_Rm21, <AT_Rm22, <AT_Rm23, <AT_Rm24, <AT_Rm25, <AT_Rm26, <AT_Rm27, <AT_Rm28, <AT_Rm29
     .db <AT_Rm30, <AT_Rm31, <AT_Rm32, <AT_Rm33, <AT_Rm34, <AT_Rm35, <AT_Rm36, <AT_Rm37, <AT_Rm38, <AT_Rm39
     .db <AT_Rm40, <AT_Rm41, <AT_Rm42, <AT_Rm43, <AT_Rm44, <AT_Rm45, <AT_Rm46, <AT_Rm47, <AT_Rm48, <AT_Rm49
@@ -205,7 +205,7 @@ AttributeTables_Map1_Lo:
 
 AttributeTables_Map1_Hi:
     .db >AT_Rm00, >AT_Rm01, >AT_Rm02, >AT_Rm03, >AT_Rm04, >AT_Rm05, >AT_Rm06, >AT_Rm07, >AT_Rm08, >AT_Rm09
-    .db >AT_Rm10, >AT_Rm11, >AT_Rm12, >AT_Rm13, >AT_Rm14, >AT_Rm15, >AT_Rm16, >AT_Rm17, >AT_Rm18, >AT_Rm19 
+    .db >AT_Rm10, >AT_Rm11, >AT_Rm12, >AT_Rm13, >AT_Rm14, >AT_Rm15, >AT_Rm16, >AT_Rm17, >AT_Rm18, >AT_Rm19
     .db >AT_Rm20, >AT_Rm21, >AT_Rm22, >AT_Rm23, >AT_Rm24, >AT_Rm25, >AT_Rm26, >AT_Rm27, >AT_Rm28, >AT_Rm29
     .db >AT_Rm30, >AT_Rm31, >AT_Rm32, >AT_Rm33, >AT_Rm34, >AT_Rm35, >AT_Rm36, >AT_Rm37, >AT_Rm38, >AT_Rm39
     .db >AT_Rm40, >AT_Rm41, >AT_Rm42, >AT_Rm43, >AT_Rm44, >AT_Rm45, >AT_Rm46, >AT_Rm47, >AT_Rm48, >AT_Rm49
@@ -235,7 +235,7 @@ AttributeTables_Map1_Hi:
 
 AttributeTables_Map2_Lo:
     .db <bAT_Rm00, <bAT_Rm01, <bAT_Rm02, <bAT_Rm03, <bAT_Rm04, <bAT_Rm05, <bAT_Rm06, <bAT_Rm07, <bAT_Rm08, <bAT_Rm09
-    .db <bAT_Rm10, <bAT_Rm11, <bAT_Rm12, <bAT_Rm13, <bAT_Rm14, <bAT_Rm15, <bAT_Rm16, <bAT_Rm17, <bAT_Rm18,  <bAT_Rm19 
+    .db <bAT_Rm10, <bAT_Rm11, <bAT_Rm12, <bAT_Rm13, <bAT_Rm14, <bAT_Rm15, <bAT_Rm16, <bAT_Rm17, <bAT_Rm18,  <bAT_Rm19
     .db <bAT_Rm20, <bAT_Rm21, <bAT_Rm22, <bAT_Rm23, <bAT_Rm24, <bAT_Rm25, <bAT_Rm26, <bAT_Rm27, <bAT_Rm28, <bAT_Rm29
     .db <bAT_Rm30, <bAT_Rm31, <bAT_Rm32, <bAT_Rm33, <bAT_Rm34, <bAT_Rm35, <bAT_Rm36, <bAT_Rm37, <bAT_Rm38, <bAT_Rm39
     .db <bAT_Rm40, <bAT_Rm41, <bAT_Rm42, <bAT_Rm43, <bAT_Rm44, <bAT_Rm45, <bAT_Rm46, <bAT_Rm47, <bAT_Rm48, <bAT_Rm49
@@ -263,9 +263,9 @@ AttributeTables_Map2_Lo:
     .db <bAT_Rm244, <bAT_Rm245, <bAT_Rm246, <bAT_Rm247, <bAT_Rm248, <bAT_Rm249, <bAT_Rm250, <bAT_Rm251, <bAT_Rm252
     .db <bAT_Rm253, <bAT_Rm254, <bAT_Rm255
 
-AttributeTables_Map2_Hi:    
+AttributeTables_Map2_Hi:
     .db >bAT_Rm00, >bAT_Rm01, >bAT_Rm02, >bAT_Rm03, >bAT_Rm04, >bAT_Rm05, >bAT_Rm06, >bAT_Rm07, >bAT_Rm08, >bAT_Rm09
-    .db >bAT_Rm10, >bAT_Rm11, >bAT_Rm12, >bAT_Rm13, >bAT_Rm14, >bAT_Rm15, >bAT_Rm16, >bAT_Rm17, >bAT_Rm18,  >bAT_Rm19 
+    .db >bAT_Rm10, >bAT_Rm11, >bAT_Rm12, >bAT_Rm13, >bAT_Rm14, >bAT_Rm15, >bAT_Rm16, >bAT_Rm17, >bAT_Rm18,  >bAT_Rm19
     .db >bAT_Rm20, >bAT_Rm21, >bAT_Rm22, >bAT_Rm23, >bAT_Rm24, >bAT_Rm25, >bAT_Rm26, >bAT_Rm27, >bAT_Rm28, >bAT_Rm29
     .db >bAT_Rm30, >bAT_Rm31, >bAT_Rm32, >bAT_Rm33, >bAT_Rm34, >bAT_Rm35, >bAT_Rm36, >bAT_Rm37, >bAT_Rm38, >bAT_Rm39
     .db >bAT_Rm40, >bAT_Rm41, >bAT_Rm42, >bAT_Rm43, >bAT_Rm44, >bAT_Rm45, >bAT_Rm46, >bAT_Rm47, >bAT_Rm48, >bAT_Rm49
@@ -291,15 +291,15 @@ AttributeTables_Map2_Hi:
     .db >bAT_Rm226, >bAT_Rm227, >bAT_Rm228, >bAT_Rm229, >bAT_Rm230, >bAT_Rm231, >bAT_Rm232, >bAT_Rm233, >bAT_Rm234
     .db >bAT_Rm235, >bAT_Rm236, >bAT_Rm237, >bAT_Rm238, >bAT_Rm239, >bAT_Rm240, >bAT_Rm241, >bAT_Rm242, >bAT_Rm243
     .db >bAT_Rm244, >bAT_Rm245, >bAT_Rm246, >bAT_Rm247, >bAT_Rm248, >bAT_Rm249, >bAT_Rm250, >bAT_Rm251, >bAT_Rm252
-    .db >bAT_Rm253, >bAT_Rm254, >bAT_Rm255    
+    .db >bAT_Rm253, >bAT_Rm254, >bAT_Rm255
 
 
 ;; Collision table pointers
-CollisionTables_Map1_Lo:    
+CollisionTables_Map1_Lo:
     .db <Ct00, <Ct01, <Ct02, <Ct03, <Ct04, <Ct05, <Ct06, <Ct07, <Ct08, <Ct09, <Ct10, <Ct11, <Ct12, <Ct13, <Ct14, <Ct15, <Ct16, <Ct17, <Ct18, <Ct19, <Ct20, <Ct21, <Ct22, <Ct23, <Ct24, <Ct25, <Ct26, <Ct27, <Ct28, <Ct29, <Ct30, <Ct31, <Ct32, <Ct33, <Ct34, <Ct35, <Ct36, <Ct37, <Ct38, <Ct39, <Ct40, <Ct41, <Ct42, <Ct43, <Ct44, <Ct45, <Ct46, <Ct47, <Ct48, <Ct49, <Ct50, <Ct51, <Ct52, <Ct53, <Ct54, <Ct55, <Ct56, <Ct57, <Ct58, <Ct59, <Ct60, <Ct61, <Ct62, <Ct63, <Ct64, <Ct65, <Ct66, <Ct67, <Ct68, <Ct69, <Ct70, <Ct71, <Ct72, <Ct73, <Ct74, <Ct75, <Ct76, <Ct77, <Ct78, <Ct79, <Ct80, <Ct81, <Ct82, <Ct83, <Ct84, <Ct85, <Ct86, <Ct87, <Ct88, <Ct89, <Ct90, <Ct91, <Ct92, <Ct93, <Ct94, <Ct95, <Ct96, <Ct97, <Ct98, <Ct99, <Ct100, <Ct101, <Ct102, <Ct103, <Ct104, <Ct105, <Ct106, <Ct107, <Ct108, <Ct109, <Ct110, <Ct111, <Ct112, <Ct113, <Ct114, <Ct115, <Ct116, <Ct117, <Ct118, <Ct119, <Ct120, <Ct121, <Ct122, <Ct123, <Ct124, <Ct125, <Ct126, <Ct127, <Ct128, <Ct129, <Ct130, <Ct131, <Ct132, <Ct133, <Ct134, <Ct135, <Ct136, <Ct137, <Ct138, <Ct139, <Ct140, <Ct141, <Ct142, <Ct143, <Ct144, <Ct145, <Ct146, <Ct147, <Ct148, <Ct149, <Ct150, <Ct151, <Ct152, <Ct153, <Ct154, <Ct155, <Ct156, <Ct157, <Ct158, <Ct159, <Ct160, <Ct161, <Ct162, <Ct163, <Ct164, <Ct165, <Ct166, <Ct167, <Ct168, <Ct169, <Ct170, <Ct171, <Ct172, <Ct173, <Ct174, <Ct175, <Ct176, <Ct177, <Ct178, <Ct179, <Ct180, <Ct181, <Ct182, <Ct183, <Ct184, <Ct185, <Ct186, <Ct187, <Ct188, <Ct189, <Ct190, <Ct191, <Ct192, <Ct193, <Ct194, <Ct195, <Ct196, <Ct197, <Ct198, <Ct199, <Ct200, <Ct201, <Ct202, <Ct203, <Ct204, <Ct205, <Ct206, <Ct207, <Ct208, <Ct209, <Ct210, <Ct211, <Ct212, <Ct213, <Ct214, <Ct215, <Ct216, <Ct217, <Ct218, <Ct219, <Ct220, <Ct221, <Ct222, <Ct223, <Ct224, <Ct225, <Ct226, <Ct227, <Ct228, <Ct229, <Ct230, <Ct231, <Ct232, <Ct233, <Ct234, <Ct235, <Ct236, <Ct237, <Ct238, <Ct239, <Ct240, <Ct241, <Ct242, <Ct243, <Ct244, <Ct245, <Ct246, <Ct247, <Ct248, <Ct249, <Ct250, <Ct251, <Ct252, <Ct253, <Ct254, <Ct255
 
-CollisionTables_Map2_Lo:    
-    .db <bCt00, <bCt01, <bCt02, <bCt03, <bCt04, <bCt05, <bCt06, <bCt07, <bCt08, <bCt09 
+CollisionTables_Map2_Lo:
+    .db <bCt00, <bCt01, <bCt02, <bCt03, <bCt04, <bCt05, <bCt06, <bCt07, <bCt08, <bCt09
     .db <bCt10, <bCt11, <bCt12, <bCt13, <bCt14, <bCt15, <bCt16, <bCt17, <bCt18, <bCt19
     .db <bCt20, <bCt21, <bCt22, <bCt23, <bCt24, <bCt25, <bCt26, <bCt27, <bCt28, <bCt29
     .db <bCt30, <bCt31, <bCt32, <bCt33, <bCt34, <bCt35, <bCt36, <bCt37, <bCt38, <bCt39
@@ -323,16 +323,16 @@ CollisionTables_Map2_Lo:
     .db <bCt199, <bCt200, <bCt201, <bCt202, <bCt203, <bCt204, <bCt205, <bCt206, <bCt207
     .db <bCt208, <bCt209, <bCt210, <bCt211, <bCt212, <bCt213, <bCt214, <bCt215, <bCt216
     .db <bCt217, <bCt218, <bCt219, <bCt220, <bCt221, <bCt222, <bCt223, <bCt224, <bCt225
-    .db <bCt226, <bCt227, <bCt228, <bCt229, <bCt230, <bCt231, <bCt232, <bCt233, <bCt234 
-    .db <bCt235, <bCt236, <bCt237, <bCt238, <bCt239, <bCt240, <bCt241, <bCt242, <bCt243 
-    .db <bCt244, <bCt245, <bCt246, <bCt247, <bCt248, <bCt249, <bCt250, <bCt251, <bCt252 
-    .db <bCt253, <bCt254, <bCt255    
+    .db <bCt226, <bCt227, <bCt228, <bCt229, <bCt230, <bCt231, <bCt232, <bCt233, <bCt234
+    .db <bCt235, <bCt236, <bCt237, <bCt238, <bCt239, <bCt240, <bCt241, <bCt242, <bCt243
+    .db <bCt244, <bCt245, <bCt246, <bCt247, <bCt248, <bCt249, <bCt250, <bCt251, <bCt252
+    .db <bCt253, <bCt254, <bCt255
 
-CollisionTables_Map1_Hi:    
+CollisionTables_Map1_Hi:
     .db >Ct00, >Ct01, >Ct02, >Ct03, >Ct04, >Ct05, >Ct06, >Ct07, >Ct08, >Ct09, >Ct10, >Ct11, >Ct12, >Ct13, >Ct14, >Ct15, >Ct16, >Ct17, >Ct18, >Ct19, >Ct20, >Ct21, >Ct22, >Ct23, >Ct24, >Ct25, >Ct26, >Ct27, >Ct28, >Ct29, >Ct30, >Ct31, >Ct32, >Ct33, >Ct34, >Ct35, >Ct36, >Ct37, >Ct38, >Ct39, >Ct40, >Ct41, >Ct42, >Ct43, >Ct44, >Ct45, >Ct46, >Ct47, >Ct48, >Ct49, >Ct50, >Ct51, >Ct52, >Ct53, >Ct54, >Ct55, >Ct56, >Ct57, >Ct58, >Ct59, >Ct60, >Ct61, >Ct62, >Ct63, >Ct64, >Ct65, >Ct66, >Ct67, >Ct68, >Ct69, >Ct70, >Ct71, >Ct72, >Ct73, >Ct74, >Ct75, >Ct76, >Ct77, >Ct78, >Ct79, >Ct80, >Ct81, >Ct82, >Ct83, >Ct84, >Ct85, >Ct86, >Ct87, >Ct88, >Ct89, >Ct90, >Ct91, >Ct92, >Ct93, >Ct94, >Ct95, >Ct96, >Ct97, >Ct98, >Ct99, >Ct100, >Ct101, >Ct102, >Ct103, >Ct104, >Ct105, >Ct106, >Ct107, >Ct108, >Ct109, >Ct110, >Ct111, >Ct112, >Ct113, >Ct114, >Ct115, >Ct116, >Ct117, >Ct118, >Ct119, >Ct120, >Ct121, >Ct122, >Ct123, >Ct124, >Ct125, >Ct126, >Ct127, >Ct128, >Ct129, >Ct130, >Ct131, >Ct132, >Ct133, >Ct134, >Ct135, >Ct136, >Ct137, >Ct138, >Ct139, >Ct140, >Ct141, >Ct142, >Ct143, >Ct144, >Ct145, >Ct146, >Ct147, >Ct148, >Ct149, >Ct150, >Ct151, >Ct152, >Ct153, >Ct154, >Ct155, >Ct156, >Ct157, >Ct158, >Ct159, >Ct160, >Ct161, >Ct162, >Ct163, >Ct164, >Ct165, >Ct166, >Ct167, >Ct168, >Ct169, >Ct170, >Ct171, >Ct172, >Ct173, >Ct174, >Ct175, >Ct176, >Ct177, >Ct178, >Ct179, >Ct180, >Ct181, >Ct182, >Ct183, >Ct184, >Ct185, >Ct186, >Ct187, >Ct188, >Ct189, >Ct190, >Ct191, >Ct192, >Ct193, >Ct194, >Ct195, >Ct196, >Ct197, >Ct198, >Ct199, >Ct200, >Ct201, >Ct202, >Ct203, >Ct204, >Ct205, >Ct206, >Ct207, >Ct208, >Ct209, >Ct210, >Ct211, >Ct212, >Ct213, >Ct214, >Ct215, >Ct216, >Ct217, >Ct218, >Ct219, >Ct220, >Ct221, >Ct222, >Ct223, >Ct224, >Ct225, >Ct226, >Ct227, >Ct228, >Ct229, >Ct230, >Ct231, >Ct232, >Ct233, >Ct234, >Ct235, >Ct236, >Ct237, >Ct238, >Ct239, >Ct240, >Ct241, >Ct242, >Ct243, >Ct244, >Ct245, >Ct246, >Ct247, >Ct248, >Ct249, >Ct250, >Ct251, >Ct252, >Ct253, >Ct254, >Ct255
 
-CollisionTables_Map2_Hi:    
-    .db >bCt00, >bCt01, >bCt02, >bCt03, >bCt04, >bCt05, >bCt06, >bCt07, >bCt08, >bCt09 
+CollisionTables_Map2_Hi:
+    .db >bCt00, >bCt01, >bCt02, >bCt03, >bCt04, >bCt05, >bCt06, >bCt07, >bCt08, >bCt09
     .db >bCt10, >bCt11, >bCt12, >bCt13, >bCt14, >bCt15, >bCt16, >bCt17, >bCt18, >bCt19
     .db >bCt20, >bCt21, >bCt22, >bCt23, >bCt24, >bCt25, >bCt26, >bCt27, >bCt28, >bCt29
     .db >bCt30, >bCt31, >bCt32, >bCt33, >bCt34, >bCt35, >bCt36, >bCt37, >bCt38, >bCt39
@@ -356,10 +356,10 @@ CollisionTables_Map2_Hi:
     .db >bCt199, >bCt200, >bCt201, >bCt202, >bCt203, >bCt204, >bCt205, >bCt206, >bCt207
     .db >bCt208, >bCt209, >bCt210, >bCt211, >bCt212, >bCt213, >bCt214, >bCt215, >bCt216
     .db >bCt217, >bCt218, >bCt219, >bCt220, >bCt221, >bCt222, >bCt223, >bCt224, >bCt225
-    .db >bCt226, >bCt227, >bCt228, >bCt229, >bCt230, >bCt231, >bCt232, >bCt233, >bCt234 
-    .db >bCt235, >bCt236, >bCt237, >bCt238, >bCt239, >bCt240, >bCt241, >bCt242, >bCt243 
-    .db >bCt244, >bCt245, >bCt246, >bCt247, >bCt248, >bCt249, >bCt250, >bCt251, >bCt252 
-    .db >bCt253, >bCt254, >bCt255        
+    .db >bCt226, >bCt227, >bCt228, >bCt229, >bCt230, >bCt231, >bCt232, >bCt233, >bCt234
+    .db >bCt235, >bCt236, >bCt237, >bCt238, >bCt239, >bCt240, >bCt241, >bCt242, >bCt243
+    .db >bCt244, >bCt245, >bCt246, >bCt247, >bCt248, >bCt249, >bCt250, >bCt251, >bCt252
+    .db >bCt253, >bCt254, >bCt255
 
 
 ;; Background Palettes
@@ -376,20 +376,20 @@ BckCHRAddLo:
     .db <BckChr00, <BckChr01, <BckChr02, <BckChr03, <BckChr04, <BckChr05
     .db <BckChr06, <BckChr07, <BckChr08, <BckChr09, <BckChr10, <BckChr11
     .db <BckChr12, <BckChr13, <BckChr14, <BckChr15, <BckChr16, <BckChr17
-    
-BckCHRAddHi: 
+
+BckCHRAddHi:
     .db >BckChr00, >BckChr01, >BckChr02, >BckChr03, >BckChr04, >BckChr05
     .db >BckChr06, >BckChr07, >BckChr08, >BckChr09, >BckChr10, >BckChr11
     .db >BckChr12, >BckChr13, >BckChr14, >BckChr15, >BckChr16, >BckChr17
 
-BckSSChrAddLo:    
+BckSSChrAddLo:
     .db <BckSSChr00, <BckSSChr01, <BckSSChr02, <BckSSChr03, <BckSSChr04, <BckSSChr05, <BckSSChr06, <BckSSChr07, <BckSSChr08, <BckSSChr09
-    .db <BckSSChr10, <BckSSChr11, <BckSSChr12, <BckSSChr13, <BckSSChr14, <BckSSChr15, <BckSSChr16, <BckSSChr17, <BckSSChr18, <BckSSChr19    
+    .db <BckSSChr10, <BckSSChr11, <BckSSChr12, <BckSSChr13, <BckSSChr14, <BckSSChr15, <BckSSChr16, <BckSSChr17, <BckSSChr18, <BckSSChr19
     .db <BckSSChr20, <BckSSChr21, <BckSSChr22, <BckSSChr23, <BckSSChr24, <BckSSChr25, <BckSSChr26, <BckSSChr27, <BckSSChr28, <BckSSChr29
 
-BckSSChrAddHi: ;; chr type 2    
+BckSSChrAddHi: ;; chr type 2
     .db >BckSSChr00, >BckSSChr01,>BckSSChr02, >BckSSChr03, >BckSSChr04, >BckSSChr05, >BckSSChr06, >BckSSChr07, >BckSSChr08, >BckSSChr09
-    .db >BckSSChr10, >BckSSChr11, >BckSSChr12, >BckSSChr13, >BckSSChr14, >BckSSChr15, >BckSSChr16, >BckSSChr17, >BckSSChr18, >BckSSChr19    
+    .db >BckSSChr10, >BckSSChr11, >BckSSChr12, >BckSSChr13, >BckSSChr14, >BckSSChr15, >BckSSChr16, >BckSSChr17, >BckSSChr18, >BckSSChr19
     .db >BckSSChr20, >BckSSChr21, >BckSSChr22, >BckSSChr23, >BckSSChr24, >BckSSChr25, >BckSSChr26, >BckSSChr27, >BckSSChr28, >BckSSChr29
 
 PathCHRAddLo:  ;; chr type 1
@@ -398,11 +398,11 @@ PathCHRAddLo:  ;; chr type 1
     .db <PathTiles08, <PathTiles09, <PathTiles10, <PathTiles11, <PathTiles12, <PathTiles13, <PathTiles14, <PathTiles15
     .db <PathTiles16, <PathTiles17, <PathTiles18, <PathTiles19, <PathTiles20, <PathTiles21, <PathTiles22, <PathTiles23
 
-PathCHRAddHi: 
+PathCHRAddHi:
     ;paths
     .db >PathTiles00, >PathTiles01, >PathTiles02, >PathTiles03, >PathTiles04, >PathTiles05, >PathTiles06, >PathTiles07
     .db >PathTiles08, >PathTiles09, >PathTiles10, >PathTiles11, >PathTiles12, >PathTiles13, >PathTiles14, >PathTiles15
-    .db >PathTiles16, >PathTiles17, >PathTiles18, >PathTiles19, >PathTiles20, >PathTiles21, >PathTiles22, >PathTiles23    
+    .db >PathTiles16, >PathTiles17, >PathTiles18, >PathTiles19, >PathTiles20, >PathTiles21, >PathTiles22, >PathTiles23
 
 GameObjectCHRAddLo:
     .db <GameObjectTiles00
@@ -415,7 +415,7 @@ OtherChrTiles_Lo:
 
 OtherChrTiles_Hi
     .db >HudTiles
-    
+
 MonsterAddressLo:
     .db <monster_0_00, <monster_0_01, <monster_0_02, <monster_0_03, <monster_0_04, <monster_0_05, <monster_0_06, <monster_0_07
     .db <monster_1_00, <monster_1_01, <monster_1_02, <monster_1_03, <monster_1_04, <monster_1_05, <monster_1_06, <monster_1_07

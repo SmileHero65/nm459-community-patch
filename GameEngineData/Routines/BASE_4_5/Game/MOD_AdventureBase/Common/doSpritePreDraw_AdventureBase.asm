@@ -1,4 +1,4 @@
-    
+
 ;; Constants that define which sprite number corresponds with which weapon.
 ;; You can change the hex values here to change what sprite in the gameobjects
 ;; tileset correlates to which weapon to be drawn.

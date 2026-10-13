@@ -25,19 +25,19 @@
         ;; is game over.
         JMP RESET
     +notGameOver:
-    
+
     LDA continueMap
     STA warpMap
     LDA continueX
     STA newX
     LDA continueY
     STA newY
-    
+
     LDA continueScreen
     STA warpToScreen
     STA camScreen
 
     WarpToScreen warpToMap, warpToScreen, #$02
-    
+
     +done:
 

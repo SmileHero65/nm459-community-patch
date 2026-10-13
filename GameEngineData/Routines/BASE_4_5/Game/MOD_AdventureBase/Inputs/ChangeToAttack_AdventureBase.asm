@@ -7,7 +7,7 @@ WEAPON_POSITION_DOWN_Y  = $10  ;;
 WEAPON_DOWN_STATE       = $01  ;;
 
 WEAPON_POSITION_RIGHT_X = $10  ;; Player faces right
-WEAPON_POSITION_RIGHT_Y = $00  ;; 
+WEAPON_POSITION_RIGHT_Y = $00  ;;
 WEAPON_RIGHT_STATE      = $00  ;;
 
 WEAPON_POSITION_UP_X    = $00  ;; Player faces up
@@ -20,7 +20,7 @@ WEAPON_LEFT_STATE       = $00  ;;
 
 
     ;; Check if the selected weapon is unlocked and usable.
-    ;; If not, return.  
+    ;; If not, return.
     LDY weaponChoice
     LDA weaponsUnlocked
     AND weaponChoiceTable,y
@@ -35,7 +35,7 @@ WEAPON_LEFT_STATE       = $00  ;;
     ;; - assumes the x-register to be the object slot
     ;; - assumes #2 is the object's attack action step
     STX temp
-    ChangeActionStep temp, #$02 
+    ChangeActionStep temp, #$02
 
     ;; Stop object from moving
     StopMoving temp, #$FF, #$00
@@ -74,7 +74,7 @@ WEAPON_LEFT_STATE       = $00  ;;
     LDA temp1
     STA Object_direction,x
 
-    ;; We're done!        
+    ;; We're done!
     RTS
 
 

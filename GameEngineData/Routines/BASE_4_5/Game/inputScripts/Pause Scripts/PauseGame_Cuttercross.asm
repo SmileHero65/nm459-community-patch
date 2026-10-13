@@ -10,7 +10,7 @@
     BNE unpausegame
     INC gameStatusByte
     ;; OPTIONAL: Play pause sfx:
-    ;PlaySound #SND_PAUSE    
+    ;PlaySound #SND_PAUSE
     ;; OPTIONAL: Make the screen dark - set all 3 emphasis bits of $2001 to 1
     LDA soft2001
     ORA #%11100000

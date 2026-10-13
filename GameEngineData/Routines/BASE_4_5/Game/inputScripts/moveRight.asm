@@ -6,10 +6,10 @@
     BNE +notHurt
         RTS
     +notHurt
-    
+
     StartMoving temp, #RIGHT
     ;STX temp
     ChangeFacingDirection temp, #FACE_RIGHT
-        
+
     RTS
 

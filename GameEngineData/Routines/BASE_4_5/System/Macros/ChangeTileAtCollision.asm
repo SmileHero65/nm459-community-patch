@@ -13,7 +13,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     +isEvenCt
         LDA arg1
         STA collisionTable,y
-        
+
     +doneWithTileUpdate
 
     ;; This part will actually update the tile with tile 0 in the tile set.
@@ -53,11 +53,11 @@ MACRO ChangeTileAtCollision arg0, arg1
     ASL
     ORA tempz
     STA temp3 ;temp16
-        
-    ;; SET THE TILE NUMBER TO CHANGE TO.    
+
+    ;; SET THE TILE NUMBER TO CHANGE TO.
     LDA arg0 ;; the tile to change.
              ;; this is in tiles, so if you wanted the second "metatile",
-             ;; use 2, not 1.  If you wanted the tile in the next row, 
+             ;; use 2, not 1.  If you wanted the tile in the next row,
              ;; use #$20, not #$10.  Etc.
     STA tempA
     CLC
@@ -69,7 +69,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     CLC
     ADC #$01
     STA tempD
-    
+
     LDY #$00
     LDA temp2
     STA scrollUpdateRam,y
@@ -80,7 +80,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     LDA tempA
     STA scrollUpdateRam,y
     INY
-        
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -92,7 +92,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     LDA tempB
     STA scrollUpdateRam,y
     INY
-        
+
     LDA temp3
     CLC
     ADC #$20
@@ -100,7 +100,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     LDA temp2
     ADC #$00
     STA temp2
-    
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -110,7 +110,7 @@ MACRO ChangeTileAtCollision arg0, arg1
     LDA tempC
     STA scrollUpdateRam,y
     INY
-    
+
     LDA temp2
     STA scrollUpdateRam,y
     INY
@@ -122,9 +122,9 @@ MACRO ChangeTileAtCollision arg0, arg1
     LDA tempD
     STA scrollUpdateRam,y
     INY
-    
+
     STY maxScrollOffsetCounter
-    
+
     ;; Turn on update screen on next frame.
     LDA updateScreenData
     ORA #%0000100

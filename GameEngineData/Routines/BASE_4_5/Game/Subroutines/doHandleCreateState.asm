@@ -7,10 +7,10 @@ doHandleCreateState:
     LSR
     AND #%00000111
     STA tempB
-    
+
     STX tempA
     DoObjectAction tempA, tempB
-    
+
     LDA Object_status,x
     AND #%00111111
     ORA #%10000000

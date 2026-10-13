@@ -15,7 +15,7 @@
     ADC #$01 ;; ladder speed
     BCC +notAtBottom
         GetActionStep player1_object
-        CMP #$03 ;; in this module, the player's action step 3 is for climbing 
+        CMP #$03 ;; in this module, the player's action step 3 is for climbing
         BNE +notAtBottom
 
         LDA #BOUNDS_TOP ;#$02
@@ -37,7 +37,7 @@
         WarpToScreen #$00, temp2, #$00
         JMP +notClimbing
     +notAtBottom:
-    
+
     LDA Object_x_hi,x
     CLC
     ADC #$08 ;; MIDDLE OF PLAYER
@@ -70,7 +70,7 @@
         BNE +alreadyOnLadder ;; will turn off ladder if right or left is pressed.
 
         ChangeActionStep player1_object, #$03
-        
+
         LDA Object_direction,x
         AND #%00001111
         STA Object_direction,x

@@ -17,12 +17,12 @@ MACRO DrawNumber arg0, arg1, arg2, arg3
 
     LDA arg3
     STA arg3_hold
-    
+
     LDA hudUpdates
     BNE +drawNumbersHappeningDuringScreenRender
         JSR doDrawNumbers
         JMP +doneDrawNumbers
-        
+
     +drawNumbersHappeningDuringScreenRender:
         JSR doDrawNumbers_update
 

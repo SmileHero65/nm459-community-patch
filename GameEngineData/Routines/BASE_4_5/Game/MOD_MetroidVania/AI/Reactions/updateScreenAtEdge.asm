@@ -6,7 +6,7 @@
     BEQ +isPlayerForBounds
         RTS
     +isPlayerForBounds
-    
+
     LDA screenUpdateByte
     AND #%11111101
     BEQ +doBounds ;; if it is zero or two, that means it is moving down or up
@@ -20,7 +20,7 @@
 
     ;; Turn screen off
     LDA #$00
-    STA soft2001    
+    STA soft2001
     JSR doWaitFrame
 
     ;; Get the screen number the player is leaving
@@ -29,7 +29,7 @@
     STA currentNametable
 
     ;; Reset the camera offset
-    LDA #$00 
+    LDA #$00
     STA camX
     STA camY
     STA camX_lo

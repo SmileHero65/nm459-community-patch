@@ -31,7 +31,7 @@
     .include SCR_SET_LOCAL_VARIABLE
     .include SCR_STOP_SOUNDS
     .include SCR_UPDATE_HUD
-    
+
 Object_Behavior_Offset_table:
     ;; Old behavior method
 

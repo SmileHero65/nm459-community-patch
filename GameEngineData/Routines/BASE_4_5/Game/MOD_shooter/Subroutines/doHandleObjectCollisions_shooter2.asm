@@ -2,7 +2,7 @@
 ;; Object collions have to check from current index through the rest of the
 ;; objects on the field of play. Objects prior to its index have already checked
 ;; against this particular object.
-    
+
     ;; with Monster Weapons collision restored by TolerantX/NightMusic
     ;; https://www.nesmakers.com/index.php?threads/4-5-9-bring-back-monster-weapons-maze-module-and-others.5966/
 
@@ -30,10 +30,10 @@
     LDA ObjectFlags,y
     STA tempA ;; temp A now holds the current object flags.
               ;; collision box is still held over from the physics routine.
-            
+
     LDA xHold_screen
     STA self_screen_left
-    
+
     LDA xHold_hi
     CLC
     ADC self_left
@@ -41,14 +41,14 @@
     LDA Object_screen,x
     ADC #$00
     STA self_screen_left
-    
+
     LDA xHold_hi
     CLC
     ADC self_right
     LDA Object_screen,x
     ADC #$00
     STA self_screen_right
-    
+
     LDA xHold_hi
     CLC
     ADC self_left
@@ -58,7 +58,7 @@
     CLC
     ADC self_right
     STA bounds_right
-    
+
     LDA yHold_hi
     CLC
     ADC self_top
@@ -109,7 +109,7 @@
         ;; if they have collided, it is a 1
         ;; if not, it is a zero.
         BEQ +skipCollision
-                
+
             ;; There was a collision between a monster and a weapon.
             ;; weapon is self.
             ;; monster is other.
@@ -117,10 +117,10 @@
             STX otherObject
             DestroyObject
             JSR doHandleHurtMonster
-                
+
             LDX selfObject
             DestroyObject
-            JMP +done                
+            JMP +done
         +skipCollision:
         +notAmonsterWeaponCollision:
 
@@ -133,7 +133,7 @@
     JMP +done
 
     +notPlayerWeapon:
-            
+
     LDA Object_flags,x
     AND #%00000010
     BNE +isPlayerForCol
@@ -160,7 +160,7 @@
         BNE +isPlayerMonsterCol
             JMP +notPlayerMonsterCollision
         +isPlayerMonsterCol:
-                            
+
         JSR getOtherColBox
         JSR doCompareBoundingBoxes
         ;; if they have collided, it is a 1
@@ -172,7 +172,7 @@
         ;; There was a collision between a monster and a weapon.
         ;; player is self.
         ;; monster is other.
-                                    
+
         STX otherObject
         TXA
         PHA
@@ -180,11 +180,11 @@
         JSR doHandleHurtPlayer
         PLA
         TAX
-                                    
+
         JMP +done
-                                    
+
         +notPlayerMonsterCollision:
-                        
+
         LDA Object_flags,x
         AND #%00100000
         BNE +isPlayerPowerupCol
@@ -200,12 +200,12 @@
         ;; There was a collision between a player and a powerup.
         ;; player is self.
         ;; powerup is other.
-        
+
         STX otherObject
         DestroyObject
         .include SCR_PICKUP_SCRIPTS
         JMP +done
-                                    
+
         +isNotPlayerPowerupCol:
 
         LDA Object_flags,x
@@ -224,18 +224,18 @@
 
             STX otherObject
 
-            TXA 
+            TXA
             PHA
 
             LDX selfObject
             LDA xPrev
             STA Object_x_hi,x
             STA xHold_hi
-                                        
+
             LDA yPrev
             STA Object_y_hi,x
             STA yHold_hi
-                                        
+
             LDA #$00
             STA Object_h_speed_lo,x
             STA Object_h_speed_hi,x
@@ -246,7 +246,7 @@
 
             PLA
             TAX
-            
+
             JMP +done
 
         +isNotPlayerNPCCol:
@@ -269,24 +269,24 @@
         ;; player is self.
         ;; monster weapon is other.
         STX otherObject
-   
+
         ;DestroyObject            ;; normally we destroy it because its a weapon
-        LDX selfObject            ;; 9Panzer edit  
+        LDX selfObject            ;; 9Panzer edit
         JSR doHandleHurtPlayer
         JMP +done
-       
+
         +isNotPlayerMonsterWeaponCol:
         +skipCollision:
-                    
+
         INX
         CPX #TOTAL_MAX_OBJECTS
         BEQ +lastCollisionForThisObject
     JMP loop_objectPlayerCollisions
-    
+
     +lastCollisionForThisObject:
 
     JMP +done
-    
+
     +notPlayerForCollisions:
     +done:
 

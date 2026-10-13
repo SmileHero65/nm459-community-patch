@@ -8,7 +8,7 @@
     BNE +notHurt
         RTS
     +notHurt
-        
+
         ; use this for 4 directional game - adventure
          LDA gamepad
          AND #%11110000
@@ -18,7 +18,7 @@
     changeToStop_NoDpadPressed:
         ChangeActionStep temp, #$00 ;; assumes that "idle" is in action 0
         StopMoving temp, #$FF, #$00
-        
+
         +done
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     RTS

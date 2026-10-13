@@ -15,7 +15,7 @@ MACRO Compare16 arg0, arg1, arg2, arg3
         BNE +noEqu
             JMP +++
     +noEqu
-    
+
     LDA arg0
     CMP arg2
     BCC ++

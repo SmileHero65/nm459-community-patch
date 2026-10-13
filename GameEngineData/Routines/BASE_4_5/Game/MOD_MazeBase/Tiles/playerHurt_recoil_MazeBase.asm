@@ -13,14 +13,14 @@
         JMP +skipHurt
     +canHurtPlayer
     DEC myLives
-    
+
     UpdateHudElement #$01
     LDA myLives
     BNE +notZeroLives
         ;;;zero lives
         JMP RESET
     +notZeroLives
-    
+
         ChangeActionStep player1_object, #$07
             ;; recoil
             LDA #$00
@@ -33,7 +33,7 @@
             LDA yPrev
             STA Object_y_hi,x
     +notAlreadyInHurtState
-    
+
 +skipHurt
-    
+
 +dontHurtRecoil:

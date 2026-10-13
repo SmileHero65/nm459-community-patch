@@ -1,11 +1,11 @@
-    
+
     ;LDA collisionsToCheck ;; declared in doHandlePhysics script
                             ;; the last nibble, each bit corresponding to a point to check.
                             ;; 0001 = top left
                             ;; 0010 = top right
                             ;; 0100 = bottom right
                             ;; 1000 = bottom left
-                            
+
     ;;; will only need to use col pt 0 and 1 to see if we should evaluate from col table 1 or 2.
     ;;; since they represent the left and the right of the object, the other checks would be
     ;;; redundant.
@@ -26,7 +26,7 @@
     CLC
     ADC self_top
     STA tileY
-    
+
     LDA xHold_hi
     CLC
     ADC self_left
@@ -37,7 +37,7 @@
     EOR #%00000001
     STA tempx
 +pointDidNotCrossThreshold
-    
+
     JSR GetTileAtPosition
     LDA tempx
     AND #%00000001
@@ -62,13 +62,13 @@ noCollision_point0:
 
     LDA xHold_screen
     AND #%00000001
-    STA tempy ;; for right points. 
+    STA tempy ;; for right points.
     ; LDA yHold_hi
     ; CLC
     ; ADC self_top
     ; STA tileY
-    
-    
+
+
     LDA xHold_hi
     CLC
     ADC self_right
@@ -78,7 +78,7 @@ noCollision_point0:
         EOR #%00000001
         STA tempy
 +pointDidNotCrossThreshold:
-    
+
 
     LDA tempy
     BEQ inLeftCt2
@@ -94,7 +94,7 @@ inLeftCt2
     JSR GetTileAtPosition
     LDA collisionTable,y
     JMP gotPoint1
-    
+
 gotPoint1:
     STA tempB
     ;BEQ noCollision_point1
@@ -105,7 +105,7 @@ noCollision_point1:
 ;    LDA collisionsToCheck
 ;    AND #%00000100
 ;    BEQ noCollision_point2
-        
+
     LDA yHold_hi
     CLC
     ADC self_bottom
@@ -126,33 +126,33 @@ inLeftCt3
     JSR GetTileAtPosition
     LDA collisionTable,y
     JMP gotPoint2
-    
+
 gotPoint2:
     STA tempC
     ;BEQ noCollision_point2
     ;JMP doneWithTileCollision
 
-    
-    
-noCollision_point2:    
+
+
+noCollision_point2:
 
 
 ;    LDA collisionsToCheck
 ;    AND #%00001000
 ;    BEQ noCollision_point3
-    
-        
+
+
     LDA yHold_hi
     CLC
     ADC self_bottom
     STA tileY
-    
-    
+
+
     LDA xHold_hi
     CLC
     ADC self_left
     STA tileX
-    
+
 
     LDA tempx
     AND #%00000001
@@ -169,7 +169,7 @@ inLeftCt4
     JSR GetTileAtPosition
     LDA collisionTable,y
     JMP gotPoint3
-    
+
 gotPoint3:
     STA tempD
     ;BEQ noCollision_point3
@@ -194,7 +194,7 @@ gotPoint3:
     LDA tempC
     BEQ +skipThisTile
     CMP #$01
-    BNE +isNotSolid    
+    BNE +isNotSolid
         JMP +isSolid
     +isNotSolid
     +skipThisTile
@@ -210,14 +210,14 @@ gotPoint3:
         CLC
         ADC self_top
         STA tileY
-        
+
         LDA xHold_hi
         CLC
         ADC self_left
         STA tileX
         JSR GetTileAtPosition ;; stores the y, which we need to know which collision table we are affecting.
         LDA tempA
-        
+
         JMP doneWithTileCollision
     tempAisNull:
     LDA tempB
@@ -226,7 +226,7 @@ gotPoint3:
         CLC
         ADC self_top
         STA tileY
-        
+
         LDA xHold_hi
         CLC
         ADC self_right
@@ -241,7 +241,7 @@ gotPoint3:
         CLC
         ADC self_bottom
         STA tileY
-        
+
         LDA xHold_hi
         CLC
         ADC self_right
@@ -256,7 +256,7 @@ gotPoint3:
         CLC
         ADC self_bottom
         STA tileY
-        
+
         LDA xHold_hi
         CLC
         ADC self_left
@@ -275,7 +275,7 @@ gotPoint3:
 +notSolidOrNull:
 
 noCollision_point3:
-        
+
 
 
 doneWithTileCollision:

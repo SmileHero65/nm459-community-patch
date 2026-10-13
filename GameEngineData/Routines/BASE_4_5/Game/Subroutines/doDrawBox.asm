@@ -13,7 +13,7 @@ doDrawBox:
         ORA #%00000010
         STA gameStatusByte
     +skipNpcText
-    
+
     LDA updateScreenData
     AND #%00000101 ;; if queued to push tiles or attributes
     BEQ +doTextBox
@@ -26,17 +26,17 @@ doDrawBox:
         LDA gameStatusByte
         ORA #%00000001 ;;; this will skip object handling.
         STA gameStatusByte
-        
+
         LDA Box_x_origin
         STA temp_boxX
-        
+
         LDA Box_y_origin
         STA Box_y_hold
         STA temp_boxY
-        
+
         LDA Box_width
         STA temp_boxWidth
-        
+
         LDA Box_height
         STA Box_height_hold
         STA temp_boxHeight
@@ -56,7 +56,7 @@ doDrawBox:
     ;; so at max, it will be updating 16x4 tiles (64) x 3 bytes per tile (192).
     ;; This makes multple frames of updates easy.
     ;; If the queue flag bit 0 is activated, that means that we have moved on to another row, but are not done yet.
-    
+
     LDA queueFlags
     AND #%00000001
     BEQ notCurrentlyUpdatingQueuedTiles
@@ -69,7 +69,7 @@ doDrawBox:
     ;; arg1_hold = y value, in metatiles
     ;; arg2_hold = width, in metatiles
     ;; arg3_hold = height, in metatiles
-    
+
     LDA queueFlags
     ORA #%00000001
     STA queueFlags
@@ -89,10 +89,10 @@ currentlyUpdatingQueuedTiles:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3
-        
+
     LDA temp1
     LSR
     LSR
@@ -100,13 +100,13 @@ currentlyUpdatingQueuedTiles:
     CLC
     ADC camFocus_tiles
     STA temp2
-    
+
     ;; LOAD THE BYTES INTO SCRATCH RAM:
     ;; High, Low, Tile.
     LDA #$00
     STA scrollOffsetCounter
     TAY
-        
+
     LDA #$00
     STA tempx
     LDX Box_width ;; load the width into x.
@@ -130,8 +130,8 @@ currentlyUpdatingQueuedTiles:
         STA queueFlags
 
         SwitchBank #$16
-            LDY currentNametable 
-                
+            LDY currentNametable
+
             LDA warpMap
             BEQ +loadFromMap1table
                 ;; load from map 2 table
@@ -146,7 +146,7 @@ currentlyUpdatingQueuedTiles:
                 LDA NameTablePointers_Map1_hi,y
                 STA temp16+1
             +GotNametableLoadPointer:
-            
+
             ;;now (temp16) holds the address of the nametable to be loaded.
         ReturnBank
 
@@ -161,7 +161,7 @@ currentlyUpdatingQueuedTiles:
         LSR
         LSR
         STA temp
-                    
+
         LDA warpMap
         BEQ +dontAdd8toScreenBank
             ;; add 8 to screen bank
@@ -182,15 +182,15 @@ currentlyUpdatingQueuedTiles:
             ASL
             ASL
             ASL
-            CLC 
+            CLC
             ADC Box_x_origin
-            CLC 
+            CLC
             ADC tempx
             TAY
 
             LDA (temp16),y
             STA temp ;; it is this value that doGetSingleMetaTileValues uses
-                    
+
             JSR doGetSingleMetaTileValues
         ReturnBank
 
@@ -202,7 +202,7 @@ currentlyUpdatingQueuedTiles:
         STA tempC
         LDA updateTile_03
         STA tempD
-        
+
         JMP gotBoxFill
 
         isJustDrawingBox:
@@ -214,7 +214,7 @@ currentlyUpdatingQueuedTiles:
 
         gotBoxFill:
         LDY tempy
-        
+
         LDA temp2
         STA scrollUpdateRam,y
         INY
@@ -226,7 +226,7 @@ currentlyUpdatingQueuedTiles:
         LDA tempA
         STA scrollUpdateRam,y
         INY
-            
+
         LDA temp2
         STA scrollUpdateRam,y
         INY
@@ -240,7 +240,7 @@ currentlyUpdatingQueuedTiles:
         LDA tempB
         STA scrollUpdateRam,y
         INY
-            
+
         LDA temp3
         CLC
         ADC #$20
@@ -249,7 +249,7 @@ currentlyUpdatingQueuedTiles:
         LDA temp2
         ADC #$00
         STA temp2
-            
+
         LDA temp2
         STA scrollUpdateRam,y
         INY
@@ -286,7 +286,7 @@ currentlyUpdatingQueuedTiles:
             ;; more box row to draw.
         LDA temp3
         SEC
-        SBC #$1E 
+        SBC #$1E
         STA temp3
         LDA temp2
         SBC #$00
@@ -309,7 +309,7 @@ currentlyUpdatingQueuedTiles:
     AND #%01000000
     BEQ isCreatingBoxTiles
         ;; is restoring box tiles
-        ;; COMPLETLY DONE WITH BOX.                
+        ;; COMPLETLY DONE WITH BOX.
         LDA #$00
         STA queueFlags
 
@@ -343,7 +343,7 @@ currentlyUpdatingQueuedTiles:
     ORA #%0000100
     STA updateScreenData
     JSR doWaitFrame
-    
+
     RTS
 
 
@@ -359,11 +359,11 @@ currentlyUpdatingQueuedAttribtues:
     BEQ doSetupAttributeQueue
         JMP alreadySetupAttributeQueue
     doSetupAttributeQueue:
-        
+
     LDA Box_height
     ;; @TODO  allow for odd starts, if on odd, will need to add 1
     STA Box_height_hold
-        
+
     LDA queueFlags
     ORA #%00010000
     STA queueFlags
@@ -377,31 +377,31 @@ currentlyUpdatingQueuedAttribtues:
     LDA Box_y_hold
     LSR
     STA tempB
-        
+
     LDA Box_width
-    LSR 
+    LSR
     ;; @TODO  allow for odd starts, if on odd, will need to add 1
     STA tempC
     STA tempz
-    
+
     ;; now, tempA*8 + tempB gives us the starting position for the box's
     ;; attributes.
-    
+
     LDA #$00
     STA scrollOffsetCounter
     TAY
 
-    doDrawBoxAttributesLoop:    
+    doDrawBoxAttributesLoop:
         STY tempy
-            
+
         LDA tempB
         ASL
         ASL
         ASL
-        CLC 
+        CLC
         ADC tempA
         STA tempx ;; tempx is our offset for the Attribute table.
-        
+
         LDA camFocus_att ;; high byte, have to change based on which nametable we are in.
         STA temp1
 
@@ -438,7 +438,7 @@ currentlyUpdatingQueuedAttribtues:
                 STA temp16+1
             +gotAttFromTable
         ReturnBank
-                
+
         LDA currentNametable
         LSR
         LSR
@@ -464,7 +464,7 @@ currentlyUpdatingQueuedAttribtues:
             LDA (temp16),y
             STA temp3
         ReturnBank
-    
+
         gotBoxAttributeFill:
 
         LDY tempy
@@ -569,7 +569,7 @@ currentlyUpdatingQueuedAttribtues:
     LDA updateScreenData
     ORA #%0000100
     STA updateScreenData
-        
+
     JSR doWaitFrame
     RTS
 

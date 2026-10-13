@@ -11,7 +11,7 @@
         BNE +notHurt                    ; If the player is NOT in the hurt state, branch to continue checking movement
             JMP +notClimbing            ; If the player is in the hurt state, don't execute this by jumping to the end of the code
         +notHurt
-    
+
     ;;;;First let's store player height (just so we we it out of the way)
     LDA #PLAYER_HEIGHT    ;;Load the height of the player - can be modified on the UI
     CLC                    ;;Clear Carry
@@ -31,7 +31,7 @@
     LDA Object_y_hi,x
     CLC
     ADC tempz             ;;
-    
+
     STA temp1
     ;;; CHECK FOR SOLID TILE, which is tile type 1 in this module.
     CheckCollisionPoint temp, temp1, #$0A, tempA ;; is it a solid?
@@ -42,7 +42,7 @@
     SEC
     SBC #LADDER_SPEED       ;; ladder speed
     STA Object_y_hi,x
-    
+
     LDA tileX
     AND #%11110000
     ;; Add or subtract player offset here if
@@ -57,11 +57,11 @@
     ; ADC #0 ;; Player x position
     ;;
     STA Object_x_hi,x
-    
+
     GetActionStep player1_object
     CMP #$03       ;; in this module, the player's action step 3 is for climbing
     BEQ +alreadyOnLadder
-    
+
     ChangeActionStep player1_object, #$03
     LDA Object_direction,x
     AND #%00001111

@@ -7,11 +7,11 @@
 ;; Textboxes have x and y, width and height, and contents.
 ;; Generally, textboxes should line up on EVEN numbers to make use of where the attributes (color data) fall.
 
-;; So what I'll do is introduce a menu with explanation, and submenus.  
+;; So what I'll do is introduce a menu with explanation, and submenus.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;=================================================
 ;;;;1. COMMAND MENU:
-;;;; This menu will behave like a command menu that pops up in the overworld of a game like 
+;;;; This menu will behave like a command menu that pops up in the overworld of a game like
 ;;;; Final Fantasy or Dragon Quest.
     ;;;; POSITION CONSTANTS:
         COMMAND_BOX_ORIGIN_X = #$06
@@ -21,11 +21,11 @@
     ;;;; ITEMS WITHIN THE MENU:
         COMMAND_BOX_CHOICES = #$04
     ;;;; VALUE OF SELECTOR SPRITE FROM SPRITE SHEET:
-        COMMAND_BOX_CURSOR = #$00 
-    ;;;; VALUE OF COMMANE BOX SUBSTATE: 
+        COMMAND_BOX_CURSOR = #$00
+    ;;;; VALUE OF COMMANE BOX SUBSTATE:
         ;;; this determines what will be in gameSubState during command box routines.
         COMMAND_BOX_SUBSTATE = #$01
-    
+
     ;;;; COMMAND MENU TEXT
     commandMenuText:
         ;;;;;; This command menu has four possible choices, denoted by the above "COMMAND_BOX_CHOICES".
@@ -37,21 +37,21 @@
         .db #_SPACE, #_SPACE, #_S, #_P, #_E, #_L, #_L, #$FE, #$FE
         .db #_SPACE, #_SPACE, #_I, #_T, #_E, #_M, #$FE, #$FE
         .db #_SPACE, #_SPACE, #_E, #_Q, #_I, #_P, #$FF ;; #$FF = finish text.
-    
+
     ;;;; COMMAND MENU CUSOR POSITIONING FOR EACH CHOICE
     commandMenuChoiceX: ;; the x value of the cursor for choice.
         .db #$64, #$64, #$64, #$64
     commandMenuChoiceY: ;; the y value of the cursor for choice.
         .db #$46, #$56, #$66, #$76
-        
-        
-        
-    ;;;;;;;;;;;;========================    
+
+
+
+    ;;;;;;;;;;;;========================
     ;;; A) STATUS MENU
         ;;; the menu for this text makes use of drawing the value of variables within the string.
         ;;; It draws some standard text, but then using the #$f6 opcode, followed by the high and low address
         ;;; of the variable you'd like to draw, draws a variable number value in the middle of the string.
-        
+
         STATUS_BOX_ORIGIN_X = #$02
         STATUS_BOX_ORIGIN_Y = #$04
         STATUS_BOX_WIDTH = #$06
@@ -59,7 +59,7 @@
         STATUS_BOX_CHOICES = #$00
         STATUS_BOX_CURSOR = #$00
         STATUS_BOX_SUBSTATE = #$02
-        
+
     statusMenuText:
         .db #_SPACE, #$FE;
         .db #_SPACE, #_S, #_T, #_A, #_T, #_U, #_S, #$FE, #$FE
@@ -70,15 +70,15 @@
         .db #_SPACE, #_SPACE, #_G, #_P, #_COLON, #_SPACE, #$F6, <myGold3, >myGold3, #$f6, <myGold2, >myGold2,#$f6, <myGold, >myGold,#$FE
         .db #_SPACE, #_SPACE, #_S, #_T, #_COLON, #_SPACE,#$F6, <myStrength2, >myStrength2, #$f6, <myStrength, >myStrength,#$FE
         .db #_SPACE, #_SPACE, #_D, #_E, #_COLON, #_SPACE,#$F6, <myDefense2, >myDefense2, #$f6, <myDefense, >myDefense,#$FF
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
     ;statusMenuChoiceX:
     ;statusMenuChoiceY:
-    
+
     ;;; B) SPELL MENU
         ;;; The spell menu uses a library system, where it draws variable words in the string
         ;;; based on a library of word values.  In this case, the names of spells.
@@ -91,26 +91,26 @@
         SPELL_BOX_CHOICES = #$03
         SPELL_BOX_CURSOR = #$00
         SPELL_BOX_SUBSTATE = #$03
-        
+
     spellMenuText:
         .db #_SPACE, #$FE;
         .db #_SPACE, #_S, #_P, #_E, #_L, #_L, #_S, #$FE, #$FE
             ;;;; In this case, F8 puts it into reading from a library mode.
             ;;;; spell1 and spell2 are user variables.
             ;;;; it uses the value of those variables as offsets to read from the library table.
-        .db #_SPACE, #$F8, #<spell1,#>spell1, #$FE 
+        .db #_SPACE, #$F8, #<spell1,#>spell1, #$FE
         ; .db #_SPACE, #$F8, #<spell2,#>spell2, #$Fe
         ; .db #_SPACE, #$F8, #<spell2,#>spell2, #$Fe
         ; .db #_SPACE, #$F8, #<spell2,#>spell2, #$Fe
         ; .db #_SPACE, #$F8, #<spell2,#>spell2, #$Fe
         ; .db #_SPACE, #$F8, #<spell2,#>spell2, #$Fe
         .db #_SPACE, #$F8, #<spell2,#>spell2, #$FF
-        
+
     spellMenuChoiceX: ;; the x value of the cursor for choice.
         .db #$24, #$64, #$64, #$64
     spellMenuChoiceY: ;; the y value of the cursor for choice.
         .db #$56, #$56, #$66, #$76
-    
+
     ;;; C) ITEM MENU
         ;;; The item menu works identical to the spell menu, using the library mode. Just name your game items in the library as well
         ;;; and assign them a value.  You could even make constants and assign the constants that value to make your code easier to read
@@ -122,32 +122,32 @@
         ITEM_BOX_CHOICES = #$6
         ITEM_BOX_CURSOR = #$00
         ITEM_BOX_SUBSTATE = #$04
-        
+
         itemMenuText:
         .db #_SPACE, #$FE;
         .db #_SPACE, #_I, #_T, #_E, #_M, #_S, #$FE, #$FE
             ;;;; In this case, F8 puts it into reading from a library mode.
             ;;;; spell1 and spell2 are user variables.
             ;;;; it uses the value of those variables as offsets to read from the library table.
-        .db #_SPACE, #$F8, #<item1,#>item1, #$FE 
+        .db #_SPACE, #$F8, #<item1,#>item1, #$FE
         .db #_SPACE, #$F8, #<item2,#>item2, #$Fe
         .db #_SPACE, #$F8, #<item3,#>item3, #$Fe
         .db #_SPACE, #$F8, #<item4,#>item4, #$Fe
         .db #_SPACE, #$F8, #<item5,#>item5, #$Fe
         .db #_SPACE, #$F8, #<item6,#>item6, #$FF
-        
+
     itemMenuChoiceX: ;; the x value of the cursor for choice.
         .db #$24, #$64, #$64, #$64
     itemMenuChoiceY: ;; the y value of the cursor for choice.
         .db #$56, #$56, #$66, #$76
-    
+
     ;;; D) EQUP MENU
-        
-    
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; SUBSTATE TABLES;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; A table value of FF effectively means "N/A".
-;0 = normal 
+;0 = normal
 ;1 = command menu
 ;2 = status menu
 ;3 = spell menu
@@ -168,22 +168,22 @@ SubstateTable_text_hi:
     .db #$ff, #>commandMenuText, #>statusMenuText, #>spellMenuText, #>itemMenuText
 SubstateTable_NextSubState:
     .db #$00, #$00, #$00, #$00, #$00
-    
-    
-    
-    
-    
-    
 
-    
+
+
+
+
+
+
+
 TextLibrary_lo:
     .db #<TL_0, #<TL_1, #<TL_2, #<TL_3, #<TL_4, #<TL_5, #<TL_6, #<TL_7
     .db #<TL_8, #<TL_9, #<TL_10, #<TL_11
-    
+
 TextLibrary_hi:
     .db #>TL_0, #>TL_1, #>TL_2, #>TL_3, #>TL_4, #>TL_5, #>TL_6, #>TL_7
     .db #>TL_8, #>TL_9, #>TL_10, #>TL_11
-    
+
 
 ;;;; #$F7 must end all of the TL values, since that is what sends it back into normal text read mode.
 ;;;;;;; OVERWORLD SPELLS

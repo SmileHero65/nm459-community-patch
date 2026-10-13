@@ -30,7 +30,7 @@ doObjectCollisions_bank1C:
     .include SCR_OBJECT_COLLISION_STATE
     .include SCR_HANDLE_OBJECT_COLLISIONS
     RTS
-    
+
 doHandleHurtPlayer:
     .include SCR_HANDLE_PLAYER_HURT
     RTS

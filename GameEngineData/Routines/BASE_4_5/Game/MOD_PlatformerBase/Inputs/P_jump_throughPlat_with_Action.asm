@@ -1,9 +1,9 @@
-;;;; 
+;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Only can jump if the place below feet is free.
     TXA
-    STX temp                            ; assumes the object we want to move is in x. 
+    STX temp                            ; assumes the object we want to move is in x.
     GetActionStep temp                  ; Get the current action step of the player
     CMP #$07                            ; Check if action step is 7, which is commonly the "hurt" state)
         BNE +notHurt                    ; If the player is NOT in the hurt state, branch to continue checking movement
@@ -22,13 +22,13 @@
     CLC
     ADC ObjectHeight,y
     sta temp2
-    
+
     LDA Object_x_hi,x
     CLC
     ADC ObjectBboxLeft,y
     STA temp
     JSR getPointColTable
-    
+
     LDA Object_y_hi,x
     CLC
     ADC #$02
@@ -38,20 +38,20 @@
     CheckCollisionPoint temp, temp1, #$01, tempA ;; check below feet to see if it is solid.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
-    BNE +checkMore 
+    BNE +checkMore
         JMP +doJump
     +checkMore
-    
+
     CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
-    BNE +checkMore 
+    BNE +checkMore
         JMP +doJump
     +checkMore
      CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is prize block .
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
-    BNE +checkMore 
+    BNE +checkMore
         JMP +doJump
     +checkMore
     CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder.
@@ -69,9 +69,9 @@
         JSR getPointColTable
         CheckCollisionPoint temp, temp1, #$01, tempA ;; check below feet to see if it is solid.
                                             ;;; if it is (equal), can jump.
-                                            ;;; if not, skips jumping.          
+                                            ;;; if not, skips jumping.
         BEQ +doJump
-        
+
         CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
@@ -95,14 +95,14 @@
     LDA ObjectJumpSpeedHi,y
     EOR #$FF
     STA Object_v_speed_hi,x
-    
+
     STX temp ;; assumes the object we want to move is in x.
  ;  change the object's action so that he is in jump mode.
     ChangeActionStep temp, #2 ;Jump
 
 +skipJumping:
     ReturnBank
-    
+
     RTS   ; Return from subroutine - in input scripts, it is
     ;;;;;;; imperative for input scripts to end on RTS, so
     ;;;;;;; the game won't crash

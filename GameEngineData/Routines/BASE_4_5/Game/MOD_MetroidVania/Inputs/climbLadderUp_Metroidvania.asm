@@ -34,7 +34,7 @@
     ;; arg0 = warp to map.  0= map1.  1= map2.
     ;; arg1 = screen to warp to.
     ;; arg2 = screen transition type - most likely use 1 here.
-               
+
               JMP +notClimbing
     +notZeroForTopBounds
     ;   LDA Object_y_hi,x
@@ -49,7 +49,7 @@
     ;       ReturnBank
     ;       RTS
     +nevermind
-    
+
     LDA Object_x_hi,x
     CLC
     adc #$08 ;; MIDDLE OF PLAYER
@@ -70,7 +70,7 @@
     sec
     sbc #$01 ;; ladder speed
     STA Object_y_hi,x
-    
+
     GetActionStep player1_object
     CMP #$03 ;; in this module, the player's action step 3 is for climbing
     BEQ +alreadyOnLadder

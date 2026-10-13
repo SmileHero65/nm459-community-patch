@@ -1,6 +1,7 @@
 # NESMaker 4.5.9 - Community patch
+## Original source by SmileHero65
 
-## Now you're creating with more power!
+*Now you're creating with more power!*
 
 This patch smooths out several issues and aims to make NESMaker more user-friendly, especially for newcomers. For example, values like the coordinates for SpriteHUD or character physics can now be adjusted directly through UI constants, so you won’t have to dive into the code to make changes. Plus, there are input presets for all modules, letting you create a basic game setup with just a few clicks — especially convenient for long-beard users who get lazy with each new game.
 

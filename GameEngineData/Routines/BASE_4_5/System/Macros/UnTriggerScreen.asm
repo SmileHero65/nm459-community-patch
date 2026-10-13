@@ -4,7 +4,7 @@ MACRO UnTriggerScreen arg0
 
     STX tempx
     STY tempy
-    
+
     LDA arg0 ;; this is the value of the screen to change.
     AND #%00000111 ;; look at last bits to know what bit to check, 0-7
     TAX

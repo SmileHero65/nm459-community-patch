@@ -41,14 +41,14 @@ doObjectAction:
     gotNewActionTimer:
 
     STA Object_action_timer,x
-                
+
     ;; Reset animation timer
     LDY Object_type,x
     LDA ObjectAnimationSpeedTableLo,y
     STA temp16
     LDA ObjectAnimationSpeedTableHi,y
     STA temp16+1
-            
+
     LDA Object_frame,x
     LSR
     LSR
@@ -69,7 +69,7 @@ doObjectAction:
     LDA Object_frame,x
     AND #%11111000
     STA Object_frame,x ;; reset animation frame.
-        
+
     LDY tempA
     LDA AI_table_lo,y
     STA temp16

@@ -16,13 +16,13 @@
 
     LDA continueMap
     STA warpMap
-    
+
     LDA continueScreen
     STA currentNametable
-    
+
     LDX player1_object
     STA Object_screen,x
-    
+
     LDA #$02 ;; this is continue type warp.
     STA screenTransitionType ;; is of warp type
 

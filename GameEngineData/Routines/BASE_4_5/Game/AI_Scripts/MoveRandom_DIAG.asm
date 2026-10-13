@@ -1,6 +1,6 @@
 
     ;; Choose out of 4 diagonals
-    TXA    
+    TXA
     STA tempA
 
     JSR doGetRandomNumber

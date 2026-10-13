@@ -22,7 +22,7 @@ doLoadScreen2:
     LSR
     LSR
     STA temp ;; this is the screen bank.
-        
+
     LDA currentNametable
     CLC
     ADC #$01
@@ -37,7 +37,7 @@ doLoadScreen2:
 
     LDA warpMap ;; and other screen bytes needed - warp map is either 0 or 1
     STA temp2
-            
+
     LoadNametableData temp, temp1, temp2, #$08, #$0F, tempx, #$00, #$00
 
     ;JSR doWaitFrame
@@ -52,7 +52,7 @@ doLoadScreen2:
 
     LDA warpMap
     STA temp2
-            
+
     LoadAttributeData temp, temp1, temp2, #$04, #$08, tempy, #$C0, #$00
 
     ;JSR doWaitFrame
@@ -71,7 +71,7 @@ doLoadScreen2:
 
     LDA warpMap
     STA temp2
-            
+
     LoadNametableData temp, temp1, temp2, #$08, #$0F, tempx, #$10, #$08
 
     ;JSR doWaitFrame
@@ -90,11 +90,11 @@ doLoadScreen2:
 
     LDA warpMap
     STA temp2
-            
+
     LoadAttributeData temp, temp1, temp2, #$04, #$08, tempy, #$C4, #$04
 
     ;JSR doWaitFrame
-    
+
     LDA currentNametable
     CLC
     ADC #$01
@@ -109,11 +109,11 @@ doLoadScreen2:
 
     LDA warpMap
     STA temp2
-                     
+
     LoadCollisionData temp, temp1, temp2, #$08, #$0F, #$00, #$00, #$01
-    
+
     ;JSR doWaitFrame
-    
+
     LDA currentNametable
     SEC
     SBC #$01
@@ -128,9 +128,9 @@ doLoadScreen2:
 
     LDA warpMap
     STA temp2
-                     
+
     LoadCollisionData temp, temp1, temp2, #$08, #$0F, #$00, #$08, #$01
-    
+
     ;JSR doWaitFrame
 
     RTS

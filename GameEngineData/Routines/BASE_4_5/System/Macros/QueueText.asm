@@ -2,7 +2,7 @@
 MACRO QueueText arg0, arg1, arg2, arg3, arg4
     ;; arg0 = bank
     ;; arg1 = label
-    ;; x 
+    ;; x
     ;; y
     ;; width (columns) in tiles
     ;; height (rows) intiles
@@ -83,10 +83,10 @@ TextIsQueued:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA textOffset_lo
-        
+
     LDA temp1
     LSR
     LSR

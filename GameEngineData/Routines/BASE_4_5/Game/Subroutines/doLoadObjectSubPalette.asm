@@ -18,7 +18,7 @@ doLoadObjectSubPalettes:
 
         LDX arg1_hold
         LDY #$00
-        loop_LoadSpriteSubPalette: 
+        loop_LoadSpriteSubPalette:
             LDA (temp16),y
             STA sprPal,x
             INY

@@ -11,7 +11,7 @@
     TXA
     PHA
     LDX player1_object
-    
+
     ;;;As always, check if it's appropiate to make the player climb
     GetActionStep player1_object        ; Get the current action step of the player
     CMP #$07                            ; Check if action step is 7, which is commonly the "hurt" state)
@@ -26,7 +26,7 @@
     ADC #LADDER_SPEED ;; ladder speed
     BCC +notAtBottom
         GetActionStep player1_object
-        CMP #$03 ;; in this module, the player's action step 3 is for climbing 
+        CMP #$03 ;; in this module, the player's action step 3 is for climbing
         BNE +notAtBottom
             LDA #BOUNDS_TOP ;#$02
             CLC
@@ -47,8 +47,8 @@
     ;; arg2 = screen transition type - most likely use 1 here.
             JMP +notClimbing
     +notAtBottom
-    
-    
+
+
     ;;;;First let's make some calculations on player's height (just so we we it out of the way)
     LDA #PLAYER_HEIGHT    ;;Load the height of the player - can be modified on the UI
     CLC                    ;;Clear Carry
@@ -57,7 +57,7 @@
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;; We do this becase...
     ;; if we give the exact player height, the player will never be able to go down if standing on top of a ladder
-    
+
 ;;; if up is engaged, check for a collision with a ladder.
 ;;; check the pixel just below feet, and the pixel just below top of bounding box.
 
@@ -81,7 +81,7 @@
     CLC
     ADC #LADDER_SPEED       ;; ladder speed
     STA Object_y_hi,x
-    
+
     LDA tileX
     AND #%11110000
     ;; Add or subtract player offset here if
@@ -96,7 +96,7 @@
     ; ADC #0 ;; Player x position
     ;;
     STA Object_x_hi,x
-    
+
     GetActionStep player1_object
     CMP #$03       ;; in this module, the player's action step 3 is for climbing
     BEQ +alreadyOnLadder

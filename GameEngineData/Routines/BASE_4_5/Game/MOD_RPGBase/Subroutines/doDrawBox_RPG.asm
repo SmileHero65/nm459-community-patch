@@ -1,33 +1,33 @@
 doDrawBox:
 
-    
+
     LDA updateScreenData
     AND #%00000101 ;; if queued to push tiles or attributes
     BEQ checkQueueFlags
-    
-    
-    RTS 
+
+
+    RTS
 checkQueueFlags:
     LDA queueFlags
     AND #%10000000
     BEQ skipSettingUpBox
-    
+
     LDA gameStatusByte
     ORA #%00000001 ;;; this will skip object handling.
     STA gameStatusByte
-    
+
     ; LDA arg0_hold
     ; STA Box_x_origin
     LDA Box_x_origin
     STA temp_boxX
-    
+
     LDA Box_y_origin
     STA Box_y_hold
     STA temp_boxY
-    
+
     LDA Box_width
     STA temp_boxWidth
-    
+
     LDA Box_height
     STA Box_height_hold
     STA temp_boxHeight
@@ -48,8 +48,8 @@ checkQueueFlags:
     LDA queueFlags
     AND #%01111111
     STA queueFlags
-    
-    
+
+
 skipSettingUpBox:
     LDA queueFlags
     AND #%00000100
@@ -60,12 +60,12 @@ notCurrentlyUpdatingQueuedAttributes:
     ;;; so at max, it will be updating 16x4 tiles (64) x 3 bytes per tile (192).
     ;;; This makes multple frames of updates easy.
     ;;; If the queue flag bit 0 is activated, that means that we have moved on to another row, but are not done yet.
-    
+
     LDA queueFlags
     AND #%00000001
     BEQ notCurrentlyUpdatingQueuedTiles
     ;; currently updating queued tiles
-    
+
     JMP currentlyUpdatingQueuedTiles
 notCurrentlyUpdatingQueuedTiles:
     ;;;;; We are JUST starting a box update.
@@ -73,14 +73,14 @@ notCurrentlyUpdatingQueuedTiles:
     ; arg1_hold = y value, in metatiles
     ; arg2_hold = width, in metatiles
     ; arg3_hold = height, in metatiles
-    
+
     LDA queueFlags
     ORA #%00000001
     STA queueFlags
-    
+
 
 currentlyUpdatingQueuedTiles:
-    
+
     LDA Box_x_origin ;; the x value, in metatiles, of the box draw.
     ASL ;; multiplied by two, since metatiles are 16x16, but PPU addresses are 8x8.
     STA temp
@@ -92,11 +92,11 @@ currentlyUpdatingQueuedTiles:
         ASL
         ASL
         ASL
-        CLC 
+        CLC
         ADC temp
         STA temp3
 
-        
+
     LDA temp1
         LSR
         LSR
@@ -105,10 +105,10 @@ currentlyUpdatingQueuedTiles:
     ADC camFocus_tiles
     STA temp2
 
-    
-    
-    
-    
+
+
+
+
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; LOAD THE BYTES INTO SCRATCH RAM:
     ;;; High, Low, Tile.
@@ -116,10 +116,10 @@ currentlyUpdatingQueuedTiles:
 
 
         LDA #$00
-        
+
         STA scrollOffsetCounter
         TAY
-        
+
         doDrawBoxLoop:
             LDA #$00
             STA tempx
@@ -141,9 +141,9 @@ currentlyUpdatingQueuedTiles:
                     ORA #%01000000
                     STA queueFlags
                     SwitchBank #$16
-    
-                        LDY currentNametable 
-                    
+
+                        LDY currentNametable
+
                          LDA warpMap
                          BEQ +loadFromMap1table
                             ; ;;;load from map 2 table
@@ -160,8 +160,8 @@ currentlyUpdatingQueuedTiles:
                         +GotNametableLoadPointer:
                             ;;now (temp16) holds the address of the nametable to be loaded.
                     ReturnBank
-                
-                
+
+
                     ;; is restoring the nametable.
                     ;; Find nametable value for this position.
                     ;; First, we have to jump to the proper bank.
@@ -172,7 +172,7 @@ currentlyUpdatingQueuedTiles:
                         LSR
                         LSR
                         STA temp
-                        
+
                         LDA warpMap
                         BEQ +dontAdd8toScreenBank
                             ;; ad 8 to screen bank
@@ -191,17 +191,17 @@ currentlyUpdatingQueuedTiles:
                                 ASL
                                 ASL
                                 ASL
-                                CLC 
+                                CLC
                                 ADC Box_x_origin
-                                CLC 
+                                CLC
                                 ADC tempx
                             TAY
                             LDA (temp16),y
                             STA temp ;; it is this value that doGetSingleMetaTileValues uses.
-                        
-                        
+
+
                     ReturnBank
-                        
+
                     LDA temp
                     JSR doGetSingleMetaTileValues
                     LDA updateTile_00
@@ -212,12 +212,12 @@ currentlyUpdatingQueuedTiles:
                     STA tempC
                     LDA updateTile_03
                     STA tempD
-                    
-                    
-                    
+
+
+
                     JMP gotBoxFill
                 isJustDrawingBox:
-                
+
                     LDA #$f5
                     STA tempA
                     STA tempB
@@ -225,7 +225,7 @@ currentlyUpdatingQueuedTiles:
                     STA tempD
                 gotBoxFill:
                 LDY tempy
-            
+
                 LDA temp2
                 STA scrollUpdateRam,y
                 INY
@@ -235,7 +235,7 @@ currentlyUpdatingQueuedTiles:
                 LDA tempA
                 STA scrollUpdateRam,y
                 INY
-                
+
                 LDA temp2
                 STA scrollUpdateRam,y
                 INY
@@ -247,7 +247,7 @@ currentlyUpdatingQueuedTiles:
                 LDA tempB
                 STA scrollUpdateRam,y
                 INY
-                
+
                     LDA temp3
                     CLC
                     ADC #$20
@@ -255,7 +255,7 @@ currentlyUpdatingQueuedTiles:
                     LDA temp2
                     ADC #$00
                     STA temp2
-                
+
                 LDA temp2
                 STA scrollUpdateRam,y
                 INY
@@ -265,7 +265,7 @@ currentlyUpdatingQueuedTiles:
                 LDA tempC
                 STA scrollUpdateRam,y
                 INY
-                
+
                 LDA temp2
                 STA scrollUpdateRam,y
                 INY
@@ -284,7 +284,7 @@ currentlyUpdatingQueuedTiles:
                 ;;; more box row to draw.
                     LDA temp3
                     SEC
-                    SBC #$1E 
+                    SBC #$1E
                     STA temp3
                     LDA temp2
                     SBC #$00
@@ -305,9 +305,9 @@ currentlyUpdatingQueuedTiles:
                     AND #%01000000
                     BNE +isNotCreatingBoxTiles
                         JMP isCreatingBoxTiles
-                    +isNotCreatingBoxTiles:    
+                    +isNotCreatingBoxTiles:
                         ;; is restoring box tiles
-                        ;;; COMPLETLY DONE WITH BOX.    
+                        ;;; COMPLETLY DONE WITH BOX.
                         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                         ;;; SUBSTATES:
                         ;;; When we're finished with a box, we need to check if we've popped to a new substate.
@@ -326,9 +326,9 @@ currentlyUpdatingQueuedTiles:
                         ;;; using a submenu).  A "pop out" will mean jump to +isZero, which finishes "un-drawing" the box.
                         TYA
                         PHA
-                        
+
                         LDY gameSubState
-                        
+
                             ; ;; set up new box
                                  LDA SubstateTable_Origin_x,y
                                  CMP #$FF
@@ -341,31 +341,31 @@ currentlyUpdatingQueuedTiles:
                                  +notNull
                                      STA Box_x_origin
                                      STA temp_boxX
-                                    
+
                                 LDA SubstateTable_Origin_y,y
                                      STA Box_y_origin
                                      STA Box_y_hold
                                      STA temp_boxY
-                                    
+
                                 LDA SubstateTable_width,y
                                      STA Box_width
                                      STA temp_boxWidth
-                                    
+
                                 LDA SubstateTable_height,y
                                      STA Box_height
                                      STA Box_height_hold
                                      STA temp_boxHeight
 
-                                    
+
                                 LDA SubstateTable_text_lo,y
                                 STA textPointer
                                 LDA SubstateTable_text_hi,y
                                 STA textPointer+1
-                                
+
                                 LDA #TEXT_FREE
                                 STA endDrawBoxAction
-                                            
-                                                
+
+
                                 LDA  #%00000001
                                 STA queueFlags
                             PLA
@@ -373,7 +373,7 @@ currentlyUpdatingQueuedTiles:
                                 ; ;;; still finish out the rest of other box.
                                 JMP notDoneWithBoxDrawOutterLoop
                             ; +notOne
-                            
+
                         +isZero
                         LDA #$00
                         STA gameSubState
@@ -394,30 +394,30 @@ currentlyUpdatingQueuedTiles:
                         LDA temp_boxY
                         STA Box_y_origin
             notDoneWithBoxDrawOutterLoop:
-        
+
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; Push the offset so we know how many tiles to update.
     ;;; max would be 85 tiles.
     ;;; could make this metatiles to get more out of this.
         STY maxScrollOffsetCounter
-        
-        
-                
-        
+
+
+
+
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; Turn on update screen on next frame.
             LDA updateScreenData
             ORA #%0000100
             STA updateScreenData
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        
-    
-    
+
+
+
     RTS
-    
-    
-    
+
+
+
 currentlyUpdatingQueuedAttribtues:
 
     ;;; the max amount of attributes to be updated on a screen is 64.
@@ -430,25 +430,25 @@ currentlyUpdatingQueuedAttribtues:
     BEQ doSetupAttributeQueue
         JMP alreadySetupAttributeQueue
     doSetupAttributeQueue:
-            
-        
+
+
         LDA Box_height
         ;; allow for odd starts, if on odd, will need to add 1
         STA Box_height_hold
-        
+
         LDA queueFlags
         ORA #%00010000
         STA queueFlags
     alreadySetupAttributeQueue
-        
-            
+
+
     ; LDA queueFlags
     ; AND #%00001000
     ; BEQ doBlankBoxAttributes
         ; JMP doRestoreScreenAttributes
-    ; doBlankBoxAttributes:    
+    ; doBlankBoxAttributes:
 
-        
+
         ;; is writing 11 to all attributes that are within "the box".
         LDA Box_x_origin
         LSR
@@ -456,39 +456,39 @@ currentlyUpdatingQueuedAttribtues:
         LDA Box_y_hold
         LSR
         STA tempB
-        
+
         LDA Box_width
-        LSR 
+        LSR
         ;; allow for odd starts, if on odd, will need to add 1
         STA tempC
         STA tempz
-    
+
         ;; now, tempA*8+tempB gives us the starting position for the box's attributes.
-    
+
         LDA #$00
         STA scrollOffsetCounter
         TAY
-        
-        doDrawBoxAttributesLoop:    
+
+        doDrawBoxAttributesLoop:
             STY tempy
-            
+
             LDA tempB
             ASL
             ASL
             ASL
-            CLC 
+            CLC
             ADC tempA
             sta tempx ;; tempx is our offset for the Attribute table.
-            
-            
+
+
             LDA camFocus_att ;; high byte, have to change based on which nametable we are in.
             STA temp1
             LDA #$C0
             CLC
             ADC tempx
             STA temp2
-            
-    
+
+
 
             LDA queueFlags
             AND #%00001000
@@ -496,7 +496,7 @@ currentlyUpdatingQueuedAttribtues:
                 LDA #$FF ;; what attribute do you want to fill the box with?
                 STA temp3
                 JMP gotBoxAttributeFill
-            
+
             isRestoringBoxAttributes:
                 LDA queueFlags
                 ORA #%01000000
@@ -517,7 +517,7 @@ currentlyUpdatingQueuedAttribtues:
                         STA temp16+1
                     +gotAttFromTable
                 ReturnBank
-                
+
                 LDA currentNametable
                 LSR
                 LSR
@@ -541,7 +541,7 @@ currentlyUpdatingQueuedAttribtues:
                     LDA (temp16),y
                     STA temp3
                 ReturnBank
-    
+
             gotBoxAttributeFill:
                     LDY tempy
                     LDA temp1
@@ -564,7 +564,7 @@ currentlyUpdatingQueuedAttribtues:
                     BEQ doneWithDrawBoxAttributes
                             INC Box_y_hold
                             JMP moreBoxAttributes
-                    
+
 
             doneWithDrawBoxAttributes:
                 LDA queueFlags
@@ -580,7 +580,7 @@ currentlyUpdatingQueuedAttribtues:
                     LDA textQueued
                     AND #%00000010
                     BEQ notTurningOffTextbox
-                        
+
                         ;; turning off textbox
                         LDA textQueued
                         AND #%11111101
@@ -601,10 +601,10 @@ currentlyUpdatingQueuedAttribtues:
                         notDo01endBoxAction:
                         CMP #$02
                         BEQ do02endBoxAction
-                            
+
                             JMP notDo02endBoxAction
                         do02endBoxAction:
-                            
+
                             EraseBox temp_boxX, temp_boxY, temp_boxWidth, temp_boxHeight
                             jmp moreBoxAttributes
                         notDo02endBoxAction
@@ -627,7 +627,7 @@ currentlyUpdatingQueuedAttribtues:
             moreBoxAttributes:
                 STY maxScrollOffsetCounter
             justUpdateScreenData:
-        
+
                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; Turn on update screen on next frame.
             LDA updateScreenData
@@ -636,10 +636,10 @@ currentlyUpdatingQueuedAttribtues:
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
             RTS
-        
+
     doRestoreScreenAttributes:
-    
-    
-    RTS 
-    
+
+
+    RTS
+
 

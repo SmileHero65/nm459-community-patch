@@ -15,9 +15,9 @@ doLoadBackgroundPalettes:
         STA temp16
         LDA GameBckPalHi,y
         STA temp16+1
-    
+
         LDY #$00
-        loop_LoadBackgroundPalette: 
+        loop_LoadBackgroundPalette:
             LDA (temp16),y
             STA bckPal,y
             INY
@@ -29,7 +29,7 @@ doLoadBackgroundPalettes:
         ORA #%00000001 ;; palette
         STA updateScreenData
     ReturnBank
-    
+
     PLA
     TAY
     PLA

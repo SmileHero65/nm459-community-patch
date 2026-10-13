@@ -1,4 +1,4 @@
-;;;; 
+;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Only can jump if the place below feet is free.
@@ -8,13 +8,13 @@
     CLC
     ADC ObjectHeight,y
     sta temp2
-    
+
     LDA Object_x_hi,x
     CLC
     ADC ObjectBboxLeft,y
     STA temp
     JSR getPointColTable
-    
+
     LDA Object_y_hi,x
     CLC
     ADC #$02
@@ -27,14 +27,14 @@
      BNE +noJumpYet
         JMP +doJump
      +noJumpYet
-    
+
     CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
     BNE +noJumpYet
         JMP +doJump
      +noJumpYet
-    
+
     CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder top platform.
                                        ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
@@ -47,9 +47,9 @@
         JSR getPointColTable
         CheckCollisionPoint temp, temp1, #$01, tempA ;; check below feet to see if it is solid.
                                             ;;; if it is (equal), can jump.
-                                            ;;; if not, skips jumping.          
+                                            ;;; if not, skips jumping.
         BEQ +doJump
-        
+
         CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
@@ -61,7 +61,7 @@
             JMP +skipJumping
 +doJump:
     STX temp ;; assumes the object we want to move is in x.
-        
+
     LDY Object_type,x
     LDA ObjectJumpSpeedLo,y
     EOR #$FF
@@ -69,7 +69,7 @@
     LDA ObjectJumpSpeedHi,y
     EOR #$FF
     STA Object_v_speed_hi,x
-        
+
     STX temp ;; assumes the object we want to move is in x.
  ;  change the object's action so that he is in jump mode.
 

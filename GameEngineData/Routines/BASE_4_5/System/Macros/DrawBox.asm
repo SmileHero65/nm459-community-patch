@@ -7,7 +7,7 @@ MACRO DrawBox arg0, arg1, arg2, arg3, arg4, arg5
     ;; arg4 = trigger
     ;;        00 = nothing, just draw the black box.
     ;;        01 = draw loaded text once black box is finished.
-    ;;        02 = erase box.  We would want to draw text with an erase box 
+    ;;        02 = erase box.  We would want to draw text with an erase box
     ;;             end action so that we can hide all the text
     ;;             and restore attributes before returning to game.
     ;;        03 = hud box
@@ -23,21 +23,21 @@ MACRO DrawBox arg0, arg1, arg2, arg3, arg4, arg5
     LDA arg0
     STA Box_x_origin
     STA temp_boxX
-    
+
     LDA arg1
     STA Box_y_origin
     STA Box_y_hold
     STA temp_boxY
-    
+
     LDA arg2
     STA Box_width
     STA temp_boxWidth
-    
+
     LDA arg3
     STA Box_height
     STA Box_height_hold
     STA temp_boxHeight
-    
+
     LDA arg4
     STA endDrawBoxAction ;; also serves a text mode.
     CMP #TEXT_FREE
@@ -64,20 +64,20 @@ MACRO DrawBox arg0, arg1, arg2, arg3, arg4, arg5
     LDA Box_y_origin
     STA Box_y_hold
     STA temp_boxY
-    
+
     LDA Box_width
     STA temp_boxWidth
-    
+
     LDA Box_height
     STA Box_height_hold
     STA temp_boxHeight
-    
+
     LDA queueFlags
     ORA #%10000000
     STA queueFlags
 
     JSR doDrawBox
-    
+
     PLA
     TAY
     PLA

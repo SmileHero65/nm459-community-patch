@@ -7,14 +7,14 @@
     LDA Object_x_hi,x
     STA xHold_hi
     STA xPrev
-    
+
     LDA Object_y_lo,x
     STA yHold_lo
 
     LDA Object_y_hi,x
     STA yHold_hi
     STA yPrev
-    
+
     LDA Object_status,x
     AND #%00000100
     BNE +
@@ -23,7 +23,7 @@
 
     LDA #$00
     STA collisionsToCheck ;; blank out collisions to check.
-    
+
     ;; Check to see if we are using aiming physics. If we are using aim physics,
     ;; Object_direction will have it's 3rd bit flipped. xxxxXxxx
     LDA Object_direction,x
@@ -37,12 +37,12 @@
             LDA Object_h_speed_lo,x
             EOR #$FF
             STA temp
-            
+
             LDA Object_x_lo,x
             SEC
             SBC temp
             STA xHold_lo
-            
+
             LDA Object_x_hi,x
             SBC Object_h_speed_hi,x
             STA xHold_hi
@@ -86,14 +86,14 @@
             SBC Object_v_speed_hi,x
             STA yHold_hi
         doneWithAimedV:
-            
+
         JMP skipPhysics ;; Skips all the acc/dec stuff and goes right to
                         ;; movement based on speed, which was figured out in
                         ;; the directional macro.
     useNormalDirectionalPhysics:
 
     ;; jump out to bank 1C to load in physics values.
-        
+
     LDY Object_type,x
     LDA ObjectMaxSpeed,y
     ASL
@@ -122,7 +122,7 @@
     LSR
     LSR
     STA myAcc+1
-    
+
     LDA ObjectBboxLeft,y
     STA self_left
 
@@ -134,7 +134,7 @@
     SBC self_left
     LSR
     STA self_center_x
-        
+
     LDA ObjectBboxTop,y
     STA self_top
 
@@ -164,7 +164,7 @@
         ADC myAcc+1
         STA Object_h_speed_hi,x
         STA temp1
-        
+
         ;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -179,7 +179,7 @@
             STA Object_h_speed_lo,x
             LDA temp1
             STA Object_h_speed_hi,x
-        
+
         doneWithAccFetch:
         JMP skipDoHdec
 
@@ -188,17 +188,17 @@
         CLC
         ADC Object_h_speed_lo,x
         BEQ skipDoHdec
-        
+
         LDA Object_h_speed_lo,x
         SEC
         SBC myAcc
         STA temp
-        
+
         LDA Object_h_speed_hi,x
         SBC myAcc+1
         STA temp1
 
-        BCC zeroHdec ;; if the result of the 16 bit compare is 
+        BCC zeroHdec ;; if the result of the 16 bit compare is
                      ;; less than zero, clamp the acc to zero.
                      ;; Otherwise, make it the stored values.
             LDA temp1
@@ -211,9 +211,9 @@
         LDA #$00
         STA Object_h_speed_hi,x
         STA Object_h_speed_lo,x
-    
+
     skipDoHdec:
-    
+
     ;; do vertical check.
     LDA Object_direction,x
     AND #%00100000
@@ -231,7 +231,7 @@
         ADC myAcc+1
         STA Object_v_speed_hi,x
         STA temp1
-        
+
         ;; now, evaluate against max speed.
         Compare16 temp1, temp, myMaxSpeed+1,myMaxSpeed
         +
@@ -254,16 +254,16 @@
         CLC
         ADC Object_v_speed_lo,x
         BEQ skipDoVdec
-    
+
         LDA Object_v_speed_lo,x
         SEC
         SBC myAcc
         STA temp
-    
+
         LDA Object_v_speed_hi,x
         SBC myAcc+1
         STA temp1
-        BCC zeroVdec ;; if the result of the 16 bit compare is 
+        BCC zeroVdec ;; if the result of the 16 bit compare is
                       ;; less than zero, clamp the acc to zero.
                       ;; Otherwise, make it the stored values.
             LDA temp1
@@ -295,8 +295,8 @@
         ;; set to check points 0 and 3 (top left and bottom left.)
         LDA collisionsToCheck
         ORA #%00001001
-        STA collisionsToCheck 
-    
+        STA collisionsToCheck
+
         LDA tempA
         CLC
         ADC tempB
@@ -318,7 +318,7 @@
         ;; set to check points 1 and 2 (top right and bottom right.)
         LDA collisionsToCheck
         ORA #%00000110
-        STA collisionsToCheck 
+        STA collisionsToCheck
 
         LDA tempA
         CLC
@@ -349,8 +349,8 @@
         ;; set to check points 0 and 1 (top left and top right.)
         LDA collisionsToCheck
         ORA #%00000011
-        STA collisionsToCheck 
-    
+        STA collisionsToCheck
+
         LDA tempC
         CLC
         ADC tempD
@@ -367,13 +367,13 @@
         AND #%11101111 ;; "up"
         STA directionByte
         JMP gotVmoveDirection
-        
+
     isMovingDown:
 
         ;; set to check points 2 and 3 (bottom left and bottom right.)
         LDA collisionsToCheck
         ORA #%00001100
-        STA collisionsToCheck 
+        STA collisionsToCheck
 
             LDA tempC
             CLC
@@ -391,7 +391,7 @@
                 STA directionByte
 
     gotVmoveDirection:
-    
+
     LDA directionByte
     AND #%01000000
     BNE doMoveRight
@@ -408,7 +408,7 @@
         LDA Object_screen,x
         SBC #$00
         STA xHold_screen
-    
+
         LDA #BOUNDS_LEFT
         BNE doNonZeroBoundsLeftCheck
             LDA Object_x_lo,x
@@ -468,7 +468,7 @@
     BCS doRightBounds
         JMP doneWithH
     doRightBounds:
-    
+
     LDA scrollTrigger
     AND #%00010000
     BEQ checkRightBounds_NoScroll

@@ -1,6 +1,6 @@
 
     DestroyObject
-    AddValue #$06, varMoney, #$01, #$00 
+    AddValue #$06, varMoney, #$01, #$00
         ;arg0 = how many places this value has.
         ;arg1 = home variable
         ;arg2 = amount to add

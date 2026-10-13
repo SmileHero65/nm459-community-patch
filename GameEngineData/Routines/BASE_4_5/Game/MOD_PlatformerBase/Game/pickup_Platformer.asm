@@ -23,7 +23,7 @@
 
     CMP #$03
     BNE +notThisPickup
-    
+
 +notThisPickup:
 
     CMP #$04

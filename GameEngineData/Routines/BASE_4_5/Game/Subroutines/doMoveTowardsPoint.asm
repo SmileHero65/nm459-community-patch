@@ -6,7 +6,7 @@ doMoveTowardsPoint:
         EOR #$ff
     +
 
-    TAX 
+    TAX
     ROL octant
 
     LDA arg2_hold
@@ -15,7 +15,7 @@ doMoveTowardsPoint:
         EOR #$ff
     +
 
-    TAY 
+    TAY
     ROL octant
 
     LDA log2_tab,x
@@ -23,7 +23,7 @@ doMoveTowardsPoint:
     BCC +
         EOR #$ff
     +
-    TAX    
+    TAX
 
     LDA octant
     ROL

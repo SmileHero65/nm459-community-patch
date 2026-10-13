@@ -1,13 +1,13 @@
 
-doUpdateCamera:    
-    
+doUpdateCamera:
+
     LDX camObject
     LDA Object_h_speed_lo,x
     STA tempA
 
     LDA Object_h_speed_hi,x
     STA tempB
-    
+
     LDA camX
     AND #%11110000
     STA tempz
@@ -56,7 +56,7 @@ doUpdateCamera:
         LDA camX
         SBC tempB
         STA camX
-        
+
         LDA camX_hi
         SBC #$00
         STA camX_hi
@@ -81,7 +81,7 @@ doUpdateCamera:
     BEQ +skipCheckForScrollScreenEdge
         RTS
     +skipCheckForScrollScreenEdge
-    
+
     LDA camX_lo
     CLC
     ADC tempA
@@ -97,7 +97,7 @@ doUpdateCamera:
     JSR getCamSeam
 
     noHorizontalCameraUpdate:
-    
+
     LDA scrollByte
     AND #%00000001
     BEQ +canUpdateScrollColumn
@@ -144,7 +144,7 @@ doUpdateCamera:
             STA pointer6
             LDA CollisionTables_Map2_Hi,y
             STA pointer6+1
-                
+
             LDY camScreen
             LDA CollisionTables_Map2_Lo,y
             STA pointer2
@@ -181,7 +181,7 @@ doUpdateCamera:
     ;; now we have pointers for the fetch.
     ;;  We can read from the pointers to get metatile data.
     ;; jump to the bank
-    LDA scrollUpdateScreen    
+    LDA scrollUpdateScreen
     LSR
     LSR
     LSR
@@ -197,20 +197,20 @@ doUpdateCamera:
         ADC #$08
         STA temp
     +gotWarpMap
-        
+
     SwitchBank temp
         LDX screenState
         LDY Mon1SpawnLocation,x
         JSR checkSeamForMonsterPosition
-            
+
         LDX screenState
         LDY Mon2SpawnLocation,x
         JSR checkSeamForMonsterPosition
-            
+
         LDX screenState
         LDY Mon3SpawnLocation,x
         JSR checkSeamForMonsterPosition
-        
+
         LDX screenState
         LDY Mon4SpawnLocation,x
         JSR checkSeamForMonsterPosition
@@ -220,25 +220,25 @@ doUpdateCamera:
         ASL
         ASL
         ORA #%00100000
-        STA temp1 ;; temp 1 now represents the high byte of the address to place 
-            
+        STA temp1 ;; temp 1 now represents the high byte of the address to place
+
         LDA scrollUpdateColumn
         LSR
         LSR
         LSR
         AND #%00011111
         STA temp2 ;; temp 2 now represents the low byte of the pushes.
-            
+
         LDA scrollUpdateColumn
         LSR
         LSR
         LSR
         LSR
         STA temp3
-            
+
         LDA #$00
-        STA scrollOffsetCounter            
-                    
+        STA scrollOffsetCounter
+
         LDX #$00 ;; will keep track of scroll update ram.
         LDA #$0F
         STA tempA ;; will keep the track of how many tiles to draw.
@@ -248,7 +248,7 @@ doUpdateCamera:
             LDA (temp16),y
             STA temp
             JSR doGetSingleMetaTileValues
-                
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -259,8 +259,8 @@ doUpdateCamera:
 
             LDA updateTile_00
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -273,8 +273,8 @@ doUpdateCamera:
 
             LDA updateTile_01
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -287,8 +287,8 @@ doUpdateCamera:
 
             LDA updateTile_02
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -301,8 +301,8 @@ doUpdateCamera:
 
             LDA updateTile_03
             STA scrollUpdateRam,x
-            INX 
-                
+            INX
+
             DEC tempA
             LDA tempA
             BEQ +doneWithNtLoad
@@ -323,7 +323,7 @@ doUpdateCamera:
                 CLC
                 ADC #$10
                 STA temp3
-            JMP loop_LoadNametableMeta_column    
+            JMP loop_LoadNametableMeta_column
         +doneWithNtLoad:
 
         ;; Add attributes to the update list.
@@ -339,7 +339,7 @@ doUpdateCamera:
         ASL
         ORA #%00100011
         STA temp1 ;; this is now the high byte of the attribute table update
-                
+
         LDA scrollUpdateColumn
         LSR
         LSR
@@ -359,7 +359,7 @@ doUpdateCamera:
             LDY temp2
             LDA (pointer),y
             STA temp
-                    
+
             LDA temp1
             STA scrollUpdateRam,x
             INX
@@ -372,7 +372,7 @@ doUpdateCamera:
 
             LDA temp
             STA scrollUpdateRam,x
-            INX 
+            INX
 
             DEC tempA
             LDA tempA
@@ -394,10 +394,10 @@ doUpdateCamera:
         LSR
         LSR
         LSR
-        LSR 
+        LSR
         STA temp1 ;; keeps track of where to place on the collision table.
 
-        LSR 
+        LSR
         STA temp2 ;; keeps track of the nubble being pulled from.
 
         LDX #$0F ;; keep track of how many values to load are left.
@@ -419,7 +419,7 @@ doUpdateCamera:
                     LSR
                     JMP +pushToCol
                 +oddCol:
-                    LDY temp2    
+                    LDY temp2
                     LDA (pointer6),y
                     AND #%00001111
                 +pushToCol:
@@ -456,7 +456,7 @@ doUpdateCamera:
                     LSR
                     JMP +pushToCol
                 +oddCol
-                    LDY temp2    
+                    LDY temp2
                     LDA (pointer6),y
                     AND #%00001111
                 +pushToCol:
@@ -494,12 +494,12 @@ doUpdateCamera:
             .include ROOT\Game\CommonScripts\userScreenBytes_scrolling.asm
         +skipUpdatingScreenFlags:
     ReturnBank
-    
+
     skipScrollUpdate:
 
     ;; here check camX_hi against tempD
     ;; if they are the same, that means we haven't changed screen boundaries.
-    ;; if they have changed, it means we have changed screen boundaries, so 
+    ;; if they have changed, it means we have changed screen boundaries, so
     ;; we should load in the new screenFlags data.
 
     ;; Make sure we always update camScreen.
@@ -528,7 +528,7 @@ getCamSeam:
     CLC
     ADC camX_hi
     STA camScreen
-    
+
     LDA scrollByte
     AND #%01000000
     BNE +getRightScrollUpdate
@@ -581,8 +581,8 @@ checkForMonsterCameraClipping:
     SBC #$00
     AND #%00001111
     STA temp16+1 ;; high left cam clip
-    
-    +gotIt:    
+
+    +gotIt:
 
     LDA camX
     CLC
@@ -611,7 +611,7 @@ checkForMonsterCameraClipping:
         STA temp1
 
         Compare16 temp16+1, temp16, temp1, temp
-        +    
+        +
             DestroyObject
             JMP doEraseNonPlayerObjectsInThisColumnLoop
         ++
@@ -621,7 +621,7 @@ checkForMonsterCameraClipping:
             JMP doEraseNonPlayerObjectsInThisColumnLoop
         ++
             DestroyObject
-    
+
         doEraseNonPlayerObjectsInThisColumnLoop:
         INX
         CPX #TOTAL_MAX_OBJECTS
@@ -629,7 +629,7 @@ checkForMonsterCameraClipping:
 
     RTS
 
-    
+
 checkSeamForMonsterPosition:
     ;; y is loaded before subroutine.
     LDA (pointer6),y

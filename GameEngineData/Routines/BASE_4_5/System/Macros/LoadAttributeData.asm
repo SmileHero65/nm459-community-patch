@@ -10,7 +10,7 @@ MACRO LoadAttributeData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
     ;; arg5 = start position hi
     ;; arg6 = start position lo
     ;; arg7 = start column
-    
+
     LDA arg0
     STA arg0_hold
     ;LDA arg1
@@ -29,7 +29,7 @@ MACRO LoadAttributeData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
     STA arg7_hold
 
     SwitchBank #$16
-        LDY arg1 
+        LDY arg1
         LDA arg2
         AND #%00000001
         BEQ loadAttFromMap1table
@@ -52,7 +52,7 @@ MACRO LoadAttributeData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
 
         GotAttLoadPointer:
     ReturnBank
-    
+
     JSR doLoadAttributeData
 ENDM
 

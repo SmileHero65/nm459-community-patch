@@ -21,22 +21,22 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
     LDA Object_direction,x
     AND #%00000111
     TAY
-    
+
     LDA NpcFocusTableX,y
     STA tempA
     LDA NpcFocusTableY,y
     STA tempB
-    
+
     LDA Object_x_hi,x
     CLC
     ADC tempA
     STA tempC
-    
+
     LDA Object_y_hi,x
     CLC
     ADC tempB
     STA tempD
-    
+
     LDX #$00
     doCheckForNpcLoop:
     LDA Object_status,x
@@ -48,7 +48,7 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
         LDA Object_flags,x
         AND #%10000000
         BNE +keepChecking
-        
+
             JMP +noNPCcollision
         +keepChecking
             ;; we have confirmed it is an NPC type.
@@ -57,7 +57,7 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
             BCC +noNPCcollision
                 ;; still possible.
                 LDA Object_x_hi,x
-                CLC 
+                CLC
                 ADC #NPC_WIDTH
                 CMP tempC
                 BCC +noNPCcollision
@@ -69,7 +69,7 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
                         CLC
                         ADC #NPC_HEIGHT
                         CMP tempD
-                        BCC +noNPCcollision           
+                        BCC +noNPCcollision
                             LDA textHandler
                             BNE +noNPCcollision
                                 LDA Object_id,x
@@ -83,7 +83,7 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
                                 ORA #%00000001
                                 STA npcTrigger
                             JMP +doNpc
-                  
+
             +noNPCcollision
                 INX
                 CPX #TOTAL_MAX_OBJECTS
@@ -95,7 +95,7 @@ NPC_HEIGHT = #$10  ;; 16 pixels tall
     BNE dontSkipNPCtext
     JMP +skipNpcText
 dontSkipNPCtext:
-   
+
     DrawBox #BOX_1_ORIGIN_X, #BOX_1_ORIGIN_Y, #BOX_1_WIDTH , #BOX_1_HEIGHT, #TEXT_NPC, npc_text
     ;;; x
     ;;; y
@@ -108,14 +108,14 @@ dontSkipNPCtext:
     ;;; string or index.
 +skipNpcText
    RTS
-   
-   
+
+
 NpcFocusTableX:
     ;; DOWN  DR    RIGHT   UR  UP    UL    LEFT  DL
     .db #$08, #$00, #$18, #$00, #$08, #$00, #$F8, #$00
 
 NpcFocusTableY:
     .db #$18, #$00, #$08, #$00, #$F8, #$00, #$08, #$00
-    
-    
-    
+
+
+

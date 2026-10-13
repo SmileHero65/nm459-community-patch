@@ -43,7 +43,7 @@ doHandleUpdateMusic:
 
 ;; Sound engine update routine
 doSoundEngineUpdate:
-    soundengine_update  
+    soundengine_update
     RTS
 
 

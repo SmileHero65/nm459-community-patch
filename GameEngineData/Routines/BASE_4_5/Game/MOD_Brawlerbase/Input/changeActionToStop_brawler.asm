@@ -3,7 +3,7 @@
     ;;; If this happens, we would have our behavior change to stop, even though we'd continue to move.
     ;;; What we need to do is checkt o see if the relevant dpad buttons are pressed.  If any buttons
     ;;; are pressed that would counter the change to a stop action upon release, we need to skip the
-    ;;; change to stop action.  
+    ;;; change to stop action.
      GetActionStep temp
     CMP #$07
     BNE +notHurt
@@ -16,7 +16,7 @@
     LDA controllerNumber_hold
     BNE weAreCheckingCOntroller2
         ;; we are checking controller 1.
-        
+
         LDA gamepad
         AND #%11110000
         BEQ changeToStop_NoDpadPressed

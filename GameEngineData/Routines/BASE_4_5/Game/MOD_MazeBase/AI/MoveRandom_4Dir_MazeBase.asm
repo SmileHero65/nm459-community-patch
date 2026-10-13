@@ -1,5 +1,5 @@
 ;;;; Choose out of 4 directions, UDLR.
-    TXA    
+    TXA
     STA tempA
     JSR doGetRandomNumber
     AND #%00000110

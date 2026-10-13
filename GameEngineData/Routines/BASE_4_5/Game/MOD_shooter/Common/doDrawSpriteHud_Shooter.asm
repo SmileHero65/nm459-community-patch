@@ -4,7 +4,7 @@
     AND #%01000000               ;; Is the HideHud box checked?
     BEQ +doNotTurnOffSpriteHud
         JMP skipDrawingSpriteHud ;; If so, skip drawing the sprite HUD
-    +doNotTurnOffSpriteHud:  
+    +doNotTurnOffSpriteHud:
 
     ;; Here is an example of how to do a sprite hud. arg5, the one that has the
     ;; value of myVar, must correspond to a user variable you have in your game.

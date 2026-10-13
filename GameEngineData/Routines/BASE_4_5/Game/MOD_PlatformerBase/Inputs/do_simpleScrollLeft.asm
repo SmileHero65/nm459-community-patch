@@ -1,4 +1,4 @@
- 
+
  ;    LDA ScreenFlags00
  ;    AND #%00100000
  ;   BEQ +doActivateScrollByte
@@ -26,12 +26,12 @@
     LDA scrollByte
     ORA #%00000010
 +notChangingCamDirectionForUpdate
-    
+
     AND #%00111111
     ORA #%10000000  ;; bit one forces an update.
     STA scrollByte
     ;;; just like movement byte of a player.
     ;;; bit 7 indicates horizontal movement of a player
     ;;; bit 6 indicates 0 for left, 1 for right.
-    
+
     rts

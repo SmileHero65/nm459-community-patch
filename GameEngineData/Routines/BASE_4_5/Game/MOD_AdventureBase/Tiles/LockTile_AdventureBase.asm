@@ -8,7 +8,7 @@
     LDA ObjectUpdateByte
     ORA #%00000001
     STA ObjectUpdateByte ;; makes solid
-    
+
     LDA myKeys
     BNE +doUnlockDoor
         RTS ;; no keys, so can not unlock door.
@@ -71,11 +71,11 @@
     ASL
     ORA tempz
     STA temp3
-        
+
     ;; Set the tile number to change to
     LDA #$00 ;; the tile to change.
              ;; this is in tiles, so if you wanted the second "metatile",
-             ;; use 2, not 1.  If you wanted the tile in the next row, 
+             ;; use 2, not 1.  If you wanted the tile in the next row,
              ;; use #$20, not #$10.  Etc.
     STA tempA
 
@@ -90,7 +90,7 @@
     CLC
     ADC #$01
     STA tempD
-    
+
     LDY #$00
 
     LDA temp2

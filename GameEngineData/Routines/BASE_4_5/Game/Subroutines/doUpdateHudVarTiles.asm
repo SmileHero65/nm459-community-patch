@@ -7,14 +7,14 @@ doUpdateHudVarTiles:
     ;; tempB hold "full" containers.
     ;; tempC holds blank image value
     ;; tempD holds full image value
-    
+
     LDA tempy
     ASL
     ASL
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC tempx
     STA temp2
 
@@ -25,11 +25,11 @@ doUpdateHudVarTiles:
     CLC
     ADC camFocus_tiles
     STA temp3
-    
+
     LDY #$00
     STY scrollOffsetCounter
     STY temp1
-    
+
     loadUpdateHudVarQueueLoop:
         LDA temp1 ;; offset
         CMP tempB ;; full value

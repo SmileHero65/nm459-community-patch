@@ -5,14 +5,14 @@ MACRO StartMoving arg0, arg1
 
     TXA
     PHA
-    
+
     LDA arg0
     STA arg0_hold
     LDA arg1
     STA arg1_hold
-    
+
     JSR oStartMovingInADirection
-    
+
     PLA
     TAX
 ENDM

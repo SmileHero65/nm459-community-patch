@@ -9,7 +9,7 @@
     AND #%00001111
     BEQ camYisLinedUpWithBoundary
         ;; don't allow vertical movement if we're not x aligned.
-        JMP +done 
+        JMP +done
     camYisLinedUpWithBoundary:
 
     LDA camX
@@ -21,7 +21,7 @@
         LDA scrollByte
         AND #%00000001
         BNE canDoRightScroll
-        
+
         JMP canDoLeftScroll
     linedUpWithHscrollBoundary:
 
@@ -32,7 +32,7 @@
         ;; here we will use the temp variable to look at the
         ;; current normalized scroll value.  If it gets beyond
         ;; This is the part that insures a column is fully loaded
-        ;; before the game tries to load a new column, 
+        ;; before the game tries to load a new column,
         ;; fixing a problem which manifests when quickly changing directions
         ;; while close to the scroll tile boundary.
         ;; Bit 7 controls whether or not we are in scroll update mode.
@@ -86,7 +86,7 @@
             canScrollRight
 
             JSR doLoadScrollColumn
-            
+
             doneScrollRight:
             JMP +done
 
@@ -100,7 +100,7 @@
         ;; current normalized scroll value.  If it gets beyond
         ;; 16 we will trigger an update to the seam tiles.
         ;; This is the part that insures a column is fully loaded
-        ;; before the game tries to load a new column, 
+        ;; before the game tries to load a new column,
         ;; fixing a problem which manifests when quickly changing directions
         ;; while close to the scroll tile boundary.
         ;; Bit 7 controls whether or not we are in scroll update mode.

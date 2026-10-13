@@ -12,7 +12,7 @@
     ; TXA
     ; PHA
     ; STA tempx
-    
+
         ; LDA Object_x_hi,x
         ; STA tempA
         ; STA tempC ;; this will keep the *x* in place
@@ -23,25 +23,25 @@
         ; LDX player1_object
         ; ;LDA Object_x_hi,x
         ; ;STA tempC
-        ; LDA Object_y_hi,x        
+        ; LDA Object_y_hi,x
         ; CLC
         ; ADC #$10
         ; STA tempD
-        
+
         ; CLC
         ; ADC #$10 ;; height of player's bbox.
         ; STA temp1
-        
+
         ; LDX tempx
-        
+
     ; ; LDA Object_y_hi,x
     ; ; CMP temp1
     ; ; BCC +keepMoving
     ; ; JMP RESET
 ; ; +keepMoving
-    
-        
-        
+
+
+
     ; MoveTowardsPoint tempA, tempC, tempB, tempD
     ; LDA Object_direction,x
     ; AND #%00000111

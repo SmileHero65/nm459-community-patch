@@ -1,5 +1,5 @@
 ;;;; Choose out LR
-    TXA    
+    TXA
     STA tempA
     JSR doGetRandomNumber
     AND #%00000001

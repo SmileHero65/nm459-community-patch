@@ -1,11 +1,11 @@
 
 MACRO UpdateHudElement arg0
     ;; arg 0 = which element to update.
-    
+
     ;;;Update multiple HUD elements simultaneously
     ;;;https://www.nesmakers.com/index.php?threads/update-multiple-hud-elements-simultaneously-4-5-9.8360/
     ;;;by Dale Coop
-    
+
     TYA
     PHA
 

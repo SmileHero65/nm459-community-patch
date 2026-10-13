@@ -6,7 +6,7 @@
         LDA Object_direction,x
         AND #%00001111
         STA Object_direction,x
-    
+
         Dec myLives
         LDA myLives
         BNE +myLivesNotZero
@@ -16,20 +16,20 @@
 
         LDA continueMap
     STA warpMap
-    
+
     LDA continueX
     STA newX
     LDA continueY
     STA newY
-    
+
     LDA continueScreen
     STA warpToScreen
     STA camScreen
-    
 
 
-    
-    
-    
+
+
+
+
     WarpToScreen warpToMap, warpToScreen, #$02
     dontDoTileReset:

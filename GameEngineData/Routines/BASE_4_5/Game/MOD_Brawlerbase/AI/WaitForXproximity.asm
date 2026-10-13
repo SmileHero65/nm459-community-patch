@@ -1,6 +1,6 @@
 ;;; this behavior will wait until there is proximity between the object and the player in the x position,
 ;;; and then jump to the next behavior when the condition is true.
-    
+
     TXA
     PHA
         LDX player1_object
@@ -11,11 +11,11 @@
 
     PLA
     TAX
-    
+
     LDA tempB
     CMP Object_screen,x
     BNE +skip
-    
+
     LDA tempA
     SEC
     SBC Object_x_hi,x

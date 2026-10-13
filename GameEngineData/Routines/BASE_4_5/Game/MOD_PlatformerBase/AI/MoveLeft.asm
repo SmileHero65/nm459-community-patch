@@ -1,5 +1,5 @@
 ;;;; Choose out of 4 directions, UDLR.
-    TXA    
+    TXA
     STA tempA
     LDA #%00000110  ;; "left"
     TAY
@@ -9,5 +9,5 @@
     STA tempC
     StartMoving tempA, tempB, #$00
     ChangeFacingDirection tempA, tempC
-    
-    
+
+

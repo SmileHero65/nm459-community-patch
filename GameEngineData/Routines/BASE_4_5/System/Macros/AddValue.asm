@@ -16,7 +16,7 @@ MACRO AddValue arg0, arg1, arg2, arg3
         DEX
     BPL -
 
-    LDX arg3 ;; sets the place to push.  
+    LDX arg3 ;; sets the place to push.
     LDA arg2
     JSR valueAddLoop ;value_add1 ;; will add what is in accumulator.
 

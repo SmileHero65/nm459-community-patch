@@ -17,7 +17,7 @@
     BNE +notJumping
         RTS
     +notJumping
-    
+
     LDA controllerNumber_hold
     BNE +weAreCheckingController2
         ;; we are checking controller 1.

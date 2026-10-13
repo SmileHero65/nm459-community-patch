@@ -17,15 +17,15 @@
 
     LDA continueMap
     STA warpMap
-    
+
     LDA continueScreen
     STA currentNametable
     AND #%00001111
     STA camX_hi
-    
+
     LDX player1_object
     STA Object_screen,x
-    
+
     LDA #$02 ;; this is continue type warp.
     STA screenTransitionType ;; is of warp type
 
@@ -44,12 +44,12 @@
 
     LDA #$00
     STA scrollOffsetCounter
-    
+
     LDA gameHandler
     ORA #%10000000
     STA gameHandler ;; this will set the next game loop to update the screen.
-    
-    LDA #$05 
+
+    LDA #$05
     STA bossHealth ;; resets boss health for this level.
 
     +skipHurt:

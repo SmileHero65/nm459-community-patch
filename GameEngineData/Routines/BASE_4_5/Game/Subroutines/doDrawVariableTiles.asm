@@ -11,7 +11,7 @@ doDrawVariableTiles:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
 
@@ -22,12 +22,12 @@ doDrawVariableTiles:
     CLC
     ADC camFocus_tiles
     STA temp2 ;; high byte
-        
+
     LDX #$00 ;; this is the FULL length of the tile thing.
 
     LDA arg5_hold ;; the tile to draw
     STA temp
-    
+
     loop_doDrawVar
         LDA arg4_hold
         BEQ changeToEmpty ;; if it's zero, change to empty.
@@ -37,7 +37,7 @@ doDrawVariableTiles:
             LDA arg3_hold
             STA temp
         dontChangeToEmpty:
-        
+
         LDA temp2
         STA $2006
 
@@ -56,10 +56,10 @@ doDrawVariableTiles:
     JMP loop_doDrawVar
 
     done_loop_doDrawVar:
-    
+
     RTS
-    
-    
+
+
 doDrawVariableTiles_update:
     LDA arg0_hold
     STA temp
@@ -72,7 +72,7 @@ doDrawVariableTiles_update:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
 
@@ -83,15 +83,15 @@ doDrawVariableTiles_update:
     CLC
     ADC camFocus_tiles
     STA temp2 ;; high byte
-        
+
     LDX #$00 ;; arg2_hold ; this is the FULL length of the tile thing.
     LDY #$00
     LDA arg5_hold ;; the tile to draw
     STA temp
-    
+
     LDA #$00
     STA scrollOffsetCounter
-    
+
     loop_doDrawVar_update:
         LDA arg4_hold
         BEQ changeToEmpty_update ;; if it's zero, change to empty.
@@ -101,7 +101,7 @@ doDrawVariableTiles_update:
             LDA arg3_hold
             STA temp
         dontChangeToEmpty_update
-        
+
         LDA temp2
         STA scrollUpdateRam,y
         INY
@@ -126,7 +126,7 @@ doDrawVariableTiles_update:
     done_loop_doDrawVar_update:
 
     STY maxScrollOffsetCounter
-        
+
     ;; Turn on update screen on next frame.
     LDA updateScreenData
     ORA #%0000100

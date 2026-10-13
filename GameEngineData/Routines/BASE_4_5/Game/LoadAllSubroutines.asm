@@ -132,11 +132,11 @@ AI_E:
 AI_F:
     .include SCR_AI_F
     RTS
-    
+
 AI_table_lo:
     .db #<AI_0, #<AI_1, #<AI_2, #<AI_3, #<AI_4, #<AI_5, #<AI_6, #<AI_7
     .db #<AI_8, #<AI_9, #<AI_A, #<AI_B, #<AI_C, #<AI_D, #<AI_E, #<AI_F
-    
+
 AI_table_hi:
     .db #>AI_0, #>AI_1, #>AI_2, #>AI_3, #>AI_4, #>AI_5, #>AI_6, #>AI_7
     .db #>AI_8, #>AI_9, #>AI_A, #>AI_B, #>AI_C, #>AI_D, #>AI_E, #>AI_F

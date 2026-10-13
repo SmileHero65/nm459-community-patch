@@ -71,10 +71,10 @@ doLoadScreen:
         LSR
         LSR
         STA temp ;; this is the screen bank.
-            
+
         LDA warpMap ;; and other screen bytes needed; warp map is either 0 or 1
         STA temp2
-            
+
         LoadNametableDataFull temp, currentNametable, temp2, tempx
         JMP DoneLoadingNametable_metaOr8x8x
 
@@ -89,9 +89,9 @@ doLoadScreen:
 
         LDA warpMap
         STA temp2
-            
+
         LoadNametableData temp, currentNametable, temp2, #$10, #$0f, tempx, #$00, #$00
-        
+
     DoneLoadingNametable_metaOr8x8x:
 
     ;JSR doWaitFrame
@@ -106,7 +106,7 @@ doLoadScreen:
 
     LDA warpMap
     STA temp2
-            
+
     LoadAttributeData temp, currentNametable, temp2, #$08, #$08, tempy, #$C0, #$00
 
     ;JSR doWaitFrame
@@ -117,21 +117,21 @@ doLoadScreen:
     LSR
     LSR
     LSR
-    STA temp ;; this is the screen bank.    
+    STA temp ;; this is the screen bank.
 
     LDA warpMap
     STA temp2
-            
+
     LoadCollisionData temp, currentNametable, temp2, #$10, #$0F, #$00, #$00, #$00
 
     ;JSR doWaitFrame
-            
+
     LDX player1_object
     LDA newX
     STA Object_x_hi,x
     LDA newY
     STA Object_y_hi,x
-    
+
     LDA screenUpdateByte
     AND #%00000100
     BEQ nevermindSettingNewContinueByte
@@ -160,7 +160,7 @@ doLoadScreen:
 
     ;; In case we want to do something custom, edit the post screen load script.
     .include SCR_POST_SCREEN_LOAD
-    
+
     LDA #%00011110
     STA soft2001
     JSR doWaitFrame

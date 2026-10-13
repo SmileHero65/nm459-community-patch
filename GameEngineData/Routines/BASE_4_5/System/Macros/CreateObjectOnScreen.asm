@@ -10,7 +10,7 @@ MACRO CreateObjectOnScreen arg0, arg1, arg2, arg3, arg4
     BNE +CreateThisObject
         JMP +NoFreeSpaces
     +CreateThisObject:
-    
+
     LDA arg0
     STA arg0_hold
     LDA arg1
@@ -21,12 +21,12 @@ MACRO CreateObjectOnScreen arg0, arg1, arg2, arg3, arg4
     STA arg3_hold
     LDA arg4
     STA Object_screen,x
-    
+
     TYA
     PHA
-    
+
     JSR doCreateObject
-    
+
     PLA
     TAY
 +NoFreeSpaces:

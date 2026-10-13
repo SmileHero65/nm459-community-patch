@@ -36,13 +36,13 @@ doHandleUpdateScreen:
     BEQ dontUpdateToNewScreen
         ;; Turn off screen
         LDA #$00
-        STA soft2001    
+        STA soft2001
         JSR doWaitFrame
 
         LDA currentNametable
         LDX player1_object
         STA Object_screen,x
-        
+
         LSR
         LSR
         LSR
@@ -59,7 +59,7 @@ doHandleUpdateScreen:
         LDA gameHandler
         AND #%01111111
         STA gameHandler
-    dontUpdateToNewScreen:    
+    dontUpdateToNewScreen:
 
     RTS
 

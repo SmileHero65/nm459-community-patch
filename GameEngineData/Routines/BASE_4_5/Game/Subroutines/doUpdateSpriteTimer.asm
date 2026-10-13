@@ -8,7 +8,7 @@
     LDA Object_animation_timer,x
     BEQ endOfAnimTimer
         JMP animationTimerNotFinished
-    endOfAnimTimer:    
+    endOfAnimTimer:
 
     ;; here, the animation timer has rounded down to zero.
     ;; so we will increase the frame
@@ -36,7 +36,7 @@
     LSR
     LSR
     AND #%00000111
-    TAY        
+    TAY
 
     LDA (pointer),y
     LSR
@@ -44,10 +44,10 @@
     LSR
     LSR
     STA tempD
-        
+
     ;LDA tempD
     TAY
-            
+
     LDA EndAnimAndActions_Lo,y
     STA temp16
     LDA EndAnimAndActions_Hi,y

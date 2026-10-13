@@ -4,7 +4,7 @@
         JMP +skipHurt
 +canHurtPlayer:
 
-    
+
     ; TXA
     ; STA temp
     ; GetActionStep temp
@@ -20,9 +20,9 @@
     BNE +notAlreadyInHurtState
         JMP +skipHurt
     +notAlreadyInHurtState
-    
+
         ChangeActionStep temp, #$07
-        
+
          LDA Object_health,x
          SEC
          SBC #$01
@@ -46,6 +46,6 @@
                 AND #%11101111
                 STA ScreenFlags00
 
-            
+
         +notZeroCount:
 +skipHurt

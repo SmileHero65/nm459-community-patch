@@ -15,10 +15,10 @@ doDrawNumbers:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
-        
+
     LDA temp1
     LSR
     LSR
@@ -37,20 +37,20 @@ doDrawNumbers:
         CLC
         ADC #$D0 ;; number start
         STA $2007
-        INY 
+        INY
 
         DEC temp3
         DEC arg3_hold
         LDA arg3_hold
     BNE doDrawNumbersLoop
-    
+
     RTS
-    
-    
+
+
 doDrawNumbers_update:
     LDA #$00
     STA scrollOffsetCounter
-    
+
     LDA arg0_hold
     CLC
     ADC arg3_hold
@@ -66,7 +66,7 @@ doDrawNumbers_update:
     ASL
     ASL
     ASL
-    CLC 
+    CLC
     ADC temp
     STA temp3 ;; low byte.
 
@@ -95,7 +95,7 @@ doDrawNumbers_update:
         STA scrollUpdateRam,x
         INX
 
-        INY 
+        INY
         DEC temp3
         DEC arg3_hold
 
@@ -103,11 +103,11 @@ doDrawNumbers_update:
     BNE doDrawNumbersLoop_update
 
     STX maxScrollOffsetCounter
-        
+
     ;; Turn on update screen on next frame.
     LDA updateScreenData
     ORA #%0000100
     STA updateScreenData
-    
+
     RTS
 

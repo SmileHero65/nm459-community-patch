@@ -6,7 +6,7 @@ oStartMovingInADirection:
         LDA Object_direction,x
         AND #%00001111 ; these bits need to be preserved
         STA temp1
-        
+
         LDA arg1_hold
         AND #%10000000
         BEQ notChangingDirectionH
@@ -22,16 +22,16 @@ oStartMovingInADirection:
                     ;; of inertia, so that it may still deccelerate in that direction.
                     ;; This is important for anything that isn't an abrupt direction change, but rather
                     ;; has acceleration / decceleration
-            
+
         LDA Object_direction,x
         AND temp
         ORA arg1_hold
         ORA temp1
         STA Object_direction,x
-        
-        
-        
-        
+
+
+
+
     ;;; right now, speed argument is unused,
     ;;; as in default physics, max speed is maintained
     ;;; in LUTs, and acceleration to that value

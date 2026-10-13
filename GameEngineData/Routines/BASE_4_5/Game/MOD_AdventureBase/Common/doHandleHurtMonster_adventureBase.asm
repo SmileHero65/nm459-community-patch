@@ -44,12 +44,12 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
 
     PLA
     TAX
-            
+
     LDA Object_direction,x
     AND #%00001111
     ORA temp1
     STA Object_direction,x
-            
+
     ChangeActionStep temp, #$07
 
     DEC Object_health,x
@@ -90,7 +90,7 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
     BEQ +noMoreMonsters
         JMP +doSkipHurtingThisObject
     +noMoreMonsters
-                
+
     LDX #$00
     doCheckForMonsterBlockAfterMonsterDeath:
         LDA currentNametable
@@ -130,12 +130,12 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
         JSR doWaitFrame
 
         +notMonsterBlockTile:
-        INX 
+        INX
         CPX #240
     BNE doCheckForMonsterBlockAfterMonsterDeath
 ;        BEQ +doSkipHurtingThisObject ;; done
 ;    JMP doCheckForMonsterBlockAfterMonsterDeath ;; last monster block.
-;            
+;
 ;    +doSkipHurtingThisObject
 
     PLA
@@ -172,7 +172,7 @@ doGetTileToChange_forMonBlock:
     ;; Set the tile number to change to
     LDA #$00 ;; the tile to change.
              ;; this is in tiles, so if you wanted the second "metatile",
-             ;; use 2, not 1.  If you wanted the tile in the next row, 
+             ;; use 2, not 1.  If you wanted the tile in the next row,
              ;; use #$20, not #$10.  Etc.
     STA tempA
 
@@ -187,7 +187,7 @@ doGetTileToChange_forMonBlock:
     CLC
     ADC #$01
     STA tempD
-    
+
     LDY #$00
     LDA temp2
     STA scrollUpdateRam,y
@@ -222,7 +222,7 @@ doGetTileToChange_forMonBlock:
     LDA temp2
     ADC #$00
     STA temp2
-        
+
     INY
     LDA temp2
     STA scrollUpdateRam,y

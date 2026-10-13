@@ -20,7 +20,7 @@
     AND #%11000111
     ORA tempC
     STA Object_frame,x
-        
+
     STX tempA
     DoObjectAction tempA, tempB
 

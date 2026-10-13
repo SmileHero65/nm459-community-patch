@@ -12,7 +12,7 @@ doEjectLeft:
     STA Object_x_lo,x
     STA Object_h_speed_hi,x
     STA Object_h_speed_lo,x
-    
+
     RTS
 
 
@@ -50,7 +50,7 @@ doEjectUp:
 
     RTS
 
-    
+
 doEjectDown:
     LDA Object_y_hi,x
     CLC
@@ -68,4 +68,4 @@ doEjectDown:
     STA Object_v_speed_lo,x
 
     RTS
-    
+

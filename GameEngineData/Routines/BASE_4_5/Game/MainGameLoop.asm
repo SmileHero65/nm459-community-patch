@@ -38,7 +38,7 @@ MainGameLoop:
 
 
 dontDoBoxUpdate:
-    
+
     ;; Handle text updates that need to be carried over a frame
     LDA textHandler
     BEQ +
@@ -63,7 +63,7 @@ dontDoBoxUpdate:
     JSR doHandleObjects
 
     ;; Update camera
-    JSR doCamera 
+    JSR doCamera
 
     ;; Do screen post-draw
     SwitchBank #$18

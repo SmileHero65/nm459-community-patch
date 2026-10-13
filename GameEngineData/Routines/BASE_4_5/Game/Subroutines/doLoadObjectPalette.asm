@@ -14,9 +14,9 @@ doLoadObjectPalettes:
         STA temp16
         LDA ObjectPaletteDataHi,y
         STA temp16+1
-    
+
         LDY #$00
-        loop_LoadSpritePalette: 
+        loop_LoadSpritePalette:
             LDA (temp16),y
             STA sprPal,y
             INY

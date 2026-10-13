@@ -10,6 +10,6 @@
       LDA (textPointer),y
       STA temp ;; flow into the rest of the text routine.
 
-      PLA 
+      PLA
       TAY
 

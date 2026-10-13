@@ -7,7 +7,7 @@ LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
                          ;; tile spot.
 
 
-    GetTrigger 
+    GetTrigger
     BNE +
         JMP +doneWithLockTiles
     +
@@ -79,14 +79,14 @@ LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
         ASL
         ORA tempz
         STA temp3
-                
+
         LDA temp2
         STA $2006
         LDA temp3
         STA $2006
         LDA #$00
         STA $2007
-                
+
         LDA temp2
         STA $2006
         LDA temp3
@@ -103,14 +103,14 @@ LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
         LDA temp2
         ADC #$00
         STA temp2
-                
+
         LDA temp2
         STA $2006
         LDA temp3
         STA $2006
         LDA #$10
         STA $2007
-                
+
         LDA temp2
         STA $2006
         LDA temp3

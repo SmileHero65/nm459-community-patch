@@ -1,4 +1,4 @@
-    
+
     ;; bounce direction - this doesn't mean that this will cause the object
     ;; to bounce like a ball, but rather if moving diagonally, it won't
     ;; directly reverse the way it was moving, but instead, react like

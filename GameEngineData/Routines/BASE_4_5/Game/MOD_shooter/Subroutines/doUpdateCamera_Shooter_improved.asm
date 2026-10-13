@@ -24,7 +24,7 @@ BNE +notStaticScreen
         LDA #$00 ; HI
         STA tempB
         JMP ++
-    +    
+    +
     CMP #$02           ;;; FAST/MEDIUM SPEED
     BNE +
         LDA #$88 ; LO
@@ -64,9 +64,9 @@ RTS
     ORA #%00000010
 +notChangingCamDirectionForUpdate
     AND #%00111111
-    ORA #%11000000 
+    ORA #%11000000
     STA scrollByte
-  
+
     LDX camObject
     LDA camX
     AND #%11110000
@@ -82,9 +82,9 @@ RTS
     ORA #%00000010
 +notChangingCamDirectionForUpdate
     AND #%00111111
-    ORA #%10000000 
+    ORA #%10000000
     STA scrollByte
-    
+
     LDX camObject
     LDA camX
     AND #%11110000
@@ -103,7 +103,7 @@ RTS
     LDA scrollByte
     AND #%01000000
     BNE doRightCameraUpdate
-        
+
         ;; is left camera update
         LDA camX_lo
         sec
@@ -120,7 +120,7 @@ RTS
         +skipCheckForScrollScreenEdge
         LDA temp
         STA camX
-        
+
         LDA camX_hi
         sbc #$00
         STA camX_hi
@@ -152,7 +152,7 @@ RTS
         ;; here we have cross the screen boundary
         ;;; so if there is anything that needs updating for scrolling
         ;;; update it here.
-        
+
     LDA scrollByte
     AND #%00000001
     BEQ +canUpdateScrollColumn
@@ -244,62 +244,62 @@ forceScrollColumnUpdate:
 
     +loadOverWorldMap
         SwitchBank temp
-            
+
             LDX screenState
             LDY Monster1ID,x
             LDA (pointer6),y
             STA tempD
             LDY Mon1SpawnLocation,x
             JSR checkSeamForMonsterPosition
-            
+
             LDX screenState
             LDY Monster2ID,x
             LDA (pointer6),y
             STA tempD
             LDY Mon2SpawnLocation,x
             JSR checkSeamForMonsterPosition
-            
+
             LDX screenState
             LDy Monster3ID,x
             LDA (pointer6),y
             STA tempD
             LDY Mon3SpawnLocation,x
             JSR checkSeamForMonsterPosition
-            
+
             LDX screenState
             LDy Monster4ID,x
             LDA (pointer6),y
             STA tempD
             LDY Mon4SpawnLocation,x
             JSR checkSeamForMonsterPosition
-            
-            
-        
-        
+
+
+
+
             LDA scrollUpdateScreen
             AND #%00000001
             ASL
             ASL
             ORA #%00100000
-            STA temp1 ;; temp 1 now represents the high byte of the address to place 
-            
+            STA temp1 ;; temp 1 now represents the high byte of the address to place
+
             LDA scrollUpdateColumn
             LSR
             LSR
             LSR
             AND #%00011111
             STA temp2 ;; temp 2 now represents the low byte of the pushes.
-            
+
             LDA scrollUpdateColumn
             LSR
             LSR
             LSR
             LSR
             STA temp3
-            
+
             LDA #$00
-            STA scrollOffsetCounter         
-                    
+            STA scrollOffsetCounter
+
             LDX #$00 ;; will keep track of scroll update ram.
             LDA #$0F
             STA tempA ;; will keep the track of how many tiles to draw.
@@ -309,7 +309,7 @@ forceScrollColumnUpdate:
                 LDA (temp16),y
                 STA temp
                 JSR doGetSingleMetaTileValues
-                
+
                 LDA temp1
                 STA scrollUpdateRam,x
                 INX
@@ -318,8 +318,8 @@ forceScrollColumnUpdate:
                 INX
                 LDA updateTile_00
                 STA scrollUpdateRam,x
-                INX 
-                
+                INX
+
                 LDA temp1
                 STA scrollUpdateRam,x
                 INX
@@ -330,8 +330,8 @@ forceScrollColumnUpdate:
                 INX
                 LDA updateTile_01
                 STA scrollUpdateRam,x
-                INX 
-                
+                INX
+
                 LDA temp1
                 STA scrollUpdateRam,x
                 INX
@@ -342,8 +342,8 @@ forceScrollColumnUpdate:
                 INX
                 LDA updateTile_02
                 STA scrollUpdateRam,x
-                INX 
-                
+                INX
+
                 LDA temp1
                 STA scrollUpdateRam,x
                 INX
@@ -354,8 +354,8 @@ forceScrollColumnUpdate:
                 INX
                 LDA updateTile_03
                 STA scrollUpdateRam,x
-                INX 
-                
+                INX
+
                 DEC tempA
                 LDA tempA
                 BEQ +doneWithNtLoad
@@ -374,7 +374,7 @@ forceScrollColumnUpdate:
                     CLC
                     ADC #$10
                     STA temp3
-                    JMP loop_LoadNametableMeta_column   
+                    JMP loop_LoadNametableMeta_column
             +doneWithNtLoad
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;;;;; add attributes to the update list.
@@ -390,26 +390,26 @@ forceScrollColumnUpdate:
                 ;ASL
                 ORA #%00100011
                 STA temp1 ;; this is now the high byte of the attribute table update
-                
+
                 LDA scrollUpdateColumn
                 LSR
                 LSR
                 LSR
                 LSR
                 LSR
-    
+
                 STA temp2 ;; temp 2 now represents the low byte of the pushes.
                 ;; don't need a temp3 to keep track of pull position, because it will be 1 to 1.
-                
+
                 LDA #$08
                 STA tempA ;; will keep the track of how many tiles to draw.
                     ;; #$0f is an entire column.
                 loop_LoadAttribute_column:
-            
+
                     LDY temp2
                     LDA (pointer),y
                     STA temp
-                    
+
                     LDA temp1
                     STA scrollUpdateRam,x
                     INX
@@ -420,7 +420,7 @@ forceScrollColumnUpdate:
                     INX
                     LDA temp
                     STA scrollUpdateRam,x
-                    INX 
+                    INX
                     DEC tempA
                     LDA tempA
                     BEQ +doneWithAtLoad
@@ -430,25 +430,25 @@ forceScrollColumnUpdate:
                         STA temp2
                         JMP loop_LoadAttribute_column
                     +doneWithAtLoad
-                    
-                    
+
+
                 STX maxScrollOffsetCounter
 
                 LDA updateScreenData
                 ORA #%00000100
                 STA updateScreenData
 
-        
+
                 LDA scrollUpdateColumn
                 LSR
                 LSR
                 LSR
-                LSR 
+                LSR
                 STA temp1 ;; keeps track of where to place on the collision table.
-                LSR 
+                LSR
                 STA temp2 ;; keeps track of the nubble being pulled from.
                 LDX #$0F ;; keep track of how many values to load are left.
-            
+
                 LDA scrollUpdateScreen
                 AND #%00000001
                 BNE +doUpdateOddCt
@@ -466,10 +466,10 @@ forceScrollColumnUpdate:
                             LSR
                             JMP +pushToCol
                         +oddCol
-                            LDY temp2   
+                            LDY temp2
                             LDA (pointer6),y
                             AND #%00001111
-                        
+
                         +pushToCol:
                             LDY temp1
                             STA collisionTable,y
@@ -499,10 +499,10 @@ forceScrollColumnUpdate:
                             LSR
                             JMP +pushToCol
                         +oddCol
-                            LDY temp2   
+                            LDY temp2
                             LDA (pointer6),y
                             AND #%00001111
-                        
+
                         +pushToCol:
                             LDY temp1
                             STA collisionTable2,y
@@ -522,7 +522,7 @@ forceScrollColumnUpdate:
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
         ReturnBank
-        
+
 
 skipScrollUpdate
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -538,9 +538,9 @@ skipScrollUpdate
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     JSR checkForMonsterCameraClipping
-    
+
     RTS
-    
+
 getCamSeam:
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;; Since we use camScreen in this subroutine, we'll have to make sure it's properly updated
@@ -597,31 +597,31 @@ getCamSeam:
 
 +loadOverWorldMap
     SwitchBank temp
-        
+
             LDY #124
             LDA (temp16),y
             STA ScreenFlags00
-            
+
             LDY #182
             LDA (temp16),y
             STA ScreenFlags01
-            
+
             .include ROOT\Game\CommonScripts\userScreenBytes_scrolling.asm
 
             LDY #125 ;
             LDA (temp16),y
             AND #%00000011
             STA screenSpeed
-            
+
             LDY #127
             LDA (temp16),y
             STA warpToScreen
-            
+
             LDY #130
             LDA (temp16),y
             AND #%00000001 ;; is this overworld or underworld map?
             STA warpToMap
-            
+
             LDY #178
             LDA (temp16),y
             STA temp
@@ -631,21 +631,21 @@ getCamSeam:
                 StopSound
                 JMP +skipSongToPlay
             +notStopSong
-    
+
             CMP songToPlay
             BEQ +skipSongToPlay ;; already playing this song
                 PlaySong temp
             +skipSongToPlay
-    
-            
+
+
             LDY #122
             LDA (temp16),y
             STA newPal
             LoadBackgroundPalettes newPal
-            
+
         ReturnBank
-        
-    +skipchanges        
+
+    +skipchanges
     LDA scrollByte
     AND #%01000000
     BNE +getRightScrollUpdate
@@ -672,9 +672,9 @@ getCamSeam:
         STA scrollUpdateScreen
 
     RTS
-    
-    
-    
+
+
+
 checkForMonsterCameraClipping:
 
 ;;; use temp16 to check for cam clips
@@ -697,13 +697,13 @@ notOnZeroScreen:
     SBC #$00
     AND #%00001111
     STA temp16+1 ;; high left cam clip
-+gotIt: 
++gotIt:
     LDA camX
     CLC
     ADC #$80
     STA pointer ;; low right cam clip
     LDA camX_hi
-    
+
     ADC #$01
     AND #%00001111
     STA pointer+1 ;; high right cam clip
@@ -722,9 +722,9 @@ notOnZeroScreen:
             AND #%00001111
             STA temp1
             Compare16 temp16+1, temp16, temp1, temp
-            +   
+            +
                 DestroyObject
-        
+
                 JMP doEraseNonPlayerObjectsInThisColumnLoop
             ++
         skipCheckingThisObject_forEraseColumnLoop2:
@@ -733,7 +733,7 @@ notOnZeroScreen:
                 JMP doEraseNonPlayerObjectsInThisColumnLoop
             ++
                 DestroyObject
-        
+
             doEraseNonPlayerObjectsInThisColumnLoop
                 INX
                 CPX #TOTAL_MAX_OBJECTS
@@ -759,11 +759,11 @@ checkSeamForMonsterPosition:
             monsterDupeCheck:
                 LDA Object_x_hi,x
                 CMP temp2
-                BEQ +noMonsterToLoadInThisColumn              
-                INX              
+                BEQ +noMonsterToLoadInThisColumn
+                INX
                 CPX #TOTAL_MAX_OBJECTS
-                BNE monsterDupeCheck          
-           
+                BNE monsterDupeCheck
+
                 LDA temp
                 AND #%11110000
                 STA temp1

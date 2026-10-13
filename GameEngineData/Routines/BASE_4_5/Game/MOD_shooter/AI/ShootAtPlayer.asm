@@ -15,6 +15,6 @@
 
    LDA Object_screen,x
    STA tempz
-   
+
    CreateObjectOnScreen tempA, tempB, tempC, tempD, tempz
 

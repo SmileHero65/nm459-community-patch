@@ -23,11 +23,11 @@ BNE +unpausegame
     STA gameStatusByte
     LDA #$01
     STA isPaused
-    
+
     ;; We play the pause sfx:
     ;------------------------
-    ;PlaySound #SND_PAUSE    
-    
+    ;PlaySound #SND_PAUSE
+
     ;; We make the screen dark:
     LDA soft2001
     ORA #%11100000
@@ -38,21 +38,21 @@ BNE +unpausegame
     LDA ScreenFlags00
     AND #%11011111
     STA ScreenFlags00
-    
+
     LDA gameStatusByte
-    AND #%11111110 
+    AND #%11111110
     STA gameStatusByte
     LDA #$00
     STA isPaused
-    
+
     ;; We play the unpause sfx:
     ;--------------------------
     ;PlaySound #SND_UNPAUSE
-    
+
     ;; We make the screen back normal:
     LDA soft2001
     AND #%00011111
     STA soft2001
 +thePauseEnd:
-    
+
     RTS

@@ -29,17 +29,17 @@
 
       LDA #$00
       STA textHandler
-          
+
       LDA #TEXT_MORE_INDICATOR
       STA temp
-          
+
       CLC
       ADC #HUD_OFFSET
       STA scrollUpdateRam,y
       INY
 
       STY maxScrollOffsetCounter
-          
+
       INC counter ;; we will use counter for "length" of the current line.
 
       LDA gameStatusByte

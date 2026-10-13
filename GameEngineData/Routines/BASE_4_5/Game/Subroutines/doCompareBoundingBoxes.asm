@@ -25,8 +25,8 @@ doCompareBoundingBoxes:
 
     LDA #$00 ;; read that NO, there was no collision.
     RTS
-    
-    
+
+
 getOtherColBox:
     TYA
     PHA
@@ -44,7 +44,7 @@ getOtherColBox:
     SBC other_left
     LSR
     STA other_center_x
-        
+
     LDA ObjectBboxTop,y
     CLC
     ADC Object_y_hi,x
@@ -57,7 +57,7 @@ getOtherColBox:
     SBC other_top
     LSR
     STA other_center_y ;; self center in the vertical direction.
-    
+
     PLA
     TAY
 

@@ -22,13 +22,13 @@ MACRO EraseBox arg0, arg1, arg2, arg3
 
     ;; This sets up "erase box", restoring a box area
     ;;; using the same doDrawBox subroutine.
-    LDA queueFlags 
+    LDA queueFlags
     ORA #%10001100
     STA queueFlags
 
     LDA #$00
     STA endDrawBoxAction
-    
+
     JSR doDrawBox
 
     PLA

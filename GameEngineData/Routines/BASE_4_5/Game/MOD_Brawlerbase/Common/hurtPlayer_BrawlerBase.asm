@@ -3,8 +3,8 @@
     BEQ +canHurtPlayer
         JMP +skipHurt
 +canHurtPlayer:
-    
-    
+
+
     ; TXA
     ; STA temp
     ; GetActionStep temp
@@ -19,11 +19,11 @@
     BNE +notAlreadyInHurtState
         JMP +skipHurt
     +notAlreadyInHurtState
-    
-        
-        
+
+
+
          DEC myHealth
-        
+
          BMI +healthBelowZero
          BEQ +healthBelowZero
              JMP +notDeadYet
@@ -52,7 +52,7 @@
         ; CLC
         ; ADC self_center_y
         ; STA tempB
-        ; TXA 
+        ; TXA
         ; PHA
             ; LDX otherObject
             ; LDA Object_x_hi,x
@@ -65,7 +65,7 @@
             ; STA tempD
         ; PLA
         ; TAX
-    
+
         ; ;;; RECOIL
         ; ;;; find the center.
         ; LDA tempA
@@ -77,7 +77,7 @@
             ; ADC #$01
         ; +gotAbs
             ; STA temp
-            
+
         ; LDA tempB
         ; SEC
         ; SBC tempD
@@ -120,23 +120,23 @@
                     ; ORA #%11000000
                     ; STA Object_direction,x
                     ; JMP +skipHurt
-    
+
         ; JMP +skipHurt
  +playerHealthIsZero:
 
     LDA continueMap
     STA warpMap
-    
+
     LDA continueScreen
     STA currentNametable
-    
+
     LDX player1_object
     STA Object_screen,x
-    
+
     LDA #$02 ;; this is continue type warp.
     STA screenTransitionType ;; is of warp type
 
-    
+
     LDA gameHandler
     ORA #%10000000
     STA gameHandler ;; this will set the next game loop to update the screen.

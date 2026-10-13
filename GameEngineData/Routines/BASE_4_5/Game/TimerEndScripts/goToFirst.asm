@@ -16,7 +16,7 @@
         AND #%00001111
         STA Object_direction,x
     +notHurtFrame:
-        
+
     LDA Object_frame,x
     AND #%11000111
     STA Object_frame,x

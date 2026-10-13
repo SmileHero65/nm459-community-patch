@@ -1,45 +1,54 @@
 
-    
 
-    
+
+
 valueAddLoop:
     ;; the accumulator holds how much to add by.
     ;; x holds what place is being added to.
-    clc
-    adc value,x
-    cmp #$0A
-    bcc skipCarryDecValue
-    sec
-    sbc #$0A
-    sta value,x
-    inx
-    cpx #$08 ;; how many 'places' the value has
-    bcs overflowThisNumber
-    lda #$01
-    jmp valueAddLoop
-skipCarryDecValue:
-    sta value,x
-overflowThisNumber:
-    rts
+    CLC
+    ADC value,x
+    CMP #$0A
+    BCC +skipCarryDecValue
+        SEC
+        SBC #$0A
+        STA value,x
+
+        INX
+        CPX #$08 ;; how many 'places' the value has
+        BCS +overflowThisNumber
+
+        LDA #$01
+        JMP valueAddLoop
+    +skipCarryDecValue:
+
+    STA value,x
+
++overflowThisNumber:
+    RTS
 
 
 valueSubLoop:
     ;; temp holds the value to subtract.
-    lda value,x
-    sec 
-    sbc temp
-    cmp #$00
-    bpl skipCarryDecValue2
-    clc
-    adc #$0A
-    sta value,x
-    inx
-    cpx #$08 ;; how many 'places' the value has
-    bcs underflowThisNumber
-    lda #$01
-    STA temp
-    jmp valueSubLoop
-skipCarryDecValue2:
-    sta value,x
-underflowThisNumber:
-    rts
+    LDA value,x
+    SEC
+    SBC temp
+    ;CMP #$00
+    BPL +skipCarryIncValue
+        CLC
+        ADC #$0A
+        STA value,x
+
+        INX
+        CPX #$08 ;; how many 'places' the value has
+        BCS +underflowThisNumber
+
+        LDA #$01
+        STA temp
+        JMP valueSubLoop
+    +skipCarryIncValue:
+
+    STA value,x
+
++underflowThisNumber:
+    RTS
+

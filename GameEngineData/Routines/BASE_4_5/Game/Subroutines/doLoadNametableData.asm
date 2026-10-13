@@ -13,19 +13,19 @@ doLoadNametableData:
     ;; arg4_hold = rows to load
     ;; arg5_hold = start position hi
     ;; arg6_hold = start position lo
-    ;; arg7_hold = start column   
-    
+    ;; arg7_hold = start column
+
     ;; decreasing arg3_holder / arg4_holder will track if there are more
     ;; columns/rows to load. If zero, that part is done.
     LDA arg6_hold
     STA pointer
     LDA arg5_hold
     STA pointer+1
-    
+
     LDA arg3_hold
     STA tempB ;; we will use tempB to hold the number of columns, so when we
               ;; start a new row, we can return to the proper number of columns.
-    
+
     ;; now we can use the (pointer) to know the PPU address to write the
     ;; nametable, while (temp16) denotes where the nametable data is being
     ;; pulled from.
@@ -42,7 +42,7 @@ doLoadNametableData:
 
             LDA (temp16),y
             STA temp
-            
+
             ;; now we have to do an evaluation, to compare this to potential
             ;; "blank" values and paths.
             JSR doGetSingleMetaTileValues
@@ -56,12 +56,12 @@ doLoadNametableData:
                 CLC
                 ADC #$02
                 STA pointer
-                JMP loop_LoadNametableMeta   
+                JMP loop_LoadNametableMeta
             doneWithMetaTileColumn:
 
             DEC arg4_hold
             LDA arg4_hold
-            BEQ noMoreMetaTilesToLoad   
+            BEQ noMoreMetaTilesToLoad
                 CMP #$08
                 BNE +
                     JSR doWaitFrame
@@ -100,14 +100,14 @@ doLoadNametableData:
                 TAY
             JMP loop_LoadNametableMeta
         noMoreMetaTilesToLoad:
-    
+
     ReturnBank
     RTS
 
 
 doGetSingleMetaTileValues:
     STA temp
-    
+
     LDA screenLoadTemps
     AND #%10000000
     BNE notPath
@@ -161,7 +161,7 @@ doGetSingleMetaTileValues:
     checkForPathUpdates:
 
     ;; This mode uses all four "paths" as paths.
-    
+
     LDA temp
     CLC            ;; dale_coop
     CMP #$80
@@ -177,7 +177,7 @@ doGetSingleMetaTileValues:
     BEQ doPathUpdate
         JMP notPath
     doPathUpdate:
-    
+
     ;; now we have to do evaluations of other tiles around us to know
     ;; exactly what to draw here.
     JSR doHandlePath
@@ -202,7 +202,7 @@ doGetSingleMetaTileValues:
     LDA temp
     STA updateTile_03
     RTS
-    
+
 
 doDrawSingleMetatile:
     BIT $2002

@@ -10,18 +10,18 @@
     LDA scrollOffsetCounter
     BEQ +doIt
         RTS
-    +doIt    
+    +doIt
 CPX player1_object
 BEQ +isPlayer
     JMP +notPlayer
     +isPlayer
-    
+
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BELOW WILL CHANGE TILE AT COLLISION.
-    
+
     ChangeTileAtCollision #$00, #$00
     JSR doWaitFrame
-    
+
     ;MACRO AddValue arg0, arg1, arg2, arg3
     ;arg0 = how many places this value has.
     ;arg1 = home variable
@@ -37,7 +37,7 @@ BEQ +isPlayer
             LDA #$00
             STA myPrizes
             ;; increase lives
-        
+
             INC myLives
             LDA myLives
             CMP #$09
@@ -46,12 +46,12 @@ BEQ +isPlayer
                 LDA #$08
                 STA myLives
             +notMaxLivesAt8
-            
+
         +notTenYet
         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         ;;;;;;;;;;;;;;;;;;;;;;;;; Do we need to update the HUD to reflect this?
         ;;;;;;;;;;;;;;;;;;;;;;;;; If so, which element is the above variable represented in?
         ;UpdateHudElement #$03
-    
-    
+
+
     +notPlayer

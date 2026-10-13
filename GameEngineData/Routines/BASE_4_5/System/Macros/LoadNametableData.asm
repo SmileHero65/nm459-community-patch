@@ -9,7 +9,7 @@ MACRO LoadNametableData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
     ;; arg4 = rows to load
     ;; arg5 = start position hi
     ;; arg6 = start position lo
-    ;; arg7 = start column    
+    ;; arg7 = start column
 
     LDA arg0
     STA arg0_hold
@@ -29,7 +29,7 @@ MACRO LoadNametableData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
     STA arg7_hold
 
     SwitchBank #$16
-        LDY arg1 
+        LDY arg1
         LDA arg2
         AND #%00000001
         BEQ loadFromMap1table
@@ -50,7 +50,7 @@ MACRO LoadNametableData arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7
             STA temp16
             LDA NameTablePointers_Map1_hi,y
             STA temp16+1
-        
+
         GotNametableLoadPointer:
         ;; now (temp16) holds the address of the nametable to be loaded.
     ReturnBank
