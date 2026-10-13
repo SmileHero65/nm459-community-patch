@@ -2,11 +2,15 @@
 ;; Main game loop
 MainGameLoop:
 
-    ;; Wait for NMI
-    LDA vBlankTimer
-    -
-        CMP vBlankTimer
-    BEQ -
+    ;; Wait for NMI (unless potential frame drop)
+    LDA waiting
+    BEQ +
+        LDA vBlankTimer
+        -
+            CMP vBlankTimer
+        BEQ -
+    +
+    INC waiting
 
     ;; Check if game is in "normal game loop" mode
     ;; If not, skip the normal game loop
