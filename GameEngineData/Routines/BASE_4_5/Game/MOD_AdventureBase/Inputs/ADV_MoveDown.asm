@@ -2,16 +2,15 @@
 ;;Simplified Movement Base - crazygrouptrio;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    STX temp             ;; assumes the object we want to move is in x.
-    GetActionStep temp     ;; don't move if you're in Action Step...
-    CMP #$07            ;; 07 - Hurt
-    BNE +notHurt
+    STX temp
+    GetActionStep temp ;;in which states we want to block player movement?
+    CMP #PLAYER_HURT_STATE
+    BEQ +blocked
+    CMP #PLAYER_ATTACK_STATE
+    BNE +canMove
+    +blocked:
         RTS
-    +notHurt
-    CMP #$02             ;; 02 - Attack
-    BNE +notAttack
-        RTS
-    +notAttack
+    +canMove:
 
         ;;Time to Move
         StartMoving temp, #DOWN
