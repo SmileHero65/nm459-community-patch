@@ -439,10 +439,21 @@ GetScreenTriggerInfo:
     TYA
     PHA
 
-    LDY #178
-    LDA (collisionPointer),y
-    STA temp
-
+    ;;Triggered Screen Song Playing Fix by Dale Coop
+    ;;https://www.nesmakers.com/index.php?threads/solved-4-5-9-arcadeplatformer-song-when-triggered-screen.7408/
+    GetTrigger
+    BNE +triggered
+        ;; normal screen song data:
+        LDY #178
+        LDA (collisionPointer),y
+        STA temp
+        JMP +continue
+    +triggered:
+        ;; triggered screen song data:
+        LDY #179
+        LDA (collisionPointer),y
+        STA temp
+    +continue:
     CMP #$FF
     BNE notStopSong
         STA songToPlay
