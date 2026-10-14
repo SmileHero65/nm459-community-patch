@@ -30,3 +30,17 @@ TEXT_NPC  = #$04
 
 DATABANK1 = #$18
 
+;;Constants moved from UI to Dedicated Script
+;;In this way, we have more room for customizable constants
+;;like Object States, Physics, etc.
+OBJECT_OBSERVES_INPUT           = 32
+OBJECT_OBSERVES_PHYSICS         = 16
+OBJECT_OBSERVES_TILES           = 8
+OBJECT_OBSERVES_OBJECTS         = 4
+OBJECT_OBSERVES_DRAWING         = 2
+OBJECT_QUEUED_FOR_ACTIVATION    = 64
+OBJECT_IS_ACTIVE                = 128
+OBJECT_QUEUED_FOR_DESTRUCTION   = 1
+HUD_OFFSET                      = 192
+TEXT_MORE_INDICATOR             = 0
+HUD_BANK                        = 30
