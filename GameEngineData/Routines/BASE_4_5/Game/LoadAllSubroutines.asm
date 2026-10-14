@@ -35,6 +35,11 @@
     .include ROOT\Game\Subroutines\ToggleTables.asm
     .include ROOT\Game\Subroutines\updateAction.asm
 
+;;Adding Monster Bits back in by JamesNES
+;;https://www.nesmakers.com/index.php?threads/4-5-9-adding-monster-bits-back-in.7682/
+MonsterBits:
+   .include "ScreenData\ObjectData\MonsterBits.dat"
+
 
 ;; User defined subroutines
     .include SCR_HANDLE_SCREEN_UPDATE
