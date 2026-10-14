@@ -26,6 +26,7 @@ _Here's a list of patches that have been applied, in no particular order, groupe
 - [Monster weapons collision restored](https://www.nesmakers.com/index.php?threads/4-5-9-bring-back-monster-weapons-maze-module-and-others.5966/), by TolerantX / NightMusic
 - [Fix button mashing during text boxes](https://www.nesmakers.com/index.php?threads/4-5-9-prevent-button-mashing-during-text-boxes.8424/), by Dale Coop
 - [MetroidVania jumping up screen issue fix](https://www.nesmakers.com/index.php?threads/4-5-6-metroidvania-jumping-up-screen-issue-solved.6246/), by goatgary
+- [Triggered Screen Song not Playing](https://www.nesmakers.com/index.php?threads/solved-4-5-9-arcadeplatformer-song-when-triggered-screen.7408/), by Dale Coop
 
 ## Quality of life changes
 - Moved values from script files to the user interface
@@ -60,3 +61,4 @@ _Here's a list of patches that have been applied, in no particular order, groupe
 - Added variable to limit projectiles per screen
 - [Arbitrary Bankswitch](https://www.nesmakers.com/index.php?threads/arbitrary-bankswitch.8271/), by JamesNES
 - 6-point and 8-point versions of the tile collision routine
+- [Monster Bits - No RAM method](https://www.nesmakers.com/index.php?threads/4-5-9-adding-monster-bits-back-in.7682/), by JamesNES
