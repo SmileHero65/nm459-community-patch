@@ -131,8 +131,8 @@
                 JMP +skipCollision
             +isActive
 
-            LDA Object_flags,x
-            AND #%00001000
+            LDA Object_flags,x ;;;If player is colliding with Monster or Monster Weapon
+            AND #%00011000
             BNE +isPlayerMonsterCol
                 JMP +notPlayerMonsterCollision
             +isPlayerMonsterCol
