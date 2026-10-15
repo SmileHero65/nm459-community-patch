@@ -155,7 +155,7 @@
                             JMP +skipCollision
                         +isActive
                         LDA Object_flags,x
-                        AND #%00001000
+                        AND #%00011000
                         BNE +isPlayerMonsterCol
                             JMP +notPlayerMonsterCollision
                         +isPlayerMonsterCol
@@ -238,30 +238,6 @@
                                     JMP +done
 
                             +isNotPlayerNPCCol
-                            ;;;;;;; THIS IS WHERE I WANT TO ADD A CHECK FOR MONSTER WEAPON ;;;;;;;
-
-                            LDA Object_flags,x
-                            AND #%00010000
-                            BNE +isPlayerMonsterWeaponCol
-                                JMP +isNotPlayerMonsterWeaponCol
-                            +isPlayerMonsterWeaponCol
-                                JSR getOtherColBox
-                                JSR doCompareBoundingBoxes
-                                BNE +doCollision
-                                    JMP +skipCollision
-                                +doCollision
-                                    STX otherObject
-                                    ;; There was a collision between a player and a monster weapon.
-                                    ;; player is self.
-                                    ;; monster weapon is other.
-
-                                    ;DestroyObject                    ;; normally we destroy it because its a weapon ;;
-                                    LDX selfObject                    ;; 9Panzer edit ;;
-                                    JSR doHandleHurtPlayer
-                                    JMP +done
-
-                        +isNotPlayerMonsterWeaponCol:
-                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                             +skipCollision
 
                             INX
