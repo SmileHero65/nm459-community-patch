@@ -13,8 +13,9 @@ MACRO DrawSpriteHud arg0, arg1, arg2, arg3, arg4, arg5, arg6
     TXA
     PHA
 
-    LDA arg5
-    BEQ +doneWithSpriteDrawElement ;; if the variable was zero, don't draw anything.
+    ;Solution for Sprite HUD disappearing when value is 0 by Dale Coop
+    ;LDA arg5
+    ;BEQ +doneWithSpriteDrawElement ;; if the variable was zero, don't draw anything.
 
         LDA arg4
         STA temp ;; full
