@@ -272,12 +272,31 @@ doHandlePhysics:
         LDA ObjectAccAmount,y
         STA myAcc
 
-
-
-
-
-
-
+        LDA Object_h_speed_hi,x
+        ORA Object_h_speed_lo,x
+        BNE Accel_HDirectionReady
+        LDA Object_frame,x
+        AND #%10111111
+        STA temp
+        LDA Object_direction,x
+        AND #%01000000
+        ORA temp
+        STA Object_frame,x
+    Accel_HDirectionReady:
+        LDA Object_v_speed_hi,x
+        ORA Object_v_speed_lo,x
+        BNE Accel_VDirectionReady
+        LDA Object_frame,x
+        AND #%01111111
+        STA temp
+        LDA Object_direction,x
+        AND #%00010000
+        ASL
+        ASL
+        ASL
+        ORA temp
+        STA Object_frame,x
+    Accel_VDirectionReady:
 
 ;   ReturnBank
     ;;;; deal with acceleration / deceleration
@@ -288,6 +307,13 @@ doHandlePhysics:
     BNE doHvel
     JMP doHdec
     doHvel:
+
+    LDA Object_direction,x
+    EOR Object_frame,x
+    AND #%01000000
+    BEQ Accel_HAccelerate
+    JMP doHdec
+    Accel_HAccelerate:
 
         ;; we have activated horizontal inertia for this object
         LDA Object_h_speed_lo,x
@@ -320,8 +346,7 @@ doHandlePhysics:
         JMP skipDoHdec
 doHdec:
     LDA Object_h_speed_hi,x
-    CLC
-    ADC Object_h_speed_lo,x
+    ORA Object_h_speed_lo,x
     BEQ skipDoHdec
 
     LDA Object_h_speed_lo,x
@@ -359,6 +384,16 @@ skipDoHdec:
     JMP doVdec
     doVvel:
 
+        LDA Object_direction,x
+        ASL
+        ASL
+        ASL
+        EOR Object_frame,x
+        AND #%10000000
+        BEQ Accel_VAccelerate
+        JMP doVdec
+        Accel_VAccelerate:
+
         ;; we have activated horizontal inertia for this object
         LDA Object_v_speed_lo,x
         CLC
@@ -390,8 +425,7 @@ skipDoHdec:
         JMP skipDoVdec
 doVdec:
     LDA Object_v_speed_hi,x
-    CLC
-    ADC Object_v_speed_lo,x
+    ORA Object_v_speed_lo,x
     BEQ skipDoVdec
 
     LDA Object_v_speed_lo,x
@@ -431,7 +465,7 @@ gotHandVspeeds:
     STA tempB
 
 
-    LDA Object_direction,x
+    LDA Object_frame,x
     AND #%01000000
     BNE isMovingRight
     ;isMovingLeft
@@ -443,8 +477,7 @@ gotHandVspeeds:
     STA collisionsToCheck
 
         LDA tempA
-        CLC
-        ADC tempB
+        ORA tempB
         BNE hSpeedIsNotZero
             ;; h speed is zero, which means no h direction
             LDA directionByte
@@ -487,8 +520,8 @@ gotHmoveDirection:
     STA tempD
 
 
-    LDA Object_direction,x
-    AND #%00010000
+    LDA Object_frame,x
+    AND #%10000000
     BNE isMovingDown
     ;isMovingUp
 
@@ -498,8 +531,7 @@ gotHmoveDirection:
     STA collisionsToCheck
 
         LDA tempC
-        CLC
-        ADC tempD
+        ORA tempD
         BNE vSpeedIsNotZero
             ;; h speed is zero, which means no h direction
             LDA directionByte
