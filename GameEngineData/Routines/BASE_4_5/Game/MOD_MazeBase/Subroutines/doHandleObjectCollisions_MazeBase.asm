@@ -71,7 +71,7 @@
                             JMP +skipCollision
                         +isActive
                         LDA Object_flags,x
-                        AND #%00001000
+                        AND #%00011000
                         BNE +isPlayerMonsterCol
                             JMP +notPlayerMonsterCollision
                         +isPlayerMonsterCol
