@@ -27,6 +27,7 @@ _Here's a list of patches that have been applied, in no particular order, groupe
 - [Fix button mashing during text boxes](https://www.nesmakers.com/index.php?threads/4-5-9-prevent-button-mashing-during-text-boxes.8424/), by Dale Coop
 - [MetroidVania jumping up screen issue fix](https://www.nesmakers.com/index.php?threads/4-5-6-metroidvania-jumping-up-screen-issue-solved.6246/), by goatgary
 - [Triggered Screen Song not Playing](https://www.nesmakers.com/index.php?threads/solved-4-5-9-arcadeplatformer-song-when-triggered-screen.7408/), by Dale Coop
+- Acceleration/Inertia bugs (IN PROGRESS - only fixed in Adventure and Maze)
 
 ## Quality of life changes
 - Moved values from script files to the user interface
