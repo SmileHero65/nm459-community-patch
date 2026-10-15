@@ -32,7 +32,7 @@ RECOIL_SPEED_LO = #$00
         CMP #$02
         BNE +notPlayer ;; skip, because was not 2.
 
-        RTS
+        JMP skipPhysics
     +notPlayer:
 
     ;; Ignore physics if not in main game mode
@@ -260,7 +260,9 @@ RECOIL_SPEED_LO = #$00
     STX temp
     GetActionStep temp
     CMP #$07
-    BNE +notHurt
+    BEQ Accel_DoRecoil
+    JMP +notHurt
+    Accel_DoRecoil:
         ;; This object is hurt, so it's speed will be determined by the recoil
         ;; speed above. Any caveats to that, put here. For instance, if there is
         ;; a monster bit that prevents recoil.
@@ -284,7 +286,22 @@ RECOIL_SPEED_LO = #$00
             STA Object_h_speed_hi,x
             STA Object_h_speed_lo,x
 
+            LDA Object_direction,x
+            AND #%00010000
+            ASL
+            ASL
+            ASL
+            STA temp
+            LDA Object_direction,x
+            AND #%01000000
+            ORA temp
+            STA temp
+            LDA Object_frame,x
+            AND #%00111111
+            ORA temp
+            STA Object_frame,x
             JMP gotHandVspeeds
+
         +isMovingH:
 
         LDA #RECOIL_SPEED_LO
@@ -295,6 +312,21 @@ RECOIL_SPEED_LO = #$00
         LDA #$00
         STA Object_v_speed_hi,x
         STA Object_v_speed_lo,x
+
+        LDA Object_direction,x
+        AND #%00010000
+        ASL
+        ASL
+        ASL
+        STA temp
+        LDA Object_direction,x
+        AND #%01000000
+        ORA temp
+        STA temp
+        LDA Object_frame,x
+        AND #%00111111
+        ORA temp
+        STA Object_frame,x
         JMP gotHandVspeeds
     +notHurt:
 
@@ -322,12 +354,46 @@ RECOIL_SPEED_LO = #$00
     LDA ObjectAccAmount,y
     STA myAcc
 
+    ; If axis is stopped, adopt requested direction
+    LDA Object_h_speed_hi,x
+    ORA Object_h_speed_lo,x
+    BNE Accel_HDirectionReady
+    LDA Object_frame,x
+    AND #%10111111
+    STA temp
+    LDA Object_direction,x
+    AND #%01000000
+    ORA temp
+    STA Object_frame,x
+    Accel_HDirectionReady:
+        LDA Object_v_speed_hi,x
+        ORA Object_v_speed_lo,x
+        BNE Accel_VDirectionReady
+        LDA Object_frame,x
+        AND #%01111111
+        STA temp
+        LDA Object_direction,x
+        AND #%00010000
+        ASL
+        ASL
+        ASL
+        ORA temp
+        STA Object_frame,x
+    Accel_VDirectionReady:
+
     ;; deal with acceleration / deceleration
     LDA Object_direction,x
     AND #%10000000
     BNE doHvel
         JMP doHdec
     doHvel:
+
+    LDA Object_direction,x
+    EOR Object_frame,x
+    AND #%01000000
+    BEQ Accel_HAccelerate
+    JMP doHdec
+    Accel_HAccelerate:
 
     ;; we have activated horizontal inertia for this object
     LDA Object_h_speed_lo,x
@@ -362,8 +428,7 @@ RECOIL_SPEED_LO = #$00
     doHdec:
 
     LDA Object_h_speed_hi,x
-    CLC
-    ADC Object_h_speed_lo,x
+    ORA Object_h_speed_lo,x
     BEQ skipDoHdec
 
         LDA Object_h_speed_lo,x
@@ -397,6 +462,16 @@ RECOIL_SPEED_LO = #$00
     BNE doVvel
         JMP doVdec
     doVvel:
+
+    LDA Object_direction,x
+    ASL
+    ASL
+    ASL
+    EOR Object_frame,x
+    AND #%10000000
+    BEQ Accel_VAccelerate
+    JMP doVdec
+    Accel_VAccelerate:
 
     ;; We have activated horizontal inertia for this object
     LDA Object_v_speed_lo,x
@@ -432,8 +507,7 @@ RECOIL_SPEED_LO = #$00
     doVdec:
 
     LDA Object_v_speed_hi,x
-    CLC
-    ADC Object_v_speed_lo,x
+    ORA Object_v_speed_lo,x
     BEQ skipDoVdec
         LDA Object_v_speed_lo,x
         SEC
@@ -470,7 +544,7 @@ RECOIL_SPEED_LO = #$00
     LDA Object_h_speed_hi,x
     STA tempB
 
-    LDA Object_direction,x
+    LDA Object_frame,x
     AND #%01000000
     BNE isMovingRight
         ;; isMovingLeft
@@ -479,9 +553,8 @@ RECOIL_SPEED_LO = #$00
         ORA #%00001001
         STA collisionsToCheck
 
-        LDA tempA
-        CLC
-        ADC tempB
+    LDA tempA
+    ORA tempB
         BNE hSpeedIsNotZero
             ;; h speed is zero, which means no h direction
             LDA directionByte
@@ -503,8 +576,7 @@ RECOIL_SPEED_LO = #$00
     STA collisionsToCheck
 
     LDA tempA
-    CLC
-    ADC tempB
+    ORA tempB
     BNE hSpeedIsNotZero2
         ;; h speed is zero, which means no h direction
         LDA directionByte
@@ -524,8 +596,8 @@ RECOIL_SPEED_LO = #$00
     LDA Object_v_speed_hi,x
     STA tempD
 
-    LDA Object_direction,x
-    AND #%00010000
+    LDA Object_frame,x
+    AND #%10000000
     BNE isMovingDown
         ;; isMovingUp
         ;; Set to check points 0 and 1 (top left and top right.)
@@ -533,9 +605,8 @@ RECOIL_SPEED_LO = #$00
         ORA #%00000011
         STA collisionsToCheck
 
-        LDA tempC
-        CLC
-        ADC tempD
+    LDA tempC
+    ORA tempD
         BNE vSpeedIsNotZero
             ;; h speed is zero, which means no h direction
             LDA directionByte
