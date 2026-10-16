@@ -10,25 +10,23 @@
        BNE +canCreateWeapon
            RTS
     +canCreateWeapon
+
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;END UNLOCKABLE WEAPONS
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-    STX temp            ;; assumes the object we want to move is in x.
-    GetActionStep temp  ;; don't attack if you're in Action Step...
-    CMP #$07            ;; 07 - Hurt
-    BNE +notHurt
+    STX temp
+    GetActionStep temp
+    CMP #OBJECT_HURT_STATE
+    BEQ +AttackBlocked
+    CMP #PLAYER_ATTACK_STATE
+    BNE +canAttack
+    +AttackBlocked:
         RTS
-    +notHurt
-    CMP #$02            ;; 02 - Attack
-    BNE +notAttack
-        RTS
-    +notAttack
+    +canAttack:
 
     STX temp ;; assumes the object that we want is in x.
 
-    ChangeActionStep temp, #$02 ;; assumes that "attack" is in action 2
+    ChangeActionStep temp, #PLAYER_ATTACK_STATE ;; assumes that "attack" is in action 2
     ;arg0 = what object?
     ;arg1 = what behavior?
 
