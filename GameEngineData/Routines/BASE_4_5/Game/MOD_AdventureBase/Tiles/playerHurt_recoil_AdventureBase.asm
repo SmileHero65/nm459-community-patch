@@ -15,7 +15,7 @@
     +notDeadYet:
 
     UpdateHudElement #$02
-    ChangeActionStep player1_object, #$07
+    ChangeActionStep player1_object, #OBJECT_HURT_STATE
 
     ;; Recoil
     LDA #$00
