@@ -62,3 +62,5 @@ MY_PRIZE          = $01  ; Object type to create.
 MY_PRIZE_STATE    = $00  ; Initial action step.
 MY_PRIZE_X_OFFSET = $00  ; Horizontal spawn offset.
 MY_PRIZE_Y_OFFSET = $10  ; Distance above the block.
+
+TEXT_DELAY = #$00
