@@ -2,27 +2,26 @@
 ;;Simplified Movement Base - crazygrouptrio;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    STX temp             ;; assumes the object we want to move is in x.
-    GetActionStep temp     ;; don't move if you're in Action Step...
-    CMP #$07            ;; 07 - Hurt
-    BNE +notHurt
+    STX temp
+    GetActionStep temp
+    CMP #OBJECT_HURT_STATE
+    BEQ +RightBlocked
+    CMP #PLAYER_ATTACK_STATE
+    BNE +canMoveRight
+    +RightBlocked:
         RTS
-    +notHurt
-    CMP #$02             ;; 02 - Attack
-    BNE +notAttack
-        RTS
-    +notAttack
+    +canMoveRight:
 
         ;;Time to Move
         StartMoving temp, #RIGHT
         STX temp ;; assumes the object we want to move is in x.
         ChangeFacingDirection temp, #FACE_RIGHT ;;Change to the direction we want to move
 
-        GetActionStep temp ;; don't display the walking state if you're not...
-        CMP #1                ;; already walking
+        GetActionStep temp                 ;; don't display the walking state if you're not...
+        CMP #PLAYER_WALK_STATE             ;; already walking
         BEQ +
-            ChangeActionStep temp, #1 ;Change to walk state
+            ChangeActionStep temp, #PLAYER_WALK_STATE ;Change to walk state
         +
 
-    RTS    ;;Return from Subroutine
+    RTS ;;Return from Subroutine
     ;;always add this at the end of your input scripts so your game doesn't crash
