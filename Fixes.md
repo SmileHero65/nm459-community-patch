@@ -27,7 +27,10 @@ _Here's a list of patches that have been applied, in no particular order, groupe
 - [Fix button mashing during text boxes](https://www.nesmakers.com/index.php?threads/4-5-9-prevent-button-mashing-during-text-boxes.8424/), by Dale Coop
 - [MetroidVania jumping up screen issue fix](https://www.nesmakers.com/index.php?threads/4-5-6-metroidvania-jumping-up-screen-issue-solved.6246/), by goatgary
 - [Triggered Screen Song not Playing](https://www.nesmakers.com/index.php?threads/solved-4-5-9-arcadeplatformer-song-when-triggered-screen.7408/), by Dale Coop
-- Acceleration/Inertia bugs (IN PROGRESS - only fixed in Adventure and Maze)
+- Acceleration/Inertia bugs (IN PROGRESS - only fixed in Adventure, Maze and LR Platformer)
+- Landing bump in Platformer modules
+- Fall and Walk animation overlap in Platformer modules
+- Variable Jump cutting trampoline's vertical speed
 
 ## Quality of life changes
 - Moved values from script files to the user interface
@@ -36,6 +39,8 @@ _Here's a list of patches that have been applied, in no particular order, groupe
 - Removed unused constants
 - Moved timer end scripts and special text character scripts to separate files to increase engine flexibility
 - Refactoring of script files (work in progress)
+- Hard coded constants moved to UI for more customization
+- Player Action States, Tile Type numbers, Physics Values, etc. are defined by constants that can be modified in the UI
 
 ## Optimizations
 - [Optimized doGetRandomNumber](https://www.nesmakers.com/index.php?threads/improving-dogetrandomnumber.7927/), by TakuikaNinja
