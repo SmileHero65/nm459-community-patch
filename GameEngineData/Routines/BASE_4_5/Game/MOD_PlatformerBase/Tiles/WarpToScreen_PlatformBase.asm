@@ -2,7 +2,7 @@
     BNE notPlayerForWarpTile
 
     ;;Change player Action Step to 00 - Idle
-    ChangeActionStep player1_object, #$00
+    ChangeActionStep player1_object, #PLAYER_IDLE_STATE
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ;;Stop the Player from Moving
