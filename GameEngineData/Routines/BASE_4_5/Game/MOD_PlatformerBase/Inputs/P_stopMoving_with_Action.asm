@@ -8,7 +8,7 @@
     TXA
     STX temp                            ; assumes the object we want to move is in x.
     GetActionStep temp                  ; Get the current action step of the player
-    CMP #$07                            ; Check if action step is 7, which is commonly the "hurt" state)
+    CMP #OBJECT_HURT_STATE              ; Check if action step is 7, which is commonly the "hurt" state)
         BNE +notHurt                    ; If the player is NOT in the hurt state, branch to continue checking movement
             RTS                         ; If the player is in the hurt state, don't execute this
         +notHurt
@@ -18,10 +18,12 @@
 
     GetActionStep temp                  ; Get the current action step of the player
     BEQ +NotIdleAnimation               ; If already Idle,   branch and don't play Idle Animation
-        CMP #2                          ; If Jumping,        branch and don't play Idle Animation
+        CMP #PLAYER_JUMP_STATE          ; If Jumping,        branch and don't play Idle Animation
+            BEQ +NotIdleAnimation
+        CMP #PLAYER_FALL_STATE          ; If Falling,        branch and don't play Idle Animation
             BEQ +NotIdleAnimation
 
-            ChangeActionStep temp, #0   ;Change to idle state
+            ChangeActionStep temp, #PLAYER_IDLE_STATE   ;Change to idle state
 
     +NotIdleAnimation
 
