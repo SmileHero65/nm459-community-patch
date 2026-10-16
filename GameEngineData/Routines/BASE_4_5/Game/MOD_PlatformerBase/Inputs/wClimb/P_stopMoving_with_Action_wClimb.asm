@@ -21,6 +21,8 @@
     BEQ +NotIdleAnimation                   ; If already Idle,           branch and don't play Idle Animation
         CMP #PLAYER_JUMP_STATE
         BEQ +NotIdleAnimation
+        CMP #PLAYER_FALL_STATE
+        BEQ +NotIdleAnimation
         CMP #PLAYER_CLIMB_IDLE_STATE
         BEQ +NotIdleAnimation
 
