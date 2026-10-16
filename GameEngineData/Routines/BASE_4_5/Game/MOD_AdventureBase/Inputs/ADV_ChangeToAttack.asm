@@ -14,16 +14,15 @@
    ;END UNLOCKABLE WEAPONS
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    STX temp            ;; assumes the object we want to move is in x.
-    GetActionStep temp  ;; don't attack if you're in Action Step...
-    CMP #$07            ;; 07 - Hurt
-    BNE +notHurt
+    STX temp
+    GetActionStep temp
+    CMP #OBJECT_HURT_STATE
+    BEQ +Attackblocked
+    CMP #PLAYER_ATTACK_STATE
+    BNE +canAttack
+    +Attackblocked:
         RTS
-    +notHurt
-    CMP #$02            ;; 02 - Attack
-    BNE +notAttack
-        RTS
-    +notAttack
+    +canAttack:
 
     STX temp ;; assumes the object that we want is in x.
 
