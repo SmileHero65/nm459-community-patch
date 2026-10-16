@@ -64,3 +64,5 @@ MY_PRIZE_X_OFFSET = $00  ; Horizontal spawn offset.
 MY_PRIZE_Y_OFFSET = $10  ; Distance above the block.
 
 TEXT_DELAY = #$00
+
+HUD_PALETTE = #$03
