@@ -25,7 +25,7 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
     STA temp
 
     GetActionStep temp
-    CMP #$07 ;; we will use action step 7 for hurt.
+    CMP #OBJECT_HURT_STATE ;; we will use action step 7 for hurt.
     BNE +dontSkipHurtingThisObject
         JMP +doSkipHurtingThisObject ;; if he is hurt, he can't be hurt again.
     +dontSkipHurtingThisObject:
@@ -50,7 +50,7 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
     ORA temp1
     STA Object_direction,x
 
-    ChangeActionStep temp, #$07
+    ChangeActionStep temp, #OBJECT_HURT_STATE
 
     DEC Object_health,x
     LDA Object_health,x
