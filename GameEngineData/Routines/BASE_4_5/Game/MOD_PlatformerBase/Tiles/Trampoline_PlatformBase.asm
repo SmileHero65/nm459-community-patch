@@ -13,5 +13,10 @@
         SBC #BOUNCE_STRENGHT
         STA Object_v_speed_hi,x
 
+        ; Mark this jump as an automatic bounce.
+        LDA Object_frame,x
+        ORA #%10000000
+        STA Object_frame,x
+
     +skip
     RTS
