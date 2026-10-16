@@ -21,20 +21,6 @@ RECOIL_SPEED_LO = #$00
     STA yHold_hi
     STA yPrev
 
-    ;; For adventure physics, don't update position if attacking.
-    CPX player1_object
-    BNE +notPlayer
-        ;; It was the player.
-        ;; If this object is in attack action, currently set to 2,
-        ;; he should not move, and should skip physics check.
-        STX temp
-        GetActionStep temp
-        CMP #PLAYER_ATTACK_STATE
-        BNE +notPlayer ;; skip, because was not 2.
-
-        JMP skipPhysics
-    +notPlayer:
-
     ;; Ignore physics if not in main game mode
     LDA gameState
     BEQ +doHandlePhysics
