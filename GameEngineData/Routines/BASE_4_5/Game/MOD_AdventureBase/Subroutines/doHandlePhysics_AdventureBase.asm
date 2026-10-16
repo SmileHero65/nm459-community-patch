@@ -29,7 +29,7 @@ RECOIL_SPEED_LO = #$00
         ;; he should not move, and should skip physics check.
         STX temp
         GetActionStep temp
-        CMP #$02
+        CMP #PLAYER_ATTACK_STATE
         BNE +notPlayer ;; skip, because was not 2.
 
         JMP skipPhysics
@@ -696,7 +696,7 @@ RECOIL_SPEED_LO = #$00
 
         STX temp
         GetActionStep temp
-        CMP #$07
+        CMP #OBJECT_HURT_STATE
         BNE +notHurt
             JMP stopMovingDueToHurtState
         +notHurt
@@ -797,7 +797,7 @@ RECOIL_SPEED_LO = #$00
 
         STX temp
         GetActionStep temp
-        CMP #$07
+        CMP #OBJECT_HURT_STATE
         BNE +notHurt
             JMP stopMovingDueToHurtState
         +notHurt:
@@ -834,7 +834,7 @@ RECOIL_SPEED_LO = #$00
 
     STX temp
     GetActionStep temp
-    CMP #$07
+    CMP #OBJECT_HURT_STATE
     BNE +notHurt
         JMP stopMovingDueToHurtState
     +notHurt
