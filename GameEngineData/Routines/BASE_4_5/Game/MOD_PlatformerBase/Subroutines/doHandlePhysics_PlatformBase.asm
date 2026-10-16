@@ -168,7 +168,7 @@ doHandlePhysics:
 
         STX temp
         GetActionStep temp
-        CMP #$07
+        CMP #OBJECT_HURT_STATE
         BNE +notHurt
             ;;; this object is hurt.
             ;;; so it's speed will be determined by the recoil speed above.
@@ -180,10 +180,31 @@ doHandlePhysics:
                     LDA #RECOIL_SPEED
                     STA Object_h_speed_hi,x
 
+                    ; Match horizontal inertia to the recoil direction.
+                    LDA Object_frame,x
+                    AND #%10111111
+                    STA temp
+                    LDA Object_direction,x
+                    AND #%01000000
+                    ORA temp
+                    STA Object_frame,x
+
                     JMP gotHandVspeeds
         +notHurt
 
-;    ReturnBank
+    ; Adopt the requested direction when horizontal speed is zero.
+    LDA Object_h_speed_hi,x
+    ORA Object_h_speed_lo,x
+    BNE PF_HDirectionReady
+        LDA Object_frame,x
+        AND #%10111111
+        STA temp
+        LDA Object_direction,x
+        AND #%01000000
+        ORA temp
+        STA Object_frame,x
+    PF_HDirectionReady:
+
     ;;;; deal with acceleration / deceleration
 
 
@@ -192,6 +213,14 @@ doHandlePhysics:
     BNE doHvel
     JMP doHdec
     doHvel:
+
+        ; Brake before accelerating in the opposite direction.
+        LDA Object_direction,x
+        EOR Object_frame,x
+        AND #%01000000
+        BEQ PF_HAccelerate
+            JMP doHdec
+        PF_HAccelerate:
 
         ;; we have activated horizontal inertia for this object
         LDA Object_h_speed_lo,x
@@ -224,8 +253,7 @@ doHandlePhysics:
         JMP skipDoHdec
 doHdec:
     LDA Object_h_speed_hi,x
-    CLC
-    ADC Object_h_speed_lo,x
+    ORA Object_h_speed_lo,x
     BEQ skipDoHdec
 
     LDA Object_h_speed_lo,x
@@ -265,7 +293,7 @@ gotHandVspeeds:
     STA tempB
 
 
-    LDA Object_direction,x
+    LDA Object_frame,x
     AND #%01000000
     BNE isMovingRight
     ;isMovingLeft
@@ -277,8 +305,7 @@ gotHandVspeeds:
     STA collisionsToCheck
 
         LDA tempA
-        CLC
-        ADC tempB
+        ORA tempB
         BNE hSpeedIsNotZero
             ;; h speed is zero, which means no h direction
             LDA directionByte
@@ -299,8 +326,7 @@ isMovingRight:
     ORA #%00001111
     STA collisionsToCheck
         LDA tempA
-        clc
-        ADC tempB
+        ORA tempB
         BNE hSpeedIsNotZero2
             ;; h speed is zero, which means no h direction
             LDA directionByte
@@ -529,79 +555,126 @@ GRAVITY_HI = #$00;
         ;; Here is where we handle the "landing" scenario for all of those possibilities.
 
 
-    GetCollisionPoint temp, temp1, tempB ;; is it a solid?
-        BNE +check
-
-    GetCollisionPoint temp3, temp1, tempA ;; is it a solid?
-        +check
-        CMP #$01
-        BNE +isNotSolid
-            JMP +isSolid
-        +isNotSolid
-        CMP #$07
-        BNE +isNotSolid
-            JMP +isOneWaySolid
-        +isNotSolid
-        CMP #$09
-        BNE +isNotSolid
-            JMP +isSolid
-        +isNotSolid
-        CMP #$0A
-        BEQ +isLadderSolid
-            JMP +notSolid
-
-    +isLadderSolid
-        LDA Object_v_speed_hi,x
-        BEQ +checkSolid
-        BPL +checkSolid
-            JMP +notSolid
-        +checkSolid
-        LDA temp1
-        SEC
-        SBC #$02
-        SEC
-        SBC Object_v_speed_hi,x
-        STA tempy
-        GetCollisionPoint temp, tempy, tempB ;; is it a solid
-            BEQ +checkForSecondPoint
-            CMP #$0A
-            BEQ +notSolid
-        GetCollisionPoint temp3, tempy, tempA ;; is it a solid?
-            BEQ +checkForFirstPoint
-            CMP #$0A
-            BEQ +notSolid
-            JMP +isSolid
-                +checkForSecondPoint
-                    GetCollisionPoint temp3, tempy, tempA ;; is it a solid?
-                    BEQ +isSolid
-                    JMP +notSolid
-                +checkForFirstPoint
-                    GetCollisionPoint temp, tempy, tempB ;; is it a solid?
-                    BEQ +isSolid
-                    JMP +notSolid
-
-
-    +isOneWaySolid
-        ;; a special kind of solid
-        LDA Object_v_speed_hi,x
-        BMI +notSolid ;; a jumpthrough platform is definitely not solid if moving up through it.
-            ;;; however, it is not solid if we haven't cleared it yet.
-            TYA
-            AND #%11110000
-            CLC
-            ADC Object_v_speed_hi,x
-            CMP temp1
-            BEQ +isSolid
-            BCS +isSolid
-            JMP +notSolid
-
-    +isSolid
-
-        JMP isSolidSoLand
-
-
-
-        +notSolid:
+    ; Do not land while moving upward.
+    LDA Object_v_speed_hi,x
+    BPL PF_BeginSupportCheck
+    JMP +notSolid
+            
+            PF_BeginSupportCheck:
+                ; Probe both feet at the calculated Y position,
+                ; then probe both feet one pixel below it.
+                LDA #$00
+                STA temp2
+            
+            PF_ProbeFoot:
+                ; Even probes check the left foot.
+                ; Odd probes check the right foot.
+                LDA temp2
+                AND #$01
+                BNE PF_ProbeRightFoot
+                    GetCollisionPoint temp, temp1, tempB
+                JMP PF_ClassifySurface
+            
+            PF_ProbeRightFoot:
+                    GetCollisionPoint temp3, temp1, tempA
+            
+            PF_ClassifySurface:    ;;Cycle through types of tile surfaces the object can collide
+                CMP #TILE_SOLID
+                BNE +
+                JMP isSolidSoLand
+            +
+                CMP #TILE_PRIZE_BLOCK
+                BNE +
+                JMP isSolidSoLand
+            +
+                CMP #TILE_JUMP_THROUGH
+                BNE +
+                JMP PF_CheckOneWaySurface
+            +
+                CMP #TILE_LADDER
+                BNE +
+                JMP PF_CheckLadderSurface
+            +
+                ; This point does not support the object.
+                JMP PF_NextSupportPoint
+            
+            PF_CheckOneWaySurface:
+                ; Preserve the existing one-way landing check.
+                TYA
+                AND #%11110000
+                CLC
+                ADC Object_v_speed_hi,x
+                CMP temp1
+                BCC PF_OneWayNotSupporting
+                JMP isSolidSoLand
+            
+            PF_OneWayNotSupporting:
+                JMP PF_NextSupportPoint
+            
+            PF_CheckLadderSurface:
+                ; Check above the feet to distinguish the top
+                ; of a ladder from its continuous interior.
+                LDA temp1
+                SEC
+                SBC #$02
+                SEC
+                SBC Object_v_speed_hi,x
+                STA tempy
+            
+                GetCollisionPoint temp, tempy, tempB
+                BNE PF_LadderLeftAboveNotEmpty
+                JMP PF_CheckLadderRightAbove
+            
+            PF_LadderLeftAboveNotEmpty:
+                CMP #TILE_LADDER
+                BNE +
+                JMP PF_NextSupportPoint
+            +
+                GetCollisionPoint temp3, tempy, tempA
+                BNE PF_LadderRightAboveNotEmpty
+                JMP PF_CheckLadderLeftAbove
+            
+            PF_LadderRightAboveNotEmpty:
+                CMP #TILE_LADDER
+                BNE +
+                JMP PF_NextSupportPoint
+            +
+                JMP isSolidSoLand
+            
+            PF_CheckLadderRightAbove:
+                GetCollisionPoint temp3, tempy, tempA
+                BNE +
+                JMP isSolidSoLand
+            +
+                JMP PF_NextSupportPoint
+            
+            PF_CheckLadderLeftAbove:
+                GetCollisionPoint temp, tempy, tempB
+                BNE +
+                JMP isSolidSoLand
+            +
+                JMP PF_NextSupportPoint
+            
+            PF_NextSupportPoint:
+                ; Advance to the next foot.
+                INC temp2
+                LDA temp2
+                CMP #$02
+                BNE PF_CheckSupportFinished
+            
+                ; After checking both feet, check one pixel lower.
+                INC temp1
+            
+            PF_CheckSupportFinished:
+                CMP #$04
+                BEQ PF_NoSupportingSurface
+                JMP PF_ProbeFoot
+            
+            PF_NoSupportingSurface:
+                ; Restore the original probe Y before falling.
+                DEC temp1
+            
+            +notSolid:
 
 
             ;; is not solid, don't land.
@@ -662,13 +735,15 @@ GRAVITY_HI = #$00;
             CPX player1_object
             BNE +notPlayerFalling
                 STX temp
-                GetActionStep temp
-                CMP #7 ;Hurt
+                GetActionStep temp        ;;In what states we shall not play the falling state?
+                CMP #OBJECT_HURT_STATE
+                BEQ +notPlayerFalling
+                CMP #PLAYER_FALL_STATE
                 BEQ +notPlayerFalling
                     LDA Object_v_speed_hi,x
                     BEQ +notPlayerFalling
                     BMI +notPlayerFalling
-                        ChangeActionStep temp, #2 ;Jumping
+                        ChangeActionStep temp, #PLAYER_FALL_STATE ;Plays Fall State Animation
             +notPlayerFalling:
 
                 LDA Object_v_speed_hi,x
@@ -679,12 +754,32 @@ GRAVITY_HI = #$00;
                     STA Object_v_speed_lo,x
                 notOverFallSpeed:
 
-
-
             JMP doneWithGravity
 
 
 isSolidSoLand:
+
+    ; Use the surface Y before other logic overwrites temp1.
+    LDA temp1
+    AND #%11110000
+    SEC
+    SBC self_bottom
+    SEC
+    SBC #$01
+    STA Object_y_hi,x
+    STA yHold_hi
+
+    ; Clear fractional position and vertical velocity.
+    LDA #$00
+    STA Object_y_lo,x
+    STA yHold_lo
+    STA Object_v_speed_lo,x
+    STA Object_v_speed_hi,x
+
+    ; Allow variable jumping again after landing.
+    LDA Object_frame,x
+    AND #%01111111
+    STA Object_frame,x
 
     ;;Fixed Walking in Place When Landing by Board-B;;
     ;;https://www.nesmakers.com/index.php?threads/walking-in-place-when-landing-platformer-metrovania-4-5-9.8417/
@@ -695,46 +790,21 @@ isSolidSoLand:
     ;;check if in a jumping state.
     STX temp
     GetActionStep temp
-    CMP #$02 ;; presums jump is in state 2
+    CMP #PLAYER_JUMP_STATE ;; presums jump is in state 2
     BNE +dontChangeToIdle
         LDA gamepad
         AND #%11000000
         BNE +isRunningWhenLanding
             ;; is idle when landing
-            LDA #$00
+            LDA #PLAYER_IDLE_STATE
             STA temp1
             JMP +gotLandingState
         +isRunningWhenLanding
-            LDA #$01
+            LDA #PLAYER_WALK_STATE
             STA temp1
         +gotLandingState
             ChangeActionStep temp, temp1 ;; changes to either idle or running depending on if a direction key is pressed.
     +dontChangeToIdle
-
-
-
-
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-        ;;;;This following commented code will smooth out your landing
-        ;;;;However, you will not be able to stand on top of a ladder
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-        ;; force y to tile boundary
-         ;LDA tileY
-         ;AND #%11110000
-         ;SEC
-         ;SBC self_bottom
-         ;SEC
-         ;SBC #$01
-         ;STA Object_y_hi,x
-         ;STA yHold_hi
-
-         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-        LDA #$00
-        STA Object_v_speed_lo,x
-        STA Object_v_speed_hi,x
 
 doneWithGravity:
 
