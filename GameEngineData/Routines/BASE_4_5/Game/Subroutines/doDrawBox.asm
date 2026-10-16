@@ -206,7 +206,7 @@ currentlyUpdatingQueuedTiles:
         JMP gotBoxFill
 
         isJustDrawingBox:
-        LDA #$F5
+        LDA #_SPACE
         STA tempA
         STA tempB
         STA tempC
