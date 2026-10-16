@@ -16,9 +16,6 @@ DROPABLE_05 = #$FF
 DROPABLE_06 = #$FF
 DROPABLE_07 = #$FF
 
-MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
-
-
     TXA
     PHA
 
@@ -100,7 +97,7 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
             STA temp1 ;; high byte of thing, is odd col table.
 
             LDA collisionTable2,x
-            CMP #MONSTER_BLOCK_TILE
+            CMP #TILE_MONSTER_BLOCK
             BEQ +isMonsterBlockTile
                 JMP +notMonsterBlockTile
             +isMonsterBlockTile:
@@ -116,7 +113,7 @@ MONSTER_BLOCK_TILE = #$07 ;; the number collision type of your monster block.
         STA temp1 ;; high byte of thing, is even col table.
 
         LDA collisionTable,x
-        CMP #MONSTER_BLOCK_TILE
+        CMP #TILE_MONSTER_BLOCK
         BEQ +isMonsterBlockTile
             JMP +notMonsterBlockTile
         +isMonsterBlockTile:
