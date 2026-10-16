@@ -45,9 +45,16 @@ OBJECT_HURT_STATE = #$07
 ;;Other CONSTANTS FOR UI LATER
 BOUNCE_STRENGHT = #$08
 
-
 TILE_SOLID = #$01
 TILE_JUMP_THROUGH = #$07
 TILE_PRIZE_BLOCK = #$09
 TILE_MONSTER_LOCK = #$08
 TILE_LADDER = #$0A
+
+PRIZE_BLOCK_USED_GRAPHIC = #$00
+BLANK_GRAPHIC = #$00
+
+MY_PRIZE          = $01  ; Object type to create.
+MY_PRIZE_STATE    = $00  ; Initial action step.
+MY_PRIZE_X_OFFSET = $00  ; Horizontal spawn offset.
+MY_PRIZE_Y_OFFSET = $10  ; Distance above the block.
