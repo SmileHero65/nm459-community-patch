@@ -3,11 +3,11 @@
 
     ;; Check if object is not hurting yet.
     GetActionStep temp
-    CMP #$07 ;; we will use action step 7 for hurt.
+    CMP #OBJECT_HURT_STATE ;; we will use action step 7 for hurt.
     BEQ +doSkipHurtingThisObject ;; if he is hurt, he can't be hurt again.
 
         ;; Put object in hurt state
-        ChangeActionStep temp, #$07
+        ChangeActionStep temp, #OBJECT_HURT_STATE
 
         ;; Take health point
         DEC Object_health,x
