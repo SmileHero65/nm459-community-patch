@@ -1,3 +1,7 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Fix abrupt stop when player collides with solid above;;;;;;;;;
+;;https://www.nesmakers.com/index.php?threads/4-5-9-physics-script-help-abrupt-stop-when-player-collides-with-solid-above.7133/#post-52144
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; ...this will only work if the current labels are observed.
 ;;;; This assumes that the label "donePositionUpdate" precedes stop-code at the end of this subroutine.
 ;;;; Assumes that
@@ -6,11 +10,6 @@
     TXA
     PHA
     STA tempx
-
-     LDA #$00
-     STA Object_x_lo,x
-     STA Object_h_speed_hi,x
-     STA Object_h_speed_lo,x
 
      LDA Object_v_speed_hi,x
      BMI +isJumpingUpWhenHittingSolid
@@ -27,11 +26,9 @@
         JSR getPointColTable
 
 
-        LDA Object_y_hi,x
+        LDA yHold_hi
         CLC
         ADC self_top
-        CLC
-        ADC Object_v_speed_hi,x
         SEC
         SBC #$01
         STA temp1
@@ -51,7 +48,9 @@
             STA temp
             JSR getPointColTable
             CheckCollisionPoint temp, temp1, #$01, tempA
-            BEQ +stopVerticalMovementOnSolidHit
+            BNE +
+                JMP +stopVerticalMovementOnSolidHit
+            +
             CheckCollisionPoint temp, temp1, #$09, tempA
             BNE +notPrizeBlock
                 JMP +isPrizeBlock
@@ -61,63 +60,87 @@
                 JMP +isFallingDownWhenHittingSolid
 
             +isPrizeBlock
-                JSR GetTileAtPosition
-                LDA Object_screen,x
-                AND #%00000001
-                BNE +checkCollisionScreenRight
-            ;;; check left collision screen
-                LDA #$01
-                STA collisionTable,y
 
-                JMP +checkedCollisionScreen
-            +checkCollisionScreenRight
-                LDA #$01
-                STA collisionTable2,y
+                LDX tempx
 
-            +checkedCollisionScreen:
-                MY_PRIZE = #$01 ;; change this to the type of object you want a prize block to create.
-                MY_PRIZE_STATE = #$00 ;; change this to the state of the prize when it appears.
-                MY_PRIZE_Y_OFFSET = #$10 ;; change this to how far above the prize box it should create this object.
-                MY_PRIZE_X_OFFSET = #$00 ;; change this to how far to the right of the left side of the tile it should create this object.
-
+                ; Preserve the prize position before updating the tile.
                 LDA tileX
                 AND #%11110000
                 CLC
                 ADC #MY_PRIZE_X_OFFSET
-                STA tempA
+                PHA
+
                 LDA tileY
                 AND #%11110000
+                SEC
                 SBC #MY_PRIZE_Y_OFFSET
-                STA tempB
+                PHA
+
                 LDA Object_screen,x
+                PHA
+
+                ; Select the collision table of the actual collision point.
+                LDA tempA
+                AND #%00000001
+                STA temp2
+            
+                ; Prepare the collision table index for the tile macro.
+                JSR GetTileAtPosition
+                STY temp1
+
+                PrizeBlock_WaitForTileQueue:
+                    ; Wait until the shared background update queue is free.
+                    LDA updateScreenData
+                    AND #%00000100
+                    BEQ +updatePrizeTile
+                    JSR doWaitFrame
+                    JMP PrizeBlock_WaitForTileQueue
+                
+               +updatePrizeTile:
+                ; Replace the graphics and collision together.
+                LDA #$00
+                STA scrollOffsetCounter
+                ChangeTileAtCollision #PRIZE_BLOCK_USED_GRAPHIC, #TILE_SOLID
+                ;;Prize Block converts into a regular solid tile and changes graphic
+            
+                ; Restore the prize screen and position.
+                PLA
                 STA tempC
+                PLA
+                STA tempB
+                PLA
+                STA tempA
+            
+                ; Create the prize and preserve the original object index.
                 TXA
                 PHA
-                CreateObjectOnScreen tempA, tempB, #MY_PRIZE, #MY_PRIZE_STATE, tempC
+                    CreateObjectOnScreen tempA, tempB, #MY_PRIZE, #MY_PRIZE_STATE, tempC
                 PLA
                 TAX
 
-            +stopVerticalMovementOnSolidHit
-                ; LDX tempx
-                ; LDY Object_type,x
-                LDA #$00
-                STA Object_v_speed_lo,x
-                STA Object_v_speed_hi,x
-                ; LDA tileY
-                ; AND #%11110000
-                ; CLC
-                ; ADC #$0F
-                ; SEC
-                ; SBC ObjectBboxTop,y
-                ; STA Object_y_hi,x
-                ; STA yHold_hi
++stopVerticalMovementOnSolidHit:
+            ; Stop upward movement without clearing horizontal momentum.
+            LDA #$00
+            STA Object_v_speed_lo,x
+            STA Object_v_speed_hi,x
+            STA Object_y_lo,x
+            STA yHold_lo
+        
+            ; Restore the vertical position before the collision.
+            LDA yPrev
+            STA Object_y_hi,x
+            STA yHold_hi
+            JMP +finishSolidReaction
 
++isFallingDownWhenHittingSolid:
+            ; Stop horizontal movement when no ceiling was detected.
+            LDX tempx
+            LDA #$00
+            STA Object_x_lo,x
+            STA Object_h_speed_hi,x
+            STA Object_h_speed_lo,x
 
-    +isFallingDownWhenHittingSolid:
-
-
-    PLA
-    TAX
-
-    JMP donePositionUpdate
-    
++finishSolidReaction:
+        PLA
+        TAX
+        JMP donePositionUpdate
