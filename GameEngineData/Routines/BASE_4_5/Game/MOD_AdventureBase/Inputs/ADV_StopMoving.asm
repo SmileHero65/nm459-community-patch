@@ -2,16 +2,15 @@
 ;;Simplified Movement Base - crazygrouptrio;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    STX temp             ;; assumes the object we want to move is in x.
-    GetActionStep temp     ;; don't move if you're in Action Step...
-    CMP #$07            ;; 07 - Hurt
-    BNE +notHurt
+    STX temp
+    GetActionStep temp
+    CMP #OBJECT_HURT_STATE
+    BEQ +StopBlocked
+    CMP #PLAYER_ATTACK_STATE
+    BNE +canStop
+    +StopBlocked:
         RTS
-    +notHurt
-    CMP #$02             ;; 02 - Attack
-    BNE +notAttack
-        RTS
-    +notAttack
+    +canStop:
 
         ; use this for 4 directional game - adventure
          LDA gamepad
@@ -20,7 +19,7 @@
          JMP +done
 
     changeToStop_NoDpadPressed:
-        ChangeActionStep temp, #$00 ;; assumes that "idle" is in action 0
+        ChangeActionStep temp, #PLAYER_IDLE_STATE ;; changes to idle state
         StopMoving temp, #$FF, #$00
 
         +done
