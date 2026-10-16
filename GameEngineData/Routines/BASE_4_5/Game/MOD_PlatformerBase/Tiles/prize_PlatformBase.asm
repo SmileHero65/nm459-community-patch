@@ -19,7 +19,7 @@ BEQ +isPlayer
 
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BELOW WILL CHANGE TILE AT COLLISION.
 
-    ChangeTileAtCollision #$00, #$00
+    ChangeTileAtCollision #BLANK_GRAPHIC, #TILE_NULL
     JSR doWaitFrame
 
     ;MACRO AddValue arg0, arg1, arg2, arg3
