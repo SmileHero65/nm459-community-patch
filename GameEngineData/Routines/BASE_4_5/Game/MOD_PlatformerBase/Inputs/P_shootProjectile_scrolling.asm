@@ -4,7 +4,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;Objects used;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; #$01 - normal projectile        (second obj)
+;;; #OBJ_PROJECTILE
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -52,7 +52,7 @@
         LDA Object_direction,x
         AND #%00000111
         STA tempC
-        CreateObjectOnScreen tempA, tempB, #$01, #$00, tempD
+        CreateObjectOnScreen tempA, tempB, #OBJ_PROJECTILE, #$00, tempD
             ;;; x, y, object, starting action.
             ;;; and now with that object, copy the player's
             ;;; direction and start it moving that way.
