@@ -8,6 +8,8 @@
     GetActionStep temp
     CMP #OBJECT_HURT_STATE
     BEQ +NoJump:
+    CMP #PLAYER_FALL_STATE
+    BEQ +NoJump:
     CMP #PLAYER_JUMP_STATE
     BNE +canJump
     +NoJump:
