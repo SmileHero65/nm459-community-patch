@@ -24,11 +24,7 @@
     STA Object_v_speed_hi,x
     STA Object_v_speed_lo,x
 
-
-
-
-
-    ChangeTileAtCollision #$00, #$00 ;; change to tile zero (make disappear), collision type 0
+    ChangeTileAtCollision #BLANK_GRAPHIC, #TILE_NULL
 
 +skip
 
