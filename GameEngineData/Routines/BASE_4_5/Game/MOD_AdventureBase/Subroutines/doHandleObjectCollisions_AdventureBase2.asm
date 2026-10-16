@@ -16,7 +16,7 @@
         ;; In this module, monsters will use action step 7 for their hurt state.
         STX selfObject
         GetActionStep selfObject
-        CMP #$07
+        CMP #OBJECT_HURT_STATE
         BNE +notHurt
             JMP +skipObjectCollisionCheck
         +notHurt
