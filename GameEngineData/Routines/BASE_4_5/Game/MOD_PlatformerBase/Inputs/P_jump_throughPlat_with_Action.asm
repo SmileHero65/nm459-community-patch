@@ -2,18 +2,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Only can jump if the place below feet is free.
+
     TXA
-    STX temp                            ; assumes the object we want to move is in x.
-    GetActionStep temp                  ; Get the current action step of the player
-    CMP #$07                            ; Check if action step is 7, which is commonly the "hurt" state)
-        BNE +notHurt                    ; If the player is NOT in the hurt state, branch to continue checking movement
-            RTS                         ; If the player is in the hurt state, don't execute this
-        +notHurt
-    CMP #$02                            ; Check if action step is 2, which is commonly the "jump" state)
-    BNE +notAlreadyJump                 ; If the player is NOT in the jump state, branch to continue checking movement
-            RTS                         ; If the player is in the jump state, don't execute this
-     +notAlreadyJump                    ; This extra check is to partially fix a bug where you can infinitely jump
-                                        ; on a ladder
+    STX temp
+    GetActionStep temp
+    CMP #OBJECT_HURT_STATE
+    BEQ +NoJump:
+    CMP #PLAYER_JUMP_STATE
+    BNE +canJump
+    +NoJump:
+        RTS
+    +canJump:
 
 
     SwitchBank #$1C
@@ -98,7 +97,7 @@
 
     STX temp ;; assumes the object we want to move is in x.
  ;  change the object's action so that he is in jump mode.
-    ChangeActionStep temp, #2 ;Jump
+    ChangeActionStep temp, #PLAYER_JUMP_STATE
 
 +skipJumping:
     ReturnBank
