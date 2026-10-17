@@ -190,6 +190,15 @@ doHandleObjects:
             PLA
             TAX
 
+            ; Skip drawing the player when screen flag bit 1 is enabled.
+            CPX player1_object
+            BNE +playerVisibilityChecked
+            LDA ScreenFlags00
+            AND #%10000000
+            BEQ +playerVisibilityChecked
+            JMP ObjectDoesNotDraw
+        +playerVisibilityChecked:
+
             LDA Object_status,x
             AND #OBJECT_OBSERVES_DRAWING
             BEQ ObjectDoesNotDraw
