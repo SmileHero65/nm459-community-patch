@@ -1,5 +1,20 @@
 
 doDrawText:
+
+    ; Count down without advancing the text.
+    LDA textHandler
+    CMP #$02
+    BCC +textDelayReady
+    DEC textHandler
+    RTS
++textDelayReady:
+    ; Wait until the shared PPU buffer is available.
+    LDA updateScreenData
+    AND #%00000111
+    BEQ +textQueueReady
+    RTS
++textQueueReady:
+
     TXA
     PHA
     TYA
@@ -203,6 +218,9 @@ doDrawText:
 
         ;; Update the max offset scroll counter
         STY maxScrollOffsetCounter
+        ; Reload the delay after queuing a normal character.
+        LDA #(TEXT_DELAY + 1)
+        STA textHandler
 
         ;; Increment counter; we will use counter to keep track of the
         ;; length of the current line
