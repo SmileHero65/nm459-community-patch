@@ -645,7 +645,7 @@ doDrawHudStuff:
         STA $2006
         LDA temp3
         STA $2006
-        LDA #$F5 ;; blank tile
+        LDA #(_SPACE + HUD_OFFSET) ;; blank tile
         STA $2007
         INC temp3
         DEC tempA
@@ -711,7 +711,7 @@ doDrawHudStuff:
             STA $2006
             LDA temp2
             STA $2006
-            LDA #$FF
+            LDA #(HUD_PALETTE * $55)
             STA $2007
             INC temp2
             DEC tempC
