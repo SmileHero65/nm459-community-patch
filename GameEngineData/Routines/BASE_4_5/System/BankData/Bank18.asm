@@ -442,7 +442,7 @@ doDrawHud_bank18:
         STA $2006
         LDA temp3
         STA $2006
-        LDA #_SPACE ;; blank tile
+        LDA #(_SPACE + HUD_OFFSET) ;; blank tile
         STA $2007
 
         INC temp3
