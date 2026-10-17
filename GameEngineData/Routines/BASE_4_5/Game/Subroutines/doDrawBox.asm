@@ -206,7 +206,7 @@ currentlyUpdatingQueuedTiles:
         JMP gotBoxFill
 
         isJustDrawingBox:
-        LDA #_SPACE
+        LDA #(_SPACE + HUD_OFFSET)
         STA tempA
         STA tempB
         STA tempC
