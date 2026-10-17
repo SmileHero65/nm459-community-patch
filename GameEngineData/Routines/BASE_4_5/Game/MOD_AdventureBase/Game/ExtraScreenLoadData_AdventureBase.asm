@@ -1,15 +1,4 @@
-
-    ;; UNDER WHAT CONDITION SHOULD WE HIDE SPRITES?
-    LDA ScreenFlags00
-    AND #%10000000
-    BEQ +show
-        HideSprites
-        JMP +continue
-    +show:
-        ShowSprites
-    +continue:
-
-    ;; UNDER WHAT CONDITIONS SHOULD WE HIDE THE HUD?
+  ;; UNDER WHAT CONDITIONS SHOULD WE HIDE THE HUD?
     LDA ScreenFlags00
     AND #%01000000
     BEQ +show
