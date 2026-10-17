@@ -245,7 +245,7 @@ RECOIL_SPEED_LO = #$00
 
     STX temp
     GetActionStep temp
-    CMP #$07
+    CMP #OBJECT_HURT_STATE
     BEQ Accel_DoRecoil
     JMP +notHurt
     Accel_DoRecoil:
@@ -724,7 +724,7 @@ RECOIL_SPEED_LO = #$00
 
     STX temp
     GetActionStep temp
-    CMP #$07
+    CMP #OBJECT_HURT_STATE
     BNE +notHurt
         JMP stopMovingDueToHurtState
     +notHurt:
