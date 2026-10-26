@@ -133,7 +133,7 @@ DROPABLE_07 = #$FF
 ;        BEQ +doSkipHurtingThisObject ;; done
 ;    JMP doCheckForMonsterBlockAfterMonsterDeath ;; last monster block.
 ;
-;    +doSkipHurtingThisObject
+    +doSkipHurtingThisObject
 
     PLA
     TAX
