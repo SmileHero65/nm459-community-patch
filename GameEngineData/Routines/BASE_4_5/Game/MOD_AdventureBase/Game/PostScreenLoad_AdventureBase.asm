@@ -1,12 +1,5 @@
 
 ;; This script unlocks locked tiles when the screen has been triggered.
-
-LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
-                         ;; here, we're looking to see if the collision type is
-                         ;; a lock block, which we currently have in our 6th
-                         ;; tile spot.
-
-
     GetTrigger
     BNE +
         JMP +doneWithLockTiles
@@ -23,7 +16,7 @@ LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
         BNE +isOddScreen
             ;; is even screen
             LDA collisionTable,y
-            CMP #LOCK_BLOCK_VALUE
+            CMP #MONSTER_BLOCK_TILE
             BEQ +isALockTile
 
             CMP #MONSTER_BLOCK_TILE
@@ -40,7 +33,7 @@ LOCK_BLOCK_VALUE = #$06  ;; change this to whatever value you are looking for.
 
         +isOddScreen:
             LDA collisionTable2,y
-            CMP #LOCK_BLOCK_VALUE
+            CMP #MONSTER_BLOCK_TILE
             BEQ +isALockTile
 
             CMP #MONSTER_BLOCK_TILE
