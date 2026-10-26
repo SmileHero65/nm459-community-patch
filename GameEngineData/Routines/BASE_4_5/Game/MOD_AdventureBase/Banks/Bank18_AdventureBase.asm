@@ -642,12 +642,12 @@ doUpdateHudElement_bank18:
 
     LDA hudUpdates
     AND #%10000000
-    BEQ +doneHudUpdate
+    BEQ doneHudUpdate
         JSR updateHudElement7
         LDA hudUpdates
         AND #%01111111
         STA hudUpdates
-    +doneHudUpdate:
+    doneHudUpdate:
 
     RTS
 
