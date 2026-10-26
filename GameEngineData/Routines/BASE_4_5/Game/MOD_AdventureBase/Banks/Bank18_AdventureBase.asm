@@ -52,7 +52,7 @@ doTileObservationLogic
 
         STX tempz
         GetActionStep tempz
-        CMP #$07
+        CMP #OBJECT_HURT_STATE
         BNE +notHurtState
             LDA ObjectUpdateByte
             ORA #%00000001 ;; is it solid?
