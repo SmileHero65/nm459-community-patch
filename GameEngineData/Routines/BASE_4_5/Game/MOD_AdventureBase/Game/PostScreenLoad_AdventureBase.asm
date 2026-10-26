@@ -16,7 +16,7 @@
         BNE +isOddScreen
             ;; is even screen
             LDA collisionTable,y
-            CMP #MONSTER_BLOCK_TILE
+            CMP #LOCK_BLOCK_VALUE
             BEQ +isALockTile
 
             CMP #MONSTER_BLOCK_TILE
@@ -33,7 +33,7 @@
 
         +isOddScreen:
             LDA collisionTable2,y
-            CMP #MONSTER_BLOCK_TILE
+            CMP #LOCK_BLOCK_VALUE
             BEQ +isALockTile
 
             CMP #MONSTER_BLOCK_TILE
