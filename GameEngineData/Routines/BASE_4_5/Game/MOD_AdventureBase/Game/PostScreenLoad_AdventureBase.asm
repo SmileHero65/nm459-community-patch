@@ -16,10 +16,10 @@
         BNE +isOddScreen
             ;; is even screen
             LDA collisionTable,y
-            CMP #LOCK_BLOCK_VALUE
+            CMP #TILE_LOCK_BLOCK
             BEQ +isALockTile
 
-            CMP #MONSTER_BLOCK_TILE
+            CMP #TILE_MONSTER_BLOCK
             BEQ +isALockTile
                 JMP +checkNextTile
             +isALockTile:
@@ -33,10 +33,10 @@
 
         +isOddScreen:
             LDA collisionTable2,y
-            CMP #LOCK_BLOCK_VALUE
+            CMP #TILE_LOCK_BLOCK
             BEQ +isALockTile
 
-            CMP #MONSTER_BLOCK_TILE
+            CMP #TILE_MONSTER_BLOCK
             BEQ +isALockTile
                 JMP +checkNextTile
             +isALockTile:
